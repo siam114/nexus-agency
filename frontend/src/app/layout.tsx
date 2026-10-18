@@ -16,8 +16,8 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "Nexus Agency | Digital Products & Web Development",
-  description: "Modern digital agency specializing in full-stack web and mobile development, UI/UX design, and scalable cloud solutions.",
+  title: "NexusAgency | Digital Product & Shopify Development Agency",
+  description: "We turn ambitious ideas into digital products that grow. We design and develop high-performing Shopify stores, custom web applications and conversion-focused digital experiences.",
   icons: {
     icon: "/icon.svg",
     shortcut: "/icon.svg",

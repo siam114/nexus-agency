@@ -6,7 +6,8 @@ import { usePathname } from "next/navigation";
 import { navItems } from "@/data/mockData";
 import { Button } from "@/components/ui/button";
 import { ThemeToggle } from "@/components/ui/theme-toggle";
-import { Menu, X, Sparkles, ArrowRight } from "lucide-react";
+import { Logo } from "@/components/ui/Logo";
+import { Menu, X, ArrowRight } from "lucide-react";
 import { cn } from "@/lib/utils";
 
 export function Navbar() {
@@ -14,86 +15,91 @@ export function Navbar() {
   const pathname = usePathname();
 
   return (
-    <header className="sticky top-0 z-50 w-full border-b border-zinc-200/80 dark:border-zinc-800/80 bg-white/80 dark:bg-zinc-950/80 backdrop-blur-md">
+    <header className="sticky top-0 z-50 w-full border-b border-slate-100 dark:border-slate-800/80 bg-white/95 dark:bg-slate-950/90 backdrop-blur-md transition-colors">
       <div className="mx-auto flex max-w-7xl items-center justify-between px-6 py-4">
         {/* Brand Logo */}
-        <Link href="/" className="flex items-center gap-2 group">
-          <div className="flex h-9 w-9 items-center justify-center rounded-xl bg-blue-600 text-white font-bold shadow-md shadow-blue-500/30 group-hover:scale-105 transition-transform">
-            <Sparkles className="h-5 w-5" />
-          </div>
-          <span className="text-xl font-bold tracking-tight text-zinc-900 dark:text-white">
-            Nexus<span className="text-blue-600">Agency</span>
-          </span>
-        </Link>
+        <Logo />
 
-        {/* Desktop Navigation */}
-        <nav className="hidden md:flex items-center gap-1 lg:gap-2">
+        {/* Center Navigation Links */}
+        <nav className="hidden md:flex items-center gap-7 lg:gap-8">
           {navItems.map((item) => {
-            const isActive = pathname === item.href;
+            const isHome = item.href === "/" && pathname === "/";
+            const isActive = isHome || (item.href !== "/" && pathname === item.href);
+
             return (
               <Link
                 key={item.label}
                 href={item.href}
                 className={cn(
-                  "px-3 py-1.5 rounded-lg text-sm font-medium transition-all duration-200",
+                  "relative py-1 text-sm font-medium transition-colors duration-150",
                   isActive
-                    ? "text-blue-600 dark:text-blue-400 bg-blue-50 dark:bg-blue-950/50 font-semibold"
-                    : "text-zinc-600 dark:text-zinc-400 hover:text-zinc-900 dark:hover:text-zinc-100 hover:bg-zinc-100 dark:hover:bg-zinc-900/50"
+                    ? "text-blue-600 dark:text-blue-400 font-semibold"
+                    : "text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white"
                 )}
               >
                 {item.label}
+                {isActive && (
+                  <span className="absolute bottom-0 left-0 right-0 h-0.5 rounded-full bg-blue-600 dark:bg-blue-400" />
+                )}
               </Link>
             );
           })}
         </nav>
 
-        {/* Actions */}
+        {/* Right Actions */}
         <div className="hidden md:flex items-center gap-3">
           <ThemeToggle />
           <Link href="/contact">
-            <Button size="sm" variant="primary">
-              Get in Touch <ArrowRight className="h-4 w-4" />
+            <Button
+              size="md"
+              className="bg-blue-600 hover:bg-blue-700 text-white rounded-full px-5 py-2 text-sm font-semibold shadow-sm shadow-blue-500/20"
+            >
+              Start a Project <ArrowRight className="h-4 w-4 ml-1" />
             </Button>
           </Link>
         </div>
 
-        {/* Mobile Actions & Menu Button */}
+        {/* Mobile Hamburger & Actions */}
         <div className="flex md:hidden items-center gap-2">
           <ThemeToggle />
           <button
             onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-            className="p-2 text-zinc-700 dark:text-zinc-300 hover:text-zinc-900 dark:hover:text-white"
-            aria-label="Toggle menu"
+            className="p-2 rounded-lg text-slate-700 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800"
+            aria-label="Toggle navigation menu"
           >
             {mobileMenuOpen ? <X className="h-6 w-6" /> : <Menu className="h-6 w-6" />}
           </button>
         </div>
       </div>
 
-      {/* Mobile Menu Dropdown */}
+      {/* Mobile Menu Drawer */}
       {mobileMenuOpen && (
-        <div className="md:hidden border-t border-zinc-200 dark:border-zinc-800 bg-white dark:bg-zinc-950 px-6 py-4 space-y-2">
+        <div className="md:hidden border-t border-slate-100 dark:border-slate-800 bg-white dark:bg-slate-950 px-6 py-5 space-y-3 shadow-lg">
           {navItems.map((item) => {
-            const isActive = pathname === item.href;
+            const isHome = item.href === "/" && pathname === "/";
+            const isActive = isHome || (item.href !== "/" && pathname === item.href);
+
             return (
               <Link
                 key={item.label}
                 href={item.href}
                 onClick={() => setMobileMenuOpen(false)}
                 className={cn(
-                  "block px-3 py-2 rounded-lg text-base font-medium transition-colors",
+                  "block px-3 py-2 rounded-xl text-base font-medium transition-colors",
                   isActive
-                    ? "text-blue-600 dark:text-blue-400 bg-blue-50 dark:bg-blue-950/50 font-semibold"
-                    : "text-zinc-700 dark:text-zinc-300 hover:text-blue-600"
+                    ? "text-blue-600 dark:text-blue-400 bg-blue-50/70 dark:bg-blue-950/40 font-semibold"
+                    : "text-slate-700 dark:text-slate-300 hover:text-blue-600 hover:bg-slate-50 dark:hover:bg-slate-900"
                 )}
               >
                 {item.label}
               </Link>
             );
           })}
-          <div className="pt-2">
+          <div className="pt-3">
             <Link href="/contact" onClick={() => setMobileMenuOpen(false)}>
-              <Button className="w-full">Get in Touch</Button>
+              <Button className="w-full rounded-full bg-blue-600 hover:bg-blue-700 text-white">
+                Start a Project <ArrowRight className="h-4 w-4 ml-1" />
+              </Button>
             </Link>
           </div>
         </div>
