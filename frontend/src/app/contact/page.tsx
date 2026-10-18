@@ -5,8 +5,9 @@ import { Card } from "@/components/ui/card";
 import { Mail, MapPin, Clock } from "lucide-react";
 
 export const metadata: Metadata = {
-  title: "Contact Us | Nexus Agency",
-  description: "Get in touch with Nexus Agency. Request a project proposal or schedule a free discovery consultation.",
+  title: "Contact Us | NexusAgency",
+  description:
+    "Get in touch with NexusAgency. Request a proposal for Shopify Development, Figma to Website Conversion, WordPress Development, SEO Services, or Ads Management.",
 };
 
 const contactDetails = [
@@ -14,19 +15,19 @@ const contactDetails = [
     icon: Mail,
     title: "Direct Email",
     value: "hello@nexusagency.com",
-    sub: "Average reply time: under 4 hours",
+    sub: "Average reply time: within 24 hours",
   },
   {
     icon: MapPin,
-    title: "Headquarters",
-    value: "San Francisco, CA",
-    sub: "Global Remote Team across US & Europe",
+    title: "Location",
+    value: "Dhaka, Bangladesh",
+    sub: "Serving clients worldwide remotely",
   },
   {
     icon: Clock,
     title: "Working Hours",
-    value: "Mon - Fri, 9:00 AM - 6:00 PM EST",
-    sub: "Weekend emergency on-call for active clients",
+    value: "Mon - Fri, 9:00 AM - 6:00 PM",
+    sub: "Flexible project availability",
   },
 ];
 
@@ -39,18 +40,18 @@ export default function ContactPage() {
           {contactDetails.map((item) => {
             const Icon = item.icon;
             return (
-              <Card key={item.title} className="p-6 flex items-start gap-4">
-                <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-xl bg-blue-100 dark:bg-blue-950 text-blue-600 dark:text-blue-400">
+              <Card key={item.title} className="p-6 flex items-start gap-4 rounded-2xl border border-slate-200/80 dark:border-slate-800 bg-white dark:bg-slate-900 shadow-sm">
+                <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-xl bg-blue-50 dark:bg-blue-950/80 text-blue-600 dark:text-blue-400">
                   <Icon className="h-6 w-6" />
                 </div>
                 <div>
-                  <h3 className="text-sm font-semibold text-zinc-500 uppercase tracking-wider">
+                  <h3 className="text-xs font-semibold text-slate-500 uppercase tracking-wider">
                     {item.title}
                   </h3>
-                  <div className="text-lg font-bold text-zinc-900 dark:text-white mt-0.5">
+                  <div className="text-base sm:text-lg font-bold text-slate-900 dark:text-white mt-0.5">
                     {item.value}
                   </div>
-                  <div className="text-xs text-zinc-500 mt-1">{item.sub}</div>
+                  <div className="text-xs text-slate-500 mt-1">{item.sub}</div>
                 </div>
               </Card>
             );
@@ -64,20 +65,23 @@ export default function ContactPage() {
         <div className="mt-28 max-w-3xl mx-auto">
           <div className="text-center mb-12">
             <span className="text-xs font-semibold uppercase tracking-wider text-blue-600 dark:text-blue-400">
-              Frequently Asked Questions
+              FREQUENTLY ASKED QUESTIONS
             </span>
-            <h2 className="text-3xl sm:text-4xl font-bold text-zinc-900 dark:text-white mt-2">
+            <h2 className="text-3xl sm:text-4xl font-extrabold text-slate-900 dark:text-white mt-2">
               Everything You Need to Know
             </h2>
+            <p className="mt-2 text-sm text-slate-500 dark:text-slate-400">
+              Clear answers regarding our core services, workflows, and standards.
+            </p>
           </div>
 
           <div className="space-y-4">
             {faqsData.map((faq, i) => (
-              <Card key={i} className="p-6">
-                <h3 className="text-base font-bold text-zinc-900 dark:text-white mb-2">
+              <Card key={i} className="p-6 rounded-2xl border border-slate-200/80 dark:border-slate-800 bg-white dark:bg-slate-900 shadow-sm">
+                <h3 className="text-base font-bold text-slate-900 dark:text-white mb-2">
                   {faq.question}
                 </h3>
-                <p className="text-sm text-zinc-600 dark:text-zinc-400 leading-relaxed">
+                <p className="text-sm text-slate-600 dark:text-slate-400 leading-relaxed">
                   {faq.answer}
                 </p>
               </Card>
@@ -88,4 +92,3 @@ export default function ContactPage() {
     </div>
   );
 }
-

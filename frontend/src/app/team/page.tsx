@@ -9,24 +9,28 @@ import { GithubIcon, LinkedinIcon } from "@/components/ui/SocialIcons";
 
 export const metadata: Metadata = {
   title: "Meet Our Team | NexusAgency",
-  description: "Meet the engineers, designers, and strategists behind NexusAgency. A remote-first digital product studio.",
+  description:
+    "Meet the developers, designers, and specialists behind NexusAgency. Specialists in Shopify development, Figma to website conversion, WordPress, SEO, and ads management.",
 };
 
 const cultureValues = [
   {
     icon: Target,
     title: "Craft & Detail",
-    description: "We obsess over micro-interactions, responsive fluidity, and clean software architecture.",
+    description:
+      "We obsess over responsive fluidity, pixel-conscious layouts, and clean code across every client store and website.",
   },
   {
     icon: Zap,
-    title: "Startup Velocity",
-    description: "Rapid iteration cycles with weekly sprint demos, keeping you continuously in the loop.",
+    title: "Transparent Milestones",
+    description:
+      "Structured sprint check-ins, defined deliverables, and clear timelines without unexpected surprises.",
   },
   {
     icon: HeartHandshake,
-    title: "Client Partnership",
-    description: "Direct collaboration with senior builders without account manager bottlenecks.",
+    title: "Direct Collaboration",
+    description:
+      "Work directly with experienced developers and campaign specialists who take pride in your project's success.",
   },
 ];
 
@@ -41,11 +45,10 @@ export default function TeamPage() {
             <span>OUR TEAM</span>
           </div>
           <h1 className="text-4xl sm:text-5xl lg:text-6xl font-extrabold tracking-tight text-slate-900 dark:text-white leading-tight">
-            Meet the Builders &amp; Designers
+            Meet the Builders &amp; Specialists
           </h1>
           <p className="mt-4 text-base sm:text-lg text-slate-600 dark:text-slate-400 leading-relaxed">
-            A small, dedicated team of designers, developers, and strategists working
-            together from around the world to bring your ideas to life.
+            A dedicated team specializing in Shopify storefronts, Figma conversions, WordPress development, technical SEO, and paid ad management.
           </p>
         </div>
 
@@ -74,8 +77,7 @@ export default function TeamPage() {
                   {member.role}
                 </p>
                 <p className="text-xs text-slate-500 dark:text-slate-400 line-clamp-3 leading-relaxed mb-4">
-                  {member.bio ||
-                    "Passionate about building scalable digital experiences and high-conversion products."}
+                  {member.bio}
                 </p>
 
                 {/* Social Icons */}
@@ -117,10 +119,10 @@ export default function TeamPage() {
         <div className="rounded-3xl border border-slate-200/80 dark:border-slate-800 bg-slate-50/50 dark:bg-slate-900/40 p-8 sm:p-14 mb-24">
           <div className="max-w-2xl mb-12">
             <span className="text-xs font-semibold uppercase tracking-wider text-blue-600 dark:text-blue-400">
-              How We Operate
+              HOW WE OPERATE
             </span>
             <h2 className="text-3xl sm:text-4xl font-extrabold text-slate-900 dark:text-white mt-2">
-              Our Working Culture
+              Our Working Principles
             </h2>
           </div>
 
@@ -128,8 +130,8 @@ export default function TeamPage() {
             {cultureValues.map((v) => {
               const Icon = v.icon;
               return (
-                <Card key={v.title} className="p-6">
-                  <div className="flex h-12 w-12 items-center justify-center rounded-xl bg-blue-100 dark:bg-blue-950/80 text-blue-600 dark:text-blue-400 mb-5">
+                <Card key={v.title} className="p-6 rounded-2xl border border-slate-200/80 dark:border-slate-800 bg-white dark:bg-slate-900 shadow-sm">
+                  <div className="flex h-12 w-12 items-center justify-center rounded-xl bg-blue-50 dark:bg-blue-950/80 text-blue-600 dark:text-blue-400 mb-5">
                     <Icon className="h-6 w-6" />
                   </div>
                   <h3 className="text-lg font-bold text-slate-900 dark:text-white mb-2">
@@ -144,17 +146,17 @@ export default function TeamPage() {
           </div>
         </div>
 
-        {/* Join the Team CTA */}
+        {/* Join the Team / Project CTA */}
         <div className="text-center max-w-xl mx-auto">
           <h3 className="text-2xl sm:text-3xl font-extrabold text-slate-900 dark:text-white mb-3">
-            Want to build with us?
+            Ready to build with us?
           </h3>
           <p className="text-slate-600 dark:text-slate-400 text-sm mb-6 leading-relaxed">
-            We are always looking for exceptional engineers, UI/UX designers, and Shopify experts.
+            Let&apos;s discuss your upcoming project or website requirements with our team.
           </p>
           <Link href="/contact">
             <Button size="lg" className="rounded-full bg-blue-600 hover:bg-blue-700 text-white px-7">
-              Reach Out &amp; Apply <ArrowRight className="h-4 w-4 ml-1.5" />
+              Start a Project <ArrowRight className="h-4 w-4 ml-1.5" />
             </Button>
           </Link>
         </div>

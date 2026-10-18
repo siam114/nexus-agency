@@ -1,6 +1,6 @@
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
-import { ArrowRight, Calendar } from "lucide-react";
+import { ArrowRight, Mail } from "lucide-react";
 
 export function CtaBanner() {
   return (
@@ -11,13 +11,13 @@ export function CtaBanner() {
             {/* Left Content */}
             <div className="max-w-xl">
               <span className="text-[11px] font-bold uppercase tracking-wider text-blue-600 dark:text-blue-400">
-                LET&apos;S BUILD SOMETHING GREAT
+                GROW YOUR ONLINE PRESENCE
               </span>
               <h2 className="text-2xl sm:text-3xl lg:text-4xl font-extrabold text-slate-900 dark:text-white mt-1.5">
-                Have a project in mind?
+                Ready to Grow Your Online Business?
               </h2>
               <p className="mt-2 text-xs sm:text-sm text-slate-600 dark:text-slate-400 leading-relaxed">
-                Let&apos;s talk about your idea and see how we can help turn it into a successful product.
+                Whether you need a Shopify store, a Figma design converted into a website, a WordPress solution, SEO improvements, or advertising management, let&apos;s discuss your project.
               </p>
             </div>
 
@@ -37,8 +37,8 @@ export function CtaBanner() {
                   variant="outline"
                   className="rounded-full px-6 py-3 text-sm font-semibold border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 text-slate-700 dark:text-slate-200 hover:bg-slate-50 dark:hover:bg-slate-800"
                 >
-                  <Calendar className="h-4 w-4 mr-2 text-slate-500" />
-                  Book a Discovery Call
+                  <Mail className="h-4 w-4 mr-2 text-slate-500" />
+                  Contact Us
                 </Button>
               </Link>
             </div>
@@ -48,4 +48,3 @@ export function CtaBanner() {
     </section>
   );
 }
-

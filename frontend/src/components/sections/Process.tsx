@@ -1,12 +1,12 @@
 import * as React from "react";
 import { processSteps } from "@/data/mockData";
 import { Card } from "@/components/ui/card";
-import { Search, FileText, Palette, Rocket, ArrowRight } from "lucide-react";
+import { Search, FileText, Wrench, Rocket, ArrowRight } from "lucide-react";
 
 const iconMap = {
   Search,
   FileText,
-  Palette,
+  Wrench,
   Rocket,
 };
 

@@ -25,7 +25,7 @@ export function Projects() {
 
           <div>
             <Link
-              href="/portfolio"
+              href="/work"
               className="inline-flex items-center gap-1.5 text-xs sm:text-sm font-semibold text-blue-600 dark:text-blue-400 hover:text-blue-700 hover:underline"
             >
               View all work <ArrowRight className="h-4 w-4" />

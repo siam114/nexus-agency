@@ -4,33 +4,46 @@ import Link from "next/link";
 import { teamData, testimonialsData } from "@/data/mockData";
 import { Card } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
-import { Sparkles, ArrowRight, Target, Zap, ShieldCheck, HeartHandshake, Quote } from "lucide-react";
+import {
+  Sparkles,
+  ArrowRight,
+  Target,
+  Smartphone,
+  ShieldCheck,
+  MessageSquare,
+  Quote,
+} from "lucide-react";
 
 export const metadata: Metadata = {
-  title: "About Us | Nexus Agency",
-  description: "Learn about Nexus Agency's mission, team, and philosophy on building world-class digital products.",
+  title: "About Us | NexusAgency",
+  description:
+    "Learn about NexusAgency, a dedicated digital agency specializing in Shopify development, Figma to website conversion, WordPress development, SEO, and ads management.",
 };
 
 const values = [
   {
     icon: Target,
-    title: "Relentless Quality",
-    description: "We don't cut corners. From pixel-precise CSS to scalable TypeScript codebases, excellence is our standard.",
+    title: "Business-Focused Solutions",
+    description:
+      "We provide actionable recommendations based on your actual business goals, audience, and operational requirements.",
   },
   {
-    icon: Zap,
-    title: "Velocity & Agility",
-    description: "Fast iteration loops, bi-weekly demo sprints, and rapid prototyping ensure you get to market ahead of competitors.",
+    icon: Smartphone,
+    title: "Responsive Experiences",
+    description:
+      "Every store, landing page, and website is engineered to function smoothly across desktop, tablet, and mobile devices.",
+  },
+  {
+    icon: MessageSquare,
+    title: "Clear Communication",
+    description:
+      "Direct collaboration with honest updates, defined milestones, and prompt answers throughout the project lifecycle.",
   },
   {
     icon: ShieldCheck,
-    title: "Architectural Integrity",
-    description: "We build systems designed to gracefully scale to millions of users without fragile dependencies or technical debt.",
-  },
-  {
-    icon: HeartHandshake,
-    title: "True Partnership",
-    description: "We treat your product as our own. Transparent communication, shared ownership, and proactive product advice.",
+    title: "Practical Optimization",
+    description:
+      "We focus on real data and proven techniques in technical SEO, conversion flow, and ad campaign structure.",
   },
 ];
 
@@ -42,22 +55,22 @@ export default function AboutPage() {
         <div className="max-w-3xl mx-auto text-center mb-20">
           <div className="inline-flex items-center gap-2 rounded-full border border-blue-500/20 bg-blue-50/50 dark:bg-blue-950/30 px-4 py-1.5 text-xs font-semibold text-blue-600 dark:text-blue-400 mb-6">
             <Sparkles className="h-3.5 w-3.5" />
-            <span>Our Mission & Story</span>
+            <span>ABOUT NEXUSAGENCY</span>
           </div>
-          <h1 className="text-4xl sm:text-5xl lg:text-6xl font-extrabold tracking-tight text-zinc-900 dark:text-white leading-tight">
-            Engineering digital experiences with lasting impact.
+          <h1 className="text-4xl sm:text-5xl lg:text-6xl font-extrabold tracking-tight text-slate-900 dark:text-white leading-tight">
+            We Build Websites That Help Businesses Grow Online
           </h1>
-          <p className="mt-6 text-lg text-zinc-600 dark:text-zinc-400 leading-relaxed">
-            Founded with the conviction that great software requires both breathtaking design and bulletproof technical architecture, Nexus Agency helps brands redefine digital standards.
+          <p className="mt-6 text-lg text-slate-600 dark:text-slate-400 leading-relaxed">
+            NexusAgency helps businesses strengthen their digital footprint through high-converting Shopify stores, pixel-accurate Figma conversions, flexible WordPress websites, organic search optimization, and targeted paid advertising.
           </p>
         </div>
 
         {/* Story Section */}
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center mb-28">
-          <div className="relative h-96 lg:h-[480px] rounded-3xl overflow-hidden border border-zinc-200 dark:border-zinc-800">
+          <div className="relative h-96 lg:h-[480px] rounded-3xl overflow-hidden border border-slate-200 dark:border-slate-800">
             <Image
               src="https://images.unsplash.com/photo-1522071820081-009f0129c71c?auto=format&fit=crop&w=1000&q=80"
-              alt="Nexus Agency Team Collaborating"
+              alt="NexusAgency Team Collaborating"
               fill
               className="object-cover"
               sizes="(max-width: 1024px) 100vw, 50vw"
@@ -66,30 +79,49 @@ export default function AboutPage() {
 
           <div className="space-y-6">
             <span className="text-xs font-semibold uppercase tracking-wider text-blue-600 dark:text-blue-400">
-              Who We Are
+              WHO WE ARE
             </span>
-            <h2 className="text-3xl sm:text-4xl font-bold text-zinc-900 dark:text-white">
-              A multidisciplinary collective of creators, engineers, and product strategists.
+            <h2 className="text-3xl sm:text-4xl font-extrabold text-slate-900 dark:text-white">
+              A focused team dedicated to practical digital execution.
             </h2>
-            <p className="text-zinc-600 dark:text-zinc-400 leading-relaxed">
-              We reject bloated agency models. When you partner with us, you collaborate directly with senior engineers and visionary designers who care deeply about your business outcomes.
+            <p className="text-slate-600 dark:text-slate-400 leading-relaxed">
+              We work directly with store owners, growing brands, and service businesses that need reliable digital implementation. Rather than offering bloated consulting packages, we focus on what moves the needle:
             </p>
-            <p className="text-zinc-600 dark:text-zinc-400 leading-relaxed">
-              Whether you need to validate a high-stakes prototype or launch a mission-critical web application, we bring the speed of a startup with the technical rigor of an enterprise.
-            </p>
+            <ul className="space-y-2 text-sm text-slate-700 dark:text-slate-300 font-medium">
+              <li className="flex items-center gap-2">
+                <span className="h-1.5 w-1.5 rounded-full bg-blue-600" />
+                <span><strong>E-commerce website development</strong> on Shopify with custom Liquid themes.</span>
+              </li>
+              <li className="flex items-center gap-2">
+                <span className="h-1.5 w-1.5 rounded-full bg-blue-600" />
+                <span><strong>Figma-to-website implementation</strong> with responsive, clean code.</span>
+              </li>
+              <li className="flex items-center gap-2">
+                <span className="h-1.5 w-1.5 rounded-full bg-blue-600" />
+                <span><strong>WordPress website solutions</strong> for businesses and service providers.</span>
+              </li>
+              <li className="flex items-center gap-2">
+                <span className="h-1.5 w-1.5 rounded-full bg-blue-600" />
+                <span><strong>Search engine optimization</strong> to improve site structure and visibility.</span>
+              </li>
+              <li className="flex items-center gap-2">
+                <span className="h-1.5 w-1.5 rounded-full bg-blue-600" />
+                <span><strong>Paid advertising management</strong> across Google and Meta platforms.</span>
+              </li>
+            </ul>
 
-            <div className="pt-4 flex gap-8">
+            <div className="pt-4 flex flex-wrap gap-8 border-t border-slate-100 dark:border-slate-800">
               <div>
-                <div className="text-3xl font-extrabold text-blue-600">5+</div>
-                <div className="text-xs text-zinc-500 mt-1">Years Operating</div>
+                <div className="text-2xl font-extrabold text-blue-600">5</div>
+                <div className="text-xs text-slate-500 mt-1 font-medium">Core Services</div>
               </div>
               <div>
-                <div className="text-3xl font-extrabold text-blue-600">50+</div>
-                <div className="text-xs text-zinc-500 mt-1">Shipped Apps</div>
+                <div className="text-2xl font-extrabold text-blue-600">Direct</div>
+                <div className="text-xs text-slate-500 mt-1 font-medium">Builder Access</div>
               </div>
               <div>
-                <div className="text-3xl font-extrabold text-blue-600">100%</div>
-                <div className="text-xs text-zinc-500 mt-1">On-Time Delivery</div>
+                <div className="text-2xl font-extrabold text-blue-600">Data-Led</div>
+                <div className="text-xs text-slate-500 mt-1 font-medium">Optimization</div>
               </div>
             </div>
           </div>
@@ -99,10 +131,10 @@ export default function AboutPage() {
         <div className="mb-28">
           <div className="text-center max-w-2xl mx-auto mb-16">
             <span className="text-xs font-semibold uppercase tracking-wider text-blue-600 dark:text-blue-400">
-              Our Principles
+              OUR PRINCIPLES
             </span>
-            <h2 className="text-3xl sm:text-4xl font-bold text-zinc-900 dark:text-white mt-2">
-              The Values That Guide Every Sprint
+            <h2 className="text-3xl sm:text-4xl font-extrabold text-slate-900 dark:text-white mt-2">
+              How We Approach Every Project
             </h2>
           </div>
 
@@ -110,15 +142,15 @@ export default function AboutPage() {
             {values.map((v) => {
               const Icon = v.icon;
               return (
-                <Card key={v.title} className="p-6 flex flex-col justify-between">
+                <Card key={v.title} className="p-6 flex flex-col justify-between rounded-2xl border border-slate-200/80 dark:border-slate-800 bg-white dark:bg-slate-900 shadow-sm">
                   <div>
-                    <div className="flex h-12 w-12 items-center justify-center rounded-xl bg-blue-100 dark:bg-blue-950 text-blue-600 dark:text-blue-400 mb-5">
+                    <div className="flex h-12 w-12 items-center justify-center rounded-xl bg-blue-50 dark:bg-blue-950/80 text-blue-600 dark:text-blue-400 mb-5">
                       <Icon className="h-6 w-6" />
                     </div>
-                    <h3 className="text-lg font-bold text-zinc-900 dark:text-white mb-2">
+                    <h3 className="text-lg font-bold text-slate-900 dark:text-white mb-2">
                       {v.title}
                     </h3>
-                    <p className="text-sm text-zinc-600 dark:text-zinc-400 leading-relaxed">
+                    <p className="text-sm text-slate-600 dark:text-slate-400 leading-relaxed">
                       {v.description}
                     </p>
                   </div>
@@ -132,17 +164,17 @@ export default function AboutPage() {
         <div className="mb-28">
           <div className="text-center max-w-2xl mx-auto mb-16">
             <span className="text-xs font-semibold uppercase tracking-wider text-blue-600 dark:text-blue-400">
-              Meet The Leaders
+              OUR TEAM
             </span>
-            <h2 className="text-3xl sm:text-4xl font-bold text-zinc-900 dark:text-white mt-2">
-              The Minds Behind Nexus Agency
+            <h2 className="text-3xl sm:text-4xl font-extrabold text-slate-900 dark:text-white mt-2">
+              Meet the Builders &amp; Specialists
             </h2>
           </div>
 
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5 gap-6">
             {teamData.map((member) => (
-              <Card key={member.id} className="overflow-hidden p-0 group">
-                <div className="relative h-64 w-full overflow-hidden bg-zinc-100 dark:bg-zinc-800">
+              <Card key={member.id} className="overflow-hidden p-0 rounded-2xl border border-slate-200/80 dark:border-slate-800 bg-white dark:bg-slate-900 shadow-sm group">
+                <div className="relative h-64 w-full overflow-hidden bg-slate-100 dark:bg-slate-800">
                   <Image
                     src={member.image}
                     alt={member.name}
@@ -151,14 +183,14 @@ export default function AboutPage() {
                     sizes="(max-width: 768px) 100vw, 33vw"
                   />
                 </div>
-                <div className="p-6">
-                  <h3 className="text-xl font-bold text-zinc-900 dark:text-white">
+                <div className="p-5">
+                  <h3 className="text-base font-bold text-slate-900 dark:text-white">
                     {member.name}
                   </h3>
-                  <div className="text-xs font-medium text-blue-600 dark:text-blue-400 mt-1 mb-3">
+                  <div className="text-xs font-medium text-blue-600 dark:text-blue-400 mt-0.5 mb-2">
                     {member.role}
                   </div>
-                  <p className="text-sm text-zinc-600 dark:text-zinc-400 leading-relaxed">
+                  <p className="text-xs text-slate-500 dark:text-slate-400 leading-relaxed">
                     {member.bio}
                   </p>
                 </div>
@@ -168,30 +200,30 @@ export default function AboutPage() {
         </div>
 
         {/* Testimonials */}
-        <div className="rounded-3xl border border-zinc-200 dark:border-zinc-800 bg-zinc-50/50 dark:bg-zinc-900/40 p-8 sm:p-14 mb-24">
+        <div className="rounded-3xl border border-slate-200/80 dark:border-slate-800 bg-slate-50/50 dark:bg-slate-900/40 p-8 sm:p-14 mb-24">
           <div className="max-w-2xl mb-12">
             <span className="text-xs font-semibold uppercase tracking-wider text-blue-600 dark:text-blue-400">
-              Client Feedback
+              CLIENT TESTIMONIALS
             </span>
-            <h2 className="text-3xl sm:text-4xl font-bold text-zinc-900 dark:text-white mt-2">
-              Trusted by Product Leaders
+            <h2 className="text-3xl sm:text-4xl font-extrabold text-slate-900 dark:text-white mt-2">
+              Feedback From Our Clients
             </h2>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
             {testimonialsData.map((t) => (
-              <Card key={t.id} className="p-8 relative">
+              <Card key={t.id} className="p-8 relative rounded-2xl border border-slate-200/80 dark:border-slate-800 bg-white dark:bg-slate-900 shadow-sm">
                 <Quote className="h-8 w-8 text-blue-600/20 absolute top-6 right-6" />
-                <p className="text-base italic text-zinc-700 dark:text-zinc-300 leading-relaxed mb-6">
+                <p className="text-sm italic text-slate-700 dark:text-slate-300 leading-relaxed mb-6">
                   &ldquo;{t.content}&rdquo;
                 </p>
                 <div className="flex items-center gap-4">
-                  <div className="relative h-12 w-12 rounded-full overflow-hidden">
-                    <Image src={t.avatar} alt={t.name} fill className="object-cover" sizes="48px" />
+                  <div className="relative h-11 w-11 rounded-full overflow-hidden">
+                    <Image src={t.avatar} alt={t.name} fill className="object-cover" sizes="44px" />
                   </div>
                   <div>
-                    <div className="font-bold text-zinc-900 dark:text-white text-sm">{t.name}</div>
-                    <div className="text-xs text-zinc-500">{t.role}, {t.company}</div>
+                    <div className="font-bold text-slate-900 dark:text-white text-sm">{t.name}</div>
+                    <div className="text-xs text-slate-500">{t.role}, {t.company}</div>
                   </div>
                 </div>
               </Card>
@@ -201,15 +233,15 @@ export default function AboutPage() {
 
         {/* Bottom CTA */}
         <div className="text-center max-w-xl mx-auto">
-          <h3 className="text-2xl sm:text-3xl font-bold text-zinc-900 dark:text-white mb-4">
-            Want to work with our team?
+          <h3 className="text-2xl sm:text-3xl font-extrabold text-slate-900 dark:text-white mb-3">
+            Ready to discuss your project?
           </h3>
-          <p className="text-zinc-600 dark:text-zinc-400 text-sm mb-6">
-            We are currently accepting new projects for upcoming sprints.
+          <p className="text-slate-600 dark:text-slate-400 text-sm mb-6">
+            Tell us about your requirements for Shopify, Figma conversion, WordPress, SEO, or Ads management.
           </p>
           <Link href="/contact">
-            <Button size="lg">
-              Get in Touch <ArrowRight className="h-4 w-4" />
+            <Button size="lg" className="rounded-full bg-blue-600 hover:bg-blue-700 text-white px-7">
+              Start a Project <ArrowRight className="h-4 w-4 ml-1.5" />
             </Button>
           </Link>
         </div>
@@ -217,4 +249,3 @@ export default function AboutPage() {
     </div>
   );
 }
-

@@ -16,29 +16,29 @@ export function Hero() {
             {/* Eyebrow Label */}
             <div className="inline-flex items-center gap-2 rounded-full border border-blue-200/80 dark:border-blue-900/60 bg-blue-50/70 dark:bg-blue-950/40 px-3.5 py-1.5 text-[11px] sm:text-xs font-semibold tracking-wider text-blue-600 dark:text-blue-400 uppercase">
               <span className="h-1.5 w-1.5 rounded-full bg-blue-600 dark:bg-blue-400" />
-              <span>DIGITAL PRODUCT &amp; SHOPIFY DEVELOPMENT AGENCY</span>
+              <span>DIGITAL GROWTH &amp; WEB DEVELOPMENT AGENCY</span>
             </div>
 
             {/* Main Headline */}
             <h1 className="text-4xl sm:text-5xl lg:text-[54px] font-extrabold tracking-tight text-slate-900 dark:text-white leading-[1.12]">
-              We turn ambitious ideas into digital products{" "}
-              <span className="text-blue-600 dark:text-blue-500">that grow.</span>
+              We Build Better Websites That{" "}
+              <span className="text-blue-600 dark:text-blue-500">Help Your Business Grow.</span>
             </h1>
 
             {/* Supporting Paragraph */}
             <p className="text-base sm:text-lg text-slate-600 dark:text-slate-400 leading-relaxed max-w-xl">
-              We design and develop high-performing Shopify stores, custom web applications
-              and conversion-focused digital experiences that help your business grow.
+              From high-converting Shopify stores and custom Figma-to-website development
+              to WordPress solutions, SEO, and paid advertising, we help businesses build a stronger online presence and reach their growth goals.
             </p>
 
             {/* CTA Buttons */}
             <div className="pt-2 flex flex-wrap items-center gap-3 sm:gap-4">
-              <Link href="/#portfolio">
+              <Link href="/services">
                 <Button
                   size="lg"
                   className="bg-blue-600 hover:bg-blue-700 text-white rounded-full px-7 py-3.5 text-sm font-semibold shadow-md shadow-blue-500/25 transition-transform hover:-translate-y-0.5"
                 >
-                  Explore Our Work <ArrowRight className="h-4 w-4 ml-1.5" />
+                  Explore Our Services <ArrowRight className="h-4 w-4 ml-1.5" />
                 </Button>
               </Link>
               <Link href="/contact">
@@ -48,7 +48,7 @@ export function Hero() {
                   className="rounded-full px-6 py-3.5 text-sm font-semibold border-slate-200 dark:border-slate-800 bg-white/80 dark:bg-slate-900 text-slate-700 dark:text-slate-200 hover:bg-slate-50 dark:hover:bg-slate-800 transition-colors"
                 >
                   <Calendar className="h-4 w-4 mr-2 text-slate-500" />
-                  Book a Discovery Call
+                  Start a Project
                 </Button>
               </Link>
             </div>

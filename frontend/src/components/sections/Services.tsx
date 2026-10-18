@@ -3,18 +3,20 @@ import { servicesData } from "@/data/mockData";
 import { Card } from "@/components/ui/card";
 import {
   ShoppingCart,
-  Code2,
-  Palette,
-  Bot,
+  Layout,
+  Globe,
+  Search,
+  Megaphone,
   Check,
   ArrowRight,
 } from "lucide-react";
 
 const iconMap = {
   ShoppingCart,
-  Code2,
-  Palette,
-  Bot,
+  Layout,
+  Globe,
+  Search,
+  Megaphone,
 };
 
 export function Services() {
@@ -27,16 +29,15 @@ export function Services() {
             <span>OUR SERVICES</span>
           </div>
           <h2 className="text-3xl sm:text-4xl font-extrabold tracking-tight text-slate-900 dark:text-white">
-            What we help you build
+            Everything You Need to Grow Online
           </h2>
           <p className="mt-3 text-sm sm:text-base text-slate-500 dark:text-slate-400 leading-relaxed">
-            We combine strategy, design and technology to create digital products
-            that are beautiful, functional and built for growth.
+            We combine website development, design implementation, search optimization, and paid advertising to help businesses strengthen their online presence.
           </p>
         </div>
 
-        {/* 4 Equal-Width Cards */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+        {/* 5 Service Cards in Responsive Grid */}
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
           {servicesData.map((service) => {
             const Icon =
               iconMap[service.iconName as keyof typeof iconMap] || ShoppingCart;
@@ -44,16 +45,16 @@ export function Services() {
             return (
               <Card
                 key={service.id}
-                className="group flex flex-col justify-between p-6 rounded-2xl border border-slate-200/80 dark:border-slate-800 bg-white dark:bg-slate-900 shadow-sm hover:shadow-xl hover:border-blue-500/40 dark:hover:border-blue-500/40 transition-all duration-300"
+                className="group flex flex-col justify-between p-6 sm:p-7 rounded-2xl border border-slate-200/80 dark:border-slate-800 bg-white dark:bg-slate-900 shadow-sm hover:shadow-xl hover:border-blue-500/40 dark:hover:border-blue-500/40 transition-all duration-300"
               >
                 <div>
                   {/* Icon */}
-                  <div className="inline-flex h-11 w-11 items-center justify-center rounded-xl bg-blue-50 dark:bg-blue-950/80 text-blue-600 dark:text-blue-400 mb-5 group-hover:scale-105 transition-transform">
-                    <Icon className="h-5 w-5" />
+                  <div className="inline-flex h-12 w-12 items-center justify-center rounded-xl bg-blue-50 dark:bg-blue-950/80 text-blue-600 dark:text-blue-400 mb-5 group-hover:scale-105 transition-transform">
+                    <Icon className="h-6 w-6" />
                   </div>
 
                   {/* Title */}
-                  <h3 className="text-base sm:text-lg font-bold text-slate-900 dark:text-white leading-snug mb-2.5">
+                  <h3 className="text-lg sm:text-xl font-bold text-slate-900 dark:text-white leading-snug mb-2.5">
                     {service.title}
                   </h3>
 
@@ -62,7 +63,7 @@ export function Services() {
                     {service.description}
                   </p>
 
-                  {/* 3 Checkpoint Features */}
+                  {/* Checkpoint Features */}
                   <ul className="space-y-2.5 mb-6">
                     {service.features.map((feature) => (
                       <li
@@ -80,7 +81,7 @@ export function Services() {
                 <div className="pt-4 border-t border-slate-100 dark:border-slate-800">
                   <Link
                     href={service.link || "/services"}
-                    className="inline-flex items-center gap-1 text-xs font-semibold text-blue-600 dark:text-blue-400 hover:text-blue-700 group-hover:translate-x-0.5 transition-all"
+                    className="inline-flex items-center gap-1.5 text-xs font-semibold text-blue-600 dark:text-blue-400 hover:text-blue-700 group-hover:translate-x-0.5 transition-all"
                   >
                     Learn more <ArrowRight className="h-3.5 w-3.5" />
                   </Link>

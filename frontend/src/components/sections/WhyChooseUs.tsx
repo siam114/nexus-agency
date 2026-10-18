@@ -2,17 +2,17 @@ import * as React from "react";
 import { whyChooseUsData } from "@/data/mockData";
 import { Card } from "@/components/ui/card";
 import {
+  Target,
+  Smartphone,
   MessageSquare,
-  ClipboardCheck,
-  Headphones,
   Gauge,
   ShieldCheck,
 } from "lucide-react";
 
 const iconMap = {
+  Target,
+  Smartphone,
   MessageSquare,
-  ClipboardCheck,
-  Headphones,
   Gauge,
   ShieldCheck,
 };
@@ -27,10 +27,10 @@ export function WhyChooseUs() {
             <span>WHY CHOOSE US</span>
           </div>
           <h2 className="text-3xl sm:text-4xl font-extrabold tracking-tight text-slate-900 dark:text-white">
-            Why teams choose us
+            Why Businesses Choose NexusAgency
           </h2>
           <p className="mt-3 text-sm sm:text-base text-slate-500 dark:text-slate-400 leading-relaxed">
-            We focus on what matters — great communication, clean code and real results.
+            We deliver business-focused solutions, responsive website experiences, and dependable ongoing support.
           </p>
         </div>
 
@@ -64,4 +64,3 @@ export function WhyChooseUs() {
     </section>
   );
 }
-

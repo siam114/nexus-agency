@@ -10,7 +10,7 @@ export function Contact() {
   const [formData, setFormData] = React.useState({
     name: "",
     email: "",
-    service: "Web Development",
+    service: "",
     message: "",
   });
 
@@ -37,7 +37,7 @@ export function Contact() {
             Have a Project in Mind?
           </p>
           <p className="mt-4 text-zinc-600 dark:text-zinc-400">
-            Tell us about your product goals and let&apos;s turn your vision into reality.
+            Tell us about your project goals and let&apos;s discuss your Shopify, WordPress, Figma conversion, SEO, or advertising needs.
           </p>
         </div>
 
@@ -52,14 +52,18 @@ export function Contact() {
                   Message Sent!
                 </h3>
                 <p className="text-sm text-zinc-600 dark:text-zinc-400 max-w-md mx-auto">
-                  Thank you for reaching out, {formData.name || "friend"}! We will review your request and get back to you within 24 hours.
+                  Thank you for reaching out, {formData.name || "friend"}! We will review your request regarding{" "}
+                  <span className="font-semibold text-blue-600 dark:text-blue-400">
+                    {formData.service || "our services"}
+                  </span>{" "}
+                  and get back to you within 24 hours.
                 </p>
                 <Button
                   variant="outline"
                   size="sm"
                   onClick={() => {
                     setSubmitted(false);
-                    setFormData({ name: "", email: "", service: "Web Development", message: "" });
+                    setFormData({ name: "", email: "", service: "", message: "" });
                   }}
                 >
                   Send another message
@@ -104,14 +108,17 @@ export function Contact() {
                   </label>
                   <select
                     name="service"
+                    required
                     value={formData.service}
                     onChange={handleChange}
                     className="w-full rounded-xl border border-zinc-300 dark:border-zinc-700 bg-white dark:bg-zinc-800/50 px-4 py-2.5 text-sm text-zinc-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-blue-500"
                   >
-                    <option value="Web Development">Web & Mobile Development</option>
-                    <option value="UI/UX Design">UI/UX & Product Design</option>
-                    <option value="Full-Stack Backend">Full-Stack & Cloud Architecture</option>
-                    <option value="Consulting">Technical Consulting</option>
+                    <option value="">Select a Service</option>
+                    <option value="Shopify Development">Shopify Development</option>
+                    <option value="Figma to Website Conversion">Figma to Website Conversion</option>
+                    <option value="WordPress Development">WordPress Development</option>
+                    <option value="SEO Services">SEO Services</option>
+                    <option value="Ads Management">Ads Management</option>
                   </select>
                 </div>
 
@@ -141,4 +148,3 @@ export function Contact() {
     </section>
   );
 }
-

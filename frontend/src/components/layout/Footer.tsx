@@ -15,59 +15,89 @@ export function Footer() {
           <div className="lg:col-span-4 space-y-4">
             <Logo />
             <p className="text-xs sm:text-sm text-slate-500 dark:text-slate-400 max-w-sm leading-relaxed">
-              Building modern digital products for ambitious brands.
+              We build high-converting Shopify stores, convert Figma designs into responsive code, develop WordPress websites, and provide practical SEO and advertising management.
             </p>
           </div>
 
-          {/* Column 2: Quick Links (3 cols) */}
+          {/* Column 2: Core Services (3 cols) */}
           <div className="lg:col-span-3">
+            <h4 className="text-xs sm:text-sm font-bold text-slate-900 dark:text-white mb-4">
+              Our Services
+            </h4>
+            <ul className="space-y-2.5 text-xs sm:text-sm text-slate-500 dark:text-slate-400">
+              <li>
+                <Link href="/services#shopify-development" className="hover:text-blue-600 transition-colors">
+                  Shopify Development
+                </Link>
+              </li>
+              <li>
+                <Link href="/services#figma-to-website" className="hover:text-blue-600 transition-colors">
+                  Figma to Website Conversion
+                </Link>
+              </li>
+              <li>
+                <Link href="/services#wordpress-development" className="hover:text-blue-600 transition-colors">
+                  WordPress Development
+                </Link>
+              </li>
+              <li>
+                <Link href="/services#seo-services" className="hover:text-blue-600 transition-colors">
+                  SEO Services
+                </Link>
+              </li>
+              <li>
+                <Link href="/services#ads-management" className="hover:text-blue-600 transition-colors">
+                  Ads Management
+                </Link>
+              </li>
+            </ul>
+          </div>
+
+          {/* Column 3: Quick Links (2 cols) */}
+          <div className="lg:col-span-2">
             <h4 className="text-xs sm:text-sm font-bold text-slate-900 dark:text-white mb-4">
               Quick Links
             </h4>
-            <div className="grid grid-cols-2 gap-2 text-xs sm:text-sm text-slate-500 dark:text-slate-400">
-              <div className="space-y-2.5">
-                <div>
-                  <Link href="/services" className="hover:text-blue-600 transition-colors">
-                    Services
-                  </Link>
-                </div>
-                <div>
-                  <Link href="/portfolio" className="hover:text-blue-600 transition-colors">
-                    Portfolio
-                  </Link>
-                </div>
-                <div>
-                  <Link href="/work" className="hover:text-blue-600 transition-colors">
-                    Work
-                  </Link>
-                </div>
-              </div>
-              <div className="space-y-2.5">
-                <div>
-                  <Link href="/about" className="hover:text-blue-600 transition-colors">
-                    About
-                  </Link>
-                </div>
-                <div>
-                  <Link href="/team" className="hover:text-blue-600 transition-colors">
-                    Team
-                  </Link>
-                </div>
-                <div>
-                  <Link href="/contact" className="hover:text-blue-600 transition-colors">
-                    Contact
-                  </Link>
-                </div>
-              </div>
-            </div>
+            <ul className="space-y-2.5 text-xs sm:text-sm text-slate-500 dark:text-slate-400">
+              <li>
+                <Link href="/" className="hover:text-blue-600 transition-colors">
+                  Home
+                </Link>
+              </li>
+              <li>
+                <Link href="/services" className="hover:text-blue-600 transition-colors">
+                  Services
+                </Link>
+              </li>
+              <li>
+                <Link href="/work" className="hover:text-blue-600 transition-colors">
+                  Portfolio / Work
+                </Link>
+              </li>
+              <li>
+                <Link href="/about" className="hover:text-blue-600 transition-colors">
+                  About
+                </Link>
+              </li>
+              <li>
+                <Link href="/team" className="hover:text-blue-600 transition-colors">
+                  Team
+                </Link>
+              </li>
+              <li>
+                <Link href="/contact" className="hover:text-blue-600 transition-colors">
+                  Contact
+                </Link>
+              </li>
+            </ul>
           </div>
 
-          {/* Column 3: Get in Touch (3 cols) */}
+          {/* Column 4: Get in Touch & Socials (3 cols) */}
           <div className="lg:col-span-3">
             <h4 className="text-xs sm:text-sm font-bold text-slate-900 dark:text-white mb-4">
               Get in Touch
             </h4>
-            <ul className="space-y-3 text-xs sm:text-sm text-slate-500 dark:text-slate-400">
+            <ul className="space-y-3 text-xs sm:text-sm text-slate-500 dark:text-slate-400 mb-5">
               <li className="flex items-center gap-2.5">
                 <Mail className="h-4 w-4 text-blue-600 shrink-0" />
                 <a href="mailto:hello@nexusagency.com" className="hover:text-blue-600 transition-colors">
@@ -85,14 +115,8 @@ export function Footer() {
                 <span>Dhaka, Bangladesh</span>
               </li>
             </ul>
-          </div>
 
-          {/* Column 4: Follow Us (2 cols) */}
-          <div className="lg:col-span-2">
-            <h4 className="text-xs sm:text-sm font-bold text-slate-900 dark:text-white mb-4">
-              Follow Us
-            </h4>
-            <div className="flex items-center gap-3 text-slate-500">
+            <div className="flex items-center gap-2.5 text-slate-500">
               <a
                 href="https://github.com"
                 target="_blank"
