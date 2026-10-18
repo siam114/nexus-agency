@@ -32,12 +32,12 @@ export function Footer() {
                   </Link>
                 </div>
                 <div>
-                  <Link href="/#portfolio" className="hover:text-blue-600 transition-colors">
+                  <Link href="/portfolio" className="hover:text-blue-600 transition-colors">
                     Portfolio
                   </Link>
                 </div>
                 <div>
-                  <Link href="/portfolio" className="hover:text-blue-600 transition-colors">
+                  <Link href="/work" className="hover:text-blue-600 transition-colors">
                     Work
                   </Link>
                 </div>
@@ -49,7 +49,7 @@ export function Footer() {
                   </Link>
                 </div>
                 <div>
-                  <Link href="/#team" className="hover:text-blue-600 transition-colors">
+                  <Link href="/team" className="hover:text-blue-600 transition-colors">
                     Team
                   </Link>
                 </div>

@@ -3,7 +3,7 @@ import Link from "next/link";
 import { servicesData } from "@/data/mockData";
 import { Card } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
-import { Code2, Palette, Layers, Cpu, CheckCircle2, ArrowRight, ShieldCheck, Sparkles } from "lucide-react";
+import { Code2, Palette, Layers, Cpu, CheckCircle2, ArrowRight, ShieldCheck, Sparkles, ShoppingCart, Bot } from "lucide-react";
 
 export const metadata: Metadata = {
   title: "Services | Nexus Agency",
@@ -11,8 +11,10 @@ export const metadata: Metadata = {
 };
 
 const iconMap = {
+  ShoppingCart,
   Code2,
   Palette,
+  Bot,
   Layers,
   Cpu,
 };

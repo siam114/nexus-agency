@@ -24,7 +24,12 @@ export function Navbar() {
         <nav className="hidden md:flex items-center gap-7 lg:gap-8">
           {navItems.map((item) => {
             const isHome = item.href === "/" && pathname === "/";
-            const isActive = isHome || (item.href !== "/" && pathname === item.href);
+            const isActive =
+              isHome ||
+              (item.href !== "/" &&
+                (pathname === item.href ||
+                  pathname.startsWith(item.href + "/") ||
+                  (item.href === "/work" && pathname.startsWith("/portfolio"))));
 
             return (
               <Link
@@ -77,7 +82,12 @@ export function Navbar() {
         <div className="md:hidden border-t border-slate-100 dark:border-slate-800 bg-white dark:bg-slate-950 px-6 py-5 space-y-3 shadow-lg">
           {navItems.map((item) => {
             const isHome = item.href === "/" && pathname === "/";
-            const isActive = isHome || (item.href !== "/" && pathname === item.href);
+            const isActive =
+              isHome ||
+              (item.href !== "/" &&
+                (pathname === item.href ||
+                  pathname.startsWith(item.href + "/") ||
+                  (item.href === "/work" && pathname.startsWith("/portfolio"))));
 
             return (
               <Link
