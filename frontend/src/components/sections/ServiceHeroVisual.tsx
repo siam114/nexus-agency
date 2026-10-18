@@ -357,3 +357,4 @@ export function ServiceHeroVisual({ slug, badge }: ServiceHeroVisualProps) {
     </div>
   );
 }
+

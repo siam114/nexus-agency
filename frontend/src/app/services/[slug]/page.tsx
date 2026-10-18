@@ -535,21 +535,42 @@ export default async function ServiceDetailPage({
         {/* =========================================================================
             SECTION H: Frequently Asked Questions
            ========================================================================= */}
-        <section className="py-16 lg:py-20 border-b border-slate-100 dark:border-slate-800/80">
-          <div className="max-w-2xl mb-12">
-            <span className="text-xs font-semibold uppercase tracking-wider text-blue-600 dark:text-blue-400">
-              FREQUENT QUESTIONS
-            </span>
-            <h2 className="text-3xl sm:text-4xl font-extrabold tracking-tight text-slate-900 dark:text-white mt-2">
-              Questions About {service.title}
-            </h2>
-            <p className="mt-3 text-sm sm:text-base text-slate-500 dark:text-slate-400 leading-relaxed">
-              Direct, honest answers about scope, technical execution, timelines, and deliverables.
-            </p>
-          </div>
+        <section className="py-12 sm:py-16 lg:py-20 border-b border-slate-100 dark:border-slate-800/80">
+          <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-start">
+            {/* Left Header Column */}
+            <div className="lg:col-span-5 space-y-4">
+              <div className="inline-flex items-center gap-1.5 rounded-full border border-blue-200/80 dark:border-blue-900/60 bg-blue-50/70 dark:bg-blue-950/40 px-3 py-1 text-[11px] font-semibold tracking-wider text-blue-600 dark:text-blue-400 uppercase">
+                <HelpCircle className="h-3 w-3" />
+                <span>FREQUENT QUESTIONS</span>
+              </div>
+              <h2 className="text-2xl sm:text-3xl lg:text-4xl font-extrabold tracking-tight text-slate-900 dark:text-white leading-tight">
+                Questions About {service.title}
+              </h2>
+              <p className="text-sm sm:text-base text-slate-500 dark:text-slate-400 leading-relaxed">
+                Direct, honest answers about scope, technical execution, timelines, and deliverables.
+              </p>
 
-          <div className="max-w-3xl">
-            <ServiceFaqAccordion faqs={service.faqs} />
+              {/* Direct Support Card on Tablet & Desktop */}
+              <div className="hidden sm:block p-5 rounded-2xl border border-slate-200/80 dark:border-slate-800 bg-slate-50/70 dark:bg-slate-950/50 mt-4">
+                <h4 className="text-sm font-bold text-slate-900 dark:text-white">
+                  Have another question?
+                </h4>
+                <p className="text-xs text-slate-500 dark:text-slate-400 mt-1 mb-3 leading-relaxed">
+                  We are happy to review your specific project requirements and discuss options.
+                </p>
+                <Link
+                  href={contactUrlWithParam}
+                  className="inline-flex items-center gap-1.5 text-xs font-semibold text-blue-600 dark:text-blue-400 hover:text-blue-700"
+                >
+                  Ask our team directly <ArrowRight className="h-3.5 w-3.5" />
+                </Link>
+              </div>
+            </div>
+
+            {/* Right Accordion Column */}
+            <div className="lg:col-span-7 w-full">
+              <ServiceFaqAccordion faqs={service.faqs} />
+            </div>
           </div>
         </section>
 
@@ -593,3 +614,4 @@ export default async function ServiceDetailPage({
     </div>
   );
 }
+

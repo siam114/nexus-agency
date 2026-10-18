@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { Contact } from "@/components/sections/Contact";
+import { ServiceFaqAccordion } from "@/components/sections/ServiceFaqAccordion";
 import { faqsData } from "@/data/mockData";
 import { Card } from "@/components/ui/card";
 import { Mail, MapPin, Clock } from "lucide-react";
@@ -62,31 +63,20 @@ export default function ContactPage() {
         <Contact />
 
         {/* FAQs */}
-        <div className="mt-28 max-w-3xl mx-auto">
-          <div className="text-center mb-12">
+        <div className="mt-20 sm:mt-28 max-w-3xl mx-auto">
+          <div className="text-center mb-10 sm:mb-12">
             <span className="text-xs font-semibold uppercase tracking-wider text-blue-600 dark:text-blue-400">
               FREQUENTLY ASKED QUESTIONS
             </span>
-            <h2 className="text-3xl sm:text-4xl font-extrabold text-slate-900 dark:text-white mt-2">
+            <h2 className="text-2xl sm:text-3xl md:text-4xl font-extrabold text-slate-900 dark:text-white mt-2">
               Everything You Need to Know
             </h2>
-            <p className="mt-2 text-sm text-slate-500 dark:text-slate-400">
+            <p className="mt-2 text-xs sm:text-sm text-slate-500 dark:text-slate-400 max-w-xl mx-auto">
               Clear answers regarding our core services, workflows, and standards.
             </p>
           </div>
 
-          <div className="space-y-4">
-            {faqsData.map((faq, i) => (
-              <Card key={i} className="p-6 rounded-2xl border border-slate-200/80 dark:border-slate-800 bg-white dark:bg-slate-900 shadow-sm">
-                <h3 className="text-base font-bold text-slate-900 dark:text-white mb-2">
-                  {faq.question}
-                </h3>
-                <p className="text-sm text-slate-600 dark:text-slate-400 leading-relaxed">
-                  {faq.answer}
-                </p>
-              </Card>
-            ))}
-          </div>
+          <ServiceFaqAccordion faqs={faqsData} />
         </div>
       </div>
     </div>
