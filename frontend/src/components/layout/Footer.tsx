@@ -8,7 +8,7 @@ import { GithubIcon, LinkedinIcon, TwitterIcon, DribbbleIcon } from "@/component
 
 export function Footer() {
   return (
-    <footer className="border-t border-slate-200/80 dark:border-slate-800 bg-white dark:bg-slate-950 pt-16 pb-12 transition-colors">
+    <footer className="border-t border-slate-200/80 dark:border-slate-800 bg-white dark:bg-slate-950 pt-12 pb-10 transition-colors">
       <div className="mx-auto max-w-7xl px-6">
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-12 gap-10 lg:gap-8 pb-12 border-b border-slate-100 dark:border-slate-800/80">
           {/* Column 1: Brand & Bio (4 cols) */}

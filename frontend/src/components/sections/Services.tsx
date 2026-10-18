@@ -19,10 +19,10 @@ const iconMap = {
 
 export function Services() {
   return (
-    <section id="services" className="py-20 lg:py-24">
+    <section id="services" className="py-12 lg:py-16">
       <div className="mx-auto max-w-7xl px-6">
         {/* Section Header */}
-        <div className="max-w-2xl mb-14 text-left sm:text-center sm:mx-auto">
+        <div className="max-w-2xl mb-10 text-left sm:text-center sm:mx-auto">
           <div className="inline-flex items-center gap-1.5 rounded-full border border-blue-200/80 dark:border-blue-900/60 bg-blue-50/70 dark:bg-blue-950/40 px-3 py-1 text-[11px] font-semibold tracking-wider text-blue-600 dark:text-blue-400 uppercase mb-3">
             <span>OUR SERVICES</span>
           </div>

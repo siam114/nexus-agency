@@ -27,7 +27,7 @@ const logoIcons = {
 
 export function TrustStrip() {
   return (
-    <section className="py-6 sm:py-8">
+    <section className="py-3 sm:py-4">
       <div className="mx-auto max-w-7xl px-6">
         <div className="rounded-2xl border border-slate-200/90 dark:border-slate-800 bg-white/90 dark:bg-slate-900/80 p-5 sm:p-6 shadow-sm backdrop-blur-sm">
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
