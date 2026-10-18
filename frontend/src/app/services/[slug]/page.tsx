@@ -14,7 +14,6 @@ import {
   CheckCircle2,
   Calendar,
   Building2,
-  ExternalLink,
   ShieldCheck,
   Target,
   Sparkles,

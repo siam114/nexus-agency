@@ -6,11 +6,8 @@ import { personalLinks } from "@/data/personalLinks";
 import {
   ChevronRight,
   FileCheck,
-  ShieldAlert,
-  Code2,
   Clock,
   ArrowRight,
-  Mail,
   Scale,
 } from "lucide-react";
 

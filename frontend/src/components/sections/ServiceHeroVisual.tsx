@@ -5,7 +5,6 @@ import {
   Globe,
   Search,
   Megaphone,
-  CheckCircle2,
   TrendingUp,
   Sparkles,
   Layers,
@@ -112,7 +111,7 @@ export function ServiceHeroVisual({ slug, badge }: ServiceHeroVisualProps) {
 
           <div className="mt-4 space-y-3">
             <div className="p-4 rounded-xl bg-slate-900 text-slate-100 font-mono text-[11px] leading-relaxed overflow-hidden">
-              <div className="text-slate-500">// Semantic React / Tailwind Implementation</div>
+              <div className="text-slate-500">{"// Semantic React / Tailwind Implementation"}</div>
               <div className="text-purple-400">export function <span className="text-blue-300">HeroSection</span>() &#123;</div>
               <div className="pl-3 text-slate-300">return (</div>
               <div className="pl-6 text-emerald-400">&lt;div className=&quot;grid grid-cols-1 md:grid-cols-2&quot;&gt;</div>

@@ -36,25 +36,28 @@ const SERVICE_PARAM_MAP: Record<string, string> = {
 
 function ContactFormContent() {
   const searchParams = useSearchParams();
+  const rawService = searchParams?.get("service");
+  const queryService = React.useMemo(() => {
+    if (!rawService) return "";
+    const decoded = decodeURIComponent(rawService).trim().toLowerCase();
+    return SERVICE_PARAM_MAP[decoded] || "";
+  }, [rawService]);
+
   const [submitted, setSubmitted] = React.useState(false);
-  const [formData, setFormData] = React.useState({
+  const [formData, setFormData] = React.useState(() => ({
     name: "",
     email: "",
-    service: "",
+    service: queryService,
     message: "",
-  });
+  }));
+  const [prevQueryService, setPrevQueryService] = React.useState(queryService);
 
-  // Synchronize preselected service from URL query parameter
-  React.useEffect(() => {
-    const rawService = searchParams?.get("service");
-    if (rawService) {
-      const decoded = decodeURIComponent(rawService).trim().toLowerCase();
-      const matched = SERVICE_PARAM_MAP[decoded];
-      if (matched) {
-        setFormData((prev) => ({ ...prev, service: matched }));
-      }
+  if (queryService !== prevQueryService) {
+    setPrevQueryService(queryService);
+    if (queryService) {
+      setFormData((prev) => ({ ...prev, service: queryService }));
     }
-  }, [searchParams]);
+  }
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();

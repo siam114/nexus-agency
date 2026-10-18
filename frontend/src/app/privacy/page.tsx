@@ -6,13 +6,9 @@ import { personalLinks } from "@/data/personalLinks";
 import {
   ChevronRight,
   ShieldCheck,
-  Lock,
-  Eye,
-  FileText,
   Mail,
   ArrowRight,
   Clock,
-  Sparkles,
 } from "lucide-react";
 
 export const metadata: Metadata = {
