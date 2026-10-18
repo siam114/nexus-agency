@@ -17,9 +17,9 @@ const contactDetails = [
   {
     icon: Mail,
     title: "Direct Email",
-    value: "hello@nexusagency.com",
+    value: personalLinks.email,
     sub: "Average reply time: within 24 hours",
-    link: "mailto:hello@nexusagency.com",
+    link: `mailto:${personalLinks.email}`,
     actionLabel: "Send an email",
   },
   {

@@ -204,10 +204,10 @@ export default function TermsOfServicePage() {
               <p className="mt-1 text-sm text-slate-600 dark:text-slate-400 max-w-xl">
                 We are happy to answer any questions or discuss custom project requirements. Contact us at{" "}
                 <a
-                  href="mailto:hello@nexusagency.com"
+                  href={`mailto:${personalLinks.email}`}
                   className="font-semibold text-blue-600 dark:text-blue-400 underline hover:text-blue-700"
                 >
-                  hello@nexusagency.com
+                  {personalLinks.email}
                 </a>.
               </p>
             </div>
@@ -237,3 +237,4 @@ export default function TermsOfServicePage() {
     </div>
   );
 }
+

@@ -8,6 +8,6 @@ export const personalLinks = {
   whatsapp:
     "https://api.whatsapp.com/send/?phone=8801567989506&text&type=phone_number&app_absent=0",
   phoneDisplay: "+880 1567 989506",
-  email: "hello@nexusagency.com",
+  email: "smsiam987@gmail.com",
 } as const;
 

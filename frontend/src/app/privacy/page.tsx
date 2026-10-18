@@ -203,10 +203,10 @@ export default function PrivacyPolicyPage() {
               <p className="mt-1 text-sm text-slate-600 dark:text-slate-400 max-w-xl">
                 Feel free to contact us anytime at{" "}
                 <a
-                  href="mailto:hello@nexusagency.com"
+                  href={`mailto:${personalLinks.email}`}
                   className="font-semibold text-blue-600 dark:text-blue-400 underline hover:text-blue-700"
                 >
-                  hello@nexusagency.com
+                  {personalLinks.email}
                 </a>{" "}
                 or chat directly with our founder on WhatsApp.
               </p>
@@ -237,3 +237,4 @@ export default function PrivacyPolicyPage() {
     </div>
   );
 }
+

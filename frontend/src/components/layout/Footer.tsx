@@ -112,8 +112,8 @@ export function Footer() {
             <ul className="space-y-3 text-xs sm:text-sm text-slate-500 dark:text-slate-400 mb-5">
               <li className="flex items-center gap-2.5">
                 <Mail className="h-4 w-4 text-blue-600 shrink-0" />
-                <a href="mailto:hello@nexusagency.com" className="hover:text-blue-600 transition-colors">
-                  hello@nexusagency.com
+                <a href={`mailto:${personalLinks.email}`} className="hover:text-blue-600 transition-colors">
+                  {personalLinks.email}
                 </a>
               </li>
               <li className="flex items-center gap-2.5">
