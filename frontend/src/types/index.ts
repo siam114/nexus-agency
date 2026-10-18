@@ -55,6 +55,8 @@ export interface TeamMember {
     linkedin?: string;
     dribbble?: string;
     website?: string;
+    facebook?: string;
+    whatsapp?: string;
   };
 }
 

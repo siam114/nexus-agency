@@ -8,6 +8,7 @@ import {
   Testimonial,
   WhyChooseUsItem,
 } from "@/types";
+import { personalLinks } from "./personalLinks";
 
 export const navItems: NavItem[] = [
   { label: "Home", href: "/" },
@@ -329,9 +330,11 @@ export const teamData: TeamMember[] = [
     image:
       "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&w=400&q=80",
     socials: {
-      github: "https://github.com",
-      linkedin: "https://linkedin.com",
-      website: "https://example.com",
+      website: personalLinks.portfolio,
+      github: personalLinks.github,
+      linkedin: personalLinks.linkedin,
+      facebook: personalLinks.facebook,
+      whatsapp: personalLinks.whatsapp,
     },
   },
   {

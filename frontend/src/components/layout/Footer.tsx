@@ -4,7 +4,14 @@ import * as React from "react";
 import Link from "next/link";
 import { Logo } from "@/components/ui/Logo";
 import { Mail, Phone, MapPin } from "lucide-react";
-import { GithubIcon, LinkedinIcon, TwitterIcon, DribbbleIcon } from "@/components/ui/SocialIcons";
+import { personalLinks } from "@/data/personalLinks";
+import {
+  GithubIcon,
+  LinkedinIcon,
+  FacebookIcon,
+  WhatsappIcon,
+  PortfolioIcon,
+} from "@/components/ui/SocialIcons";
 
 export function Footer() {
   return (
@@ -111,8 +118,13 @@ export function Footer() {
               </li>
               <li className="flex items-center gap-2.5">
                 <Phone className="h-4 w-4 text-blue-600 shrink-0" />
-                <a href="tel:+8801712345678" className="hover:text-blue-600 transition-colors">
-                  +880 1712 345678
+                <a
+                  href={personalLinks.whatsapp}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="hover:text-blue-600 transition-colors"
+                >
+                  {personalLinks.phoneDisplay}
                 </a>
               </li>
               <li className="flex items-center gap-2.5">
@@ -121,42 +133,56 @@ export function Footer() {
               </li>
             </ul>
 
-            <div className="flex items-center gap-2.5 text-slate-500">
+            <div className="flex items-center gap-2 text-slate-500 flex-wrap">
               <a
-                href="https://github.com"
+                href={personalLinks.portfolio}
+                target="_blank"
+                rel="noopener noreferrer"
+                aria-label="Personal Portfolio"
+                title="Personal Portfolio"
+                className="flex h-8 w-8 items-center justify-center rounded-lg border border-slate-200 dark:border-slate-800 hover:border-blue-500 hover:text-blue-600 transition-colors"
+              >
+                <PortfolioIcon className="h-4 w-4" />
+              </a>
+              <a
+                href={personalLinks.github}
                 target="_blank"
                 rel="noopener noreferrer"
                 aria-label="GitHub"
+                title="GitHub"
                 className="flex h-8 w-8 items-center justify-center rounded-lg border border-slate-200 dark:border-slate-800 hover:border-blue-500 hover:text-blue-600 transition-colors"
               >
                 <GithubIcon className="h-4 w-4" />
               </a>
               <a
-                href="https://linkedin.com"
+                href={personalLinks.linkedin}
                 target="_blank"
                 rel="noopener noreferrer"
                 aria-label="LinkedIn"
+                title="LinkedIn"
                 className="flex h-8 w-8 items-center justify-center rounded-lg border border-slate-200 dark:border-slate-800 hover:border-blue-500 hover:text-blue-600 transition-colors"
               >
                 <LinkedinIcon className="h-4 w-4" />
               </a>
               <a
-                href="https://twitter.com"
+                href={personalLinks.facebook}
                 target="_blank"
                 rel="noopener noreferrer"
-                aria-label="Twitter"
+                aria-label="Facebook"
+                title="Facebook"
                 className="flex h-8 w-8 items-center justify-center rounded-lg border border-slate-200 dark:border-slate-800 hover:border-blue-500 hover:text-blue-600 transition-colors"
               >
-                <TwitterIcon className="h-4 w-4" />
+                <FacebookIcon className="h-4 w-4" />
               </a>
               <a
-                href="https://dribbble.com"
+                href={personalLinks.whatsapp}
                 target="_blank"
                 rel="noopener noreferrer"
-                aria-label="Dribbble"
-                className="flex h-8 w-8 items-center justify-center rounded-lg border border-slate-200 dark:border-slate-800 hover:border-blue-500 hover:text-blue-600 transition-colors"
+                aria-label="WhatsApp"
+                title="WhatsApp"
+                className="flex h-8 w-8 items-center justify-center rounded-lg border border-slate-200 dark:border-slate-800 hover:border-emerald-500 hover:text-emerald-600 transition-colors"
               >
-                <DribbbleIcon className="h-4 w-4" />
+                <WhatsappIcon className="h-4 w-4" />
               </a>
             </div>
           </div>
