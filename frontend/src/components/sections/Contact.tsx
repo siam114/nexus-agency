@@ -23,6 +23,13 @@ const SERVICE_PARAM_MAP: Record<string, string> = {
   "ads management": "Ads Management",
   "ads-management": "Ads Management",
   ads: "Ads Management",
+  "custom website development": "Custom Website Development",
+  "custom-website-development": "Custom Website Development",
+  "custom website": "Custom Website Development",
+  "custom-website": "Custom Website Development",
+  "custom web development": "Custom Website Development",
+  "custom-web-development": "Custom Website Development",
+  custom: "Custom Website Development",
 };
 
 function ContactFormContent() {
@@ -69,7 +76,7 @@ function ContactFormContent() {
             Have a Project in Mind?
           </p>
           <p className="mt-4 text-zinc-600 dark:text-zinc-400">
-            Tell us about your project goals and let&apos;s discuss your Shopify, WordPress, Figma conversion, SEO, or advertising needs.
+            Tell us about your project goals and let&apos;s discuss your Shopify, WordPress, Figma conversion, custom website development, SEO, or advertising needs.
           </p>
         </div>
 
@@ -149,6 +156,7 @@ function ContactFormContent() {
                     <option value="Shopify Development">Shopify Development</option>
                     <option value="Figma to Website Conversion">Figma to Website Conversion</option>
                     <option value="WordPress Development">WordPress Development</option>
+                    <option value="Custom Website Development">Custom Website Development</option>
                     <option value="SEO Services">SEO Services</option>
                     <option value="Ads Management">Ads Management</option>
                   </select>

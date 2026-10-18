@@ -890,5 +890,186 @@ export const serviceDetailsData: Record<string, ServiceDetail> = {
     ctaDescription:
       "Tell us about your project, and let's discuss the right solution for your business.",
   },
+  "custom-website-development": {
+    slug: "custom-website-development",
+    title: "Custom Website Development",
+    eyebrow: "CUSTOM WEB DEVELOPMENT",
+    heroHeading: "Custom Websites Built Around Your Business",
+    heroDescription:
+      "We design and develop tailored websites that match your brand, meet your business requirements, and deliver smooth experiences across desktop, tablet, and mobile devices.",
+    metaTitle: "Custom Website Development Services | NexusAgency",
+    metaDescription:
+      "Bespoke websites built around your business goals, brand identity, and unique functionality requirements. Custom design, modern frontend, and seamless integrations.",
+    iconName: "Code2",
+    visualBadge: {
+      label: "Architecture",
+      value: "Bespoke & Scalable",
+      tag: "Zero Template Bloat",
+    },
+    overview: {
+      whatItIs:
+        "Custom website development is the process of planning, designing, and engineering a bespoke digital solution tailored specifically to your company's operational needs, brand aesthetic, and target audience. Unlike generic off-the-shelf templates with locked-in constraints and redundant code, custom development gives you total control over the user experience, architecture, performance, and long-term scalability.",
+      problemsSolved: [
+        "Rigid template constraints that restrict your branding, layout possibilities, and desired customer journey.",
+        "Slow page loading speeds caused by bloated pre-packaged themes and unnecessary third-party scripts.",
+        "Difficulty integrating unique business workflows, interactive configurators, customer portals, or specialized forms.",
+        "Limited scalability when trying to connect custom APIs, CRMs, or modern marketing technology stacks.",
+      ],
+      whoItIsFor:
+        "Designed for established companies, high-growth startups, professional service firms, and forward-thinking brands that demand a distinct digital identity, optimal search speed, and bespoke functionality that off-the-shelf templates cannot provide.",
+      whatWeDeliver:
+        "A turnkey, fully bespoke website built with clean modern code, responsive design across all viewports, verified cross-browser compatibility, seamless API integrations, and complete ownership of your codebase.",
+      businessImpact:
+        "A high-performing, distinctive web presence that elevates your brand authority, accelerates page conversions, ranks better on search engines due to lean architecture, and easily scales alongside your business roadmap.",
+    },
+    offerings: [
+      {
+        title: "Custom Website Design",
+        description:
+          "Bespoke visual layouts crafted around your brand identity, complete with responsive wireframes, tailored typography, intuitive navigation, and high-fidelity UI design.",
+        iconName: "Layout",
+      },
+      {
+        title: "Frontend Development",
+        description:
+          "Clean, modular, and maintainable modern code written in React, Next.js, or HTML5/CSS3 with semantic markup, accessibility standards, and fluid responsive styling.",
+        iconName: "Code2",
+      },
+      {
+        title: "Custom Functionality",
+        description:
+          "Interactive components, dynamic calculators, customized multi-step forms, real-time filtering, and custom user journeys designed for your exact business requirements.",
+        iconName: "Sliders",
+      },
+      {
+        title: "API & Third-Party Integrations",
+        description:
+          "Seamless connection to your preferred CRMs, marketing automation tools, booking engines, payment gateways, newsletter platforms, and external data feeds.",
+        iconName: "Zap",
+      },
+      {
+        title: "Responsive & Cross-Browser Optimization",
+        description:
+          "Pixel-perfect rendering across modern smartphones, tablets, laptops, and ultra-wide desktops, rigorously tested across Chrome, Safari, Firefox, and Edge.",
+        iconName: "Smartphone",
+      },
+      {
+        title: "Performance & Maintainability",
+        description:
+          "Optimized asset loading, clean code splitting, excellent Core Web Vitals, and modular code architecture structured for straightforward ongoing maintenance.",
+        iconName: "ShieldCheck",
+      },
+    ],
+    benefits: [
+      {
+        title: "Tailored to Your Exact Business Goals",
+        description:
+          "Every layout, user flow, and interaction is engineered specifically to convert your target audience, not adapted from a rigid pre-made template.",
+      },
+      {
+        title: "Sub-Second Performance & Clean Code",
+        description:
+          "By eliminating heavy plugin bloat and unused CSS/JS scripts, your website achieves lightning-fast load times and superior Core Web Vitals scores.",
+      },
+      {
+        title: "Full Code Ownership & Flexibility",
+        description:
+          "You own 100% of your source code and assets with no platform lock-in, giving you absolute freedom to expand and iterate anytime.",
+      },
+      {
+        title: "Seamless Future Scalability",
+        description:
+          "A modular, modern architecture makes adding new landing pages, product catalogs, or API integrations seamless as your business grows.",
+      },
+    ],
+    useCases: [
+      {
+        title: "Corporate & B2B Service Websites",
+        scenario:
+          "Professional firms needing a distinctive, high-credibility digital presence with custom lead generation funnels, case study hubs, and team directories.",
+      },
+      {
+        title: "Startup & Digital Product Showcases",
+        scenario:
+          "Emerging technology and venture-backed brands requiring interactive feature previews, dynamic pricing tables, and investor-ready presentation.",
+      },
+      {
+        title: "Interactive Web Applications & Portals",
+        scenario:
+          "Businesses requiring interactive tools such as estimate calculators, quote builders, custom multi-step onboarding flows, or authenticated client dashboards.",
+      },
+      {
+        title: "High-Converting Marketing & Landing Hubs",
+        scenario:
+          "Brands running targeted acquisition campaigns that require custom conversion-optimized landing pages with dedicated tracking and CRM synchronizations.",
+      },
+    ],
+    process: [
+      {
+        step: "01",
+        title: "Discovery & Strategy",
+        description:
+          "We dive deep into your business goals, target audience, brand requirements, functional needs, and content architecture to define a precise project blueprint.",
+      },
+      {
+        step: "02",
+        title: "Planning & UI/UX Design",
+        description:
+          "We craft interactive wireframes, establish modern visual styles, design responsive UI layouts, and refine the interface collaboratively based on your feedback.",
+      },
+      {
+        step: "03",
+        title: "Development & Integration",
+        description:
+          "We build your website with clean, modular frontend code, implement dynamic interactions, connect required third-party APIs and forms, and conduct thorough code reviews.",
+      },
+      {
+        step: "04",
+        title: "Testing, Launch & Handover",
+        description:
+          "We perform cross-device validation, speed optimizations, Core Web Vitals checks, assist with production deployment, and hand over full repository ownership.",
+      },
+    ],
+    faqs: [
+      {
+        question:
+          "What is the difference between a custom website and a template-based site?",
+        answer:
+          "A template-based site relies on pre-made themes with fixed layouts, generic styling, and often heavy, unused code that slows down performance. A custom website is architected and built from scratch specifically for your brand. It offers complete visual and functional freedom, significantly faster loading speeds, superior search crawlability, and the flexibility to adapt to your unique business needs without compromise.",
+      },
+      {
+        question:
+          "What technologies and tools do you use for custom website development?",
+        answer:
+          "We primarily use modern, industry-standard frontend technologies including React, Next.js, TypeScript, and Tailwind CSS. For content-driven custom websites, we can integrate headless CMS solutions or custom admin backends. We choose the tech stack based on your project goals, performance requirements, and long-term maintenance preferences.",
+      },
+      {
+        question: "Will my custom website be fully responsive on mobile devices?",
+        answer:
+          "Yes, absolutely. We follow a mobile-first responsive design philosophy. Your custom website is meticulously styled and tested across an extensive matrix of screen sizes—from smartphones and tablets to high-resolution desktop monitors—ensuring seamless navigation, readable typography, and fluid touch interactions on every device.",
+      },
+      {
+        question:
+          "Can you integrate third-party tools like CRMs, analytics, and payment forms?",
+        answer:
+          "Yes. We regularly connect custom websites to third-party tools and platforms, including CRM platforms (HubSpot, Salesforce), email marketing tools (Mailchimp, Klaviyo), analytics suites (Google Analytics 4, Tag Manager), appointment schedulers (Calendly), and payment gateways (Stripe, PayPal). We verify that data flows accurately and securely upon submission.",
+      },
+      {
+        question:
+          "How long does a custom website development project typically take?",
+        answer:
+          "Project timelines vary based on scope, feature complexity, and page count. A focused custom marketing or business website typically takes 3 to 6 weeks from discovery to launch, while larger interactive web applications or platforms may take 6 to 10 weeks. We establish clear milestone schedules at the start of the project and provide weekly progress updates.",
+      },
+      {
+        question:
+          "Who owns the website and the code after the project is completed?",
+        answer:
+          "You own 100% of the website, design assets, and source code. Upon project completion and final handover, we transfer all repository code, assets, and deployment access directly to you. There are no recurring agency licensing fees or proprietary software lock-ins.",
+      },
+    ],
+    ctaHeading: "Have an Idea for a Custom Website?",
+    ctaDescription:
+      "Tell us about your goals, required features, and project requirements. Let's discuss a website solution that fits your business.",
+  },
 };
 

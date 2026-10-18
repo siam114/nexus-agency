@@ -18,7 +18,7 @@ const geistMono = Geist_Mono({
 export const metadata: Metadata = {
   title: "NexusAgency | Digital Growth & Web Development Agency",
   description:
-    "We build better websites that help your business grow. Specializing in Shopify Development, Figma to Website Conversion, WordPress Development, SEO Services, and Ads Management.",
+    "We build better websites that help your business grow. Specializing in Shopify Development, Figma to Website Conversion, WordPress Development, Custom Website Development, SEO Services, and Ads Management.",
   icons: {
     icon: "/icon.svg",
     shortcut: "/icon.svg",

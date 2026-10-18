@@ -15,7 +15,7 @@ export function Footer() {
           <div className="lg:col-span-4 space-y-4">
             <Logo />
             <p className="text-xs sm:text-sm text-slate-500 dark:text-slate-400 max-w-sm leading-relaxed">
-              We build high-converting Shopify stores, convert Figma designs into responsive code, develop WordPress websites, and provide practical SEO and advertising management.
+              We build high-converting Shopify stores, convert Figma designs into responsive code, develop WordPress sites, build custom web applications, and provide practical SEO and advertising management.
             </p>
           </div>
 
@@ -38,6 +38,11 @@ export function Footer() {
               <li>
                 <Link href="/services/wordpress-development" className="hover:text-blue-600 transition-colors">
                   WordPress Development
+                </Link>
+              </li>
+              <li>
+                <Link href="/services/custom-website-development" className="hover:text-blue-600 transition-colors">
+                  Custom Website Development
                 </Link>
               </li>
               <li>

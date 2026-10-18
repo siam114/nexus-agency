@@ -17,7 +17,7 @@ import {
 export const metadata: Metadata = {
   title: "About Us | NexusAgency",
   description:
-    "Learn about NexusAgency, a dedicated digital agency specializing in Shopify development, Figma to website conversion, WordPress development, SEO, and ads management.",
+    "Learn about NexusAgency, a dedicated digital agency specializing in Shopify development, Figma to website conversion, WordPress development, Custom Website Development, SEO, and ads management.",
 };
 
 const values = [
@@ -61,7 +61,7 @@ export default function AboutPage() {
             We Build Websites That Help Businesses Grow Online
           </h1>
           <p className="mt-6 text-lg text-slate-600 dark:text-slate-400 leading-relaxed">
-            NexusAgency helps businesses strengthen their digital footprint through high-converting Shopify stores, pixel-accurate Figma conversions, flexible WordPress websites, organic search optimization, and targeted paid advertising.
+            NexusAgency helps businesses strengthen their digital footprint through high-converting Shopify stores, pixel-accurate Figma conversions, flexible WordPress websites, custom web applications, organic search optimization, and targeted paid advertising.
           </p>
         </div>
 
@@ -102,6 +102,10 @@ export default function AboutPage() {
               </li>
               <li className="flex items-center gap-2">
                 <span className="h-1.5 w-1.5 rounded-full bg-blue-600" />
+                <span><strong>Custom website development</strong> built for bespoke functionality and scale.</span>
+              </li>
+              <li className="flex items-center gap-2">
+                <span className="h-1.5 w-1.5 rounded-full bg-blue-600" />
                 <span><strong>Search engine optimization</strong> to improve site structure and visibility.</span>
               </li>
               <li className="flex items-center gap-2">
@@ -112,7 +116,7 @@ export default function AboutPage() {
 
             <div className="pt-4 flex flex-wrap gap-8 border-t border-slate-100 dark:border-slate-800">
               <div>
-                <div className="text-2xl font-extrabold text-blue-600">5</div>
+                <div className="text-2xl font-extrabold text-blue-600">6</div>
                 <div className="text-xs text-slate-500 mt-1 font-medium">Core Services</div>
               </div>
               <div>

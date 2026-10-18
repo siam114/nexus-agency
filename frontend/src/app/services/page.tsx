@@ -9,6 +9,7 @@ import {
   Globe,
   Search,
   Megaphone,
+  Code2,
   CheckCircle2,
   ArrowRight,
   ShieldCheck,
@@ -18,7 +19,7 @@ import {
 export const metadata: Metadata = {
   title: "Our Services | NexusAgency",
   description:
-    "Explore our 5 core services: Shopify Development, Figma to Website Conversion, WordPress Development, SEO Services, and Ads Management.",
+    "Explore our 6 core services: Shopify Development, Figma to Website Conversion, WordPress Development, Custom Website Development, SEO Services, and Ads Management.",
 };
 
 const iconMap = {
@@ -27,6 +28,7 @@ const iconMap = {
   Globe,
   Search,
   Megaphone,
+  Code2,
 };
 
 export default function ServicesPage() {

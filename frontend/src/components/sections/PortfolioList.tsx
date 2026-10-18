@@ -18,6 +18,7 @@ const CATEGORIES = [
   "Shopify Development",
   "Figma to Website Conversion",
   "WordPress Development",
+  "Custom Website Development",
   "SEO",
   "Ads Management",
 ];

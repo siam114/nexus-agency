@@ -145,6 +145,26 @@ export const servicesData: Service[] = [
     ],
     link: "/services/ads-management",
   },
+  {
+    id: "custom-website-development",
+    title: "Custom Website Development",
+    description:
+      "Bespoke websites built around your business goals, brand identity, and unique functionality requirements.",
+    iconName: "Code2",
+    features: [
+      "Custom UI/UX and Website Design",
+      "Responsive Frontend Development",
+      "Interactive Features and Integrations",
+      "Performance and Usability Optimization",
+    ],
+    deliverables: [
+      "Tailored website architecture & design",
+      "Clean, scalable modern frontend codebase",
+      "API & third-party tool integrations",
+      "Full source code & deployment handover",
+    ],
+    link: "/services/custom-website-development",
+  },
 ];
 
 export const projectsData: Project[] = [
@@ -248,6 +268,23 @@ export const projectsData: Project[] = [
     metrics: [
       { label: "Store Experience", value: "Mobile First" },
       { label: "Cart Experience", value: "Streamlined" },
+    ],
+  },
+  {
+    id: "7",
+    title: "VentureCraft Digital Platform",
+    category: "Custom Website Development",
+    tags: ["Custom Website Development", "React / Next.js", "Tailwind CSS"],
+    description:
+      "A bespoke corporate web platform engineered with custom interactive modules, dynamic service configurators, and modern API integrations.",
+    image:
+      "https://images.unsplash.com/photo-1507238691740-187a5b1d37b8?auto=format&fit=crop&w=800&q=80",
+    client: "VentureCraft Studio",
+    year: "2025",
+    featured: true,
+    metrics: [
+      { label: "Architecture", value: "Bespoke Modern Stack" },
+      { label: "Performance", value: "Sub-Second Load" },
     ],
   },
 ];

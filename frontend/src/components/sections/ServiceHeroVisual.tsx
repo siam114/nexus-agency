@@ -290,6 +290,85 @@ export function ServiceHeroVisual({ slug, badge }: ServiceHeroVisualProps) {
     );
   }
 
+  if (slug === "custom-website-development") {
+    return (
+      <div className="relative w-full max-w-lg mx-auto">
+        <div className="rounded-2xl border border-slate-200/90 dark:border-slate-800 bg-white dark:bg-slate-900 shadow-2xl p-6">
+          <div className="flex items-center justify-between pb-4 border-b border-slate-100 dark:border-slate-800">
+            <div className="flex items-center gap-2">
+              <span className="flex h-7 w-7 items-center justify-center rounded-lg bg-blue-600 text-white font-bold text-xs">
+                <Code2 className="h-4 w-4" />
+              </span>
+              <span className="text-xs font-bold text-slate-800 dark:text-slate-200">
+                Custom Architecture
+              </span>
+            </div>
+            <span className="rounded-full bg-blue-50 dark:bg-blue-950/60 px-2.5 py-0.5 text-[10px] font-semibold text-blue-600">
+              Modern Full-Stack
+            </span>
+          </div>
+
+          <div className="mt-4 space-y-3">
+            {/* Code / Architecture preview */}
+            <div className="p-3.5 rounded-xl bg-slate-950 text-slate-200 font-mono text-[11px] leading-relaxed border border-slate-800 space-y-1">
+              <div className="flex items-center justify-between text-[10px] text-slate-500 pb-1.5 mb-1.5 border-b border-slate-800/80">
+                <span className="flex items-center gap-1.5 text-blue-400">
+                  <span className="h-2 w-2 rounded-full bg-emerald-400" />
+                  AppArchitecture.tsx
+                </span>
+                <span className="text-slate-400">TypeScript / Next.js</span>
+              </div>
+              <p className="text-slate-400">
+                <span className="text-purple-400">export const</span>{" "}
+                <span className="text-blue-300">CustomApp</span> = &#123;
+              </p>
+              <p className="pl-3 text-emerald-400">
+                stack: <span className="text-amber-300">&quot;React / Next.js + Tailwind&quot;</span>,
+              </p>
+              <p className="pl-3 text-emerald-400">
+                integrations: [<span className="text-amber-300">&quot;CRM&quot;</span>, <span className="text-amber-300">&quot;Analytics&quot;</span>, <span className="text-amber-300">&quot;APIs&quot;</span>],
+              </p>
+              <p className="pl-3 text-emerald-400">
+                performance: <span className="text-sky-300">99</span>,
+              </p>
+              <p className="text-slate-400">&#125;;</p>
+            </div>
+
+            <div className="grid grid-cols-2 gap-2 text-xs">
+              <div className="p-3 rounded-xl bg-slate-50 dark:bg-slate-950/60 border border-slate-100 dark:border-slate-800">
+                <span className="text-[10px] text-slate-400">Component Design</span>
+                <div className="font-bold text-slate-800 dark:text-slate-200 mt-0.5">
+                  Modular &amp; Scalable
+                </div>
+              </div>
+              <div className="p-3 rounded-xl bg-slate-50 dark:bg-slate-950/60 border border-slate-100 dark:border-slate-800">
+                <span className="text-[10px] text-slate-400">Core Web Vitals</span>
+                <div className="font-bold text-slate-800 dark:text-slate-200 mt-0.5">
+                  Sub-Second Load
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        {/* Floating Metrics Badge */}
+        <div className="absolute -bottom-5 -right-3 rounded-xl border border-slate-200 dark:border-slate-800 bg-white/95 dark:bg-slate-900/95 p-3.5 shadow-xl backdrop-blur-md">
+          <div className="flex items-center gap-2">
+            <span className="flex h-6 w-6 items-center justify-center rounded-full bg-blue-100 dark:bg-blue-950 text-blue-600">
+              <Sparkles className="h-3.5 w-3.5" />
+            </span>
+            <div>
+              <div className="text-xs font-bold text-slate-900 dark:text-white">
+                {badge.value}
+              </div>
+              <div className="text-[10px] text-slate-400">{badge.tag}</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    );
+  }
+
   // Fallback for ads-management
   return (
     <div className="relative w-full max-w-lg mx-auto">
