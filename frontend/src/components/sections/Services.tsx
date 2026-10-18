@@ -55,7 +55,12 @@ export function Services() {
 
                   {/* Title */}
                   <h3 className="text-lg sm:text-xl font-bold text-slate-900 dark:text-white leading-snug mb-2.5">
-                    {service.title}
+                    <Link
+                      href={service.link || "/services"}
+                      className="hover:text-blue-600 dark:hover:text-blue-400 transition-colors"
+                    >
+                      {service.title}
+                    </Link>
                   </h3>
 
                   {/* Description */}

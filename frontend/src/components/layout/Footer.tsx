@@ -26,27 +26,27 @@ export function Footer() {
             </h4>
             <ul className="space-y-2.5 text-xs sm:text-sm text-slate-500 dark:text-slate-400">
               <li>
-                <Link href="/services#shopify-development" className="hover:text-blue-600 transition-colors">
+                <Link href="/services/shopify-development" className="hover:text-blue-600 transition-colors">
                   Shopify Development
                 </Link>
               </li>
               <li>
-                <Link href="/services#figma-to-website" className="hover:text-blue-600 transition-colors">
+                <Link href="/services/figma-to-website" className="hover:text-blue-600 transition-colors">
                   Figma to Website Conversion
                 </Link>
               </li>
               <li>
-                <Link href="/services#wordpress-development" className="hover:text-blue-600 transition-colors">
+                <Link href="/services/wordpress-development" className="hover:text-blue-600 transition-colors">
                   WordPress Development
                 </Link>
               </li>
               <li>
-                <Link href="/services#seo-services" className="hover:text-blue-600 transition-colors">
+                <Link href="/services/seo-services" className="hover:text-blue-600 transition-colors">
                   SEO Services
                 </Link>
               </li>
               <li>
-                <Link href="/services#ads-management" className="hover:text-blue-600 transition-colors">
+                <Link href="/services/ads-management" className="hover:text-blue-600 transition-colors">
                   Ads Management
                 </Link>
               </li>

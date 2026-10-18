@@ -72,17 +72,30 @@ export default function ServicesPage() {
                     </div>
 
                     <h2 className="text-2xl sm:text-3xl font-extrabold text-slate-900 dark:text-white">
-                      {service.title}
+                      <Link
+                        href={service.link || `/services/${service.id}`}
+                        className="hover:text-blue-600 dark:hover:text-blue-400 transition-colors"
+                      >
+                        {service.title}
+                      </Link>
                     </h2>
 
                     <p className="text-slate-600 dark:text-slate-400 text-sm sm:text-base leading-relaxed">
                       {service.description}
                     </p>
 
-                    <div className="pt-2">
-                      <Link href="/contact">
-                        <Button className="rounded-full bg-blue-600 hover:bg-blue-700 text-white px-6">
-                          Inquire About This Service <ArrowRight className="h-4 w-4 ml-1.5" />
+                    <div className="pt-2 flex flex-wrap items-center gap-3">
+                      <Link href={service.link || `/services/${service.id}`}>
+                        <Button className="rounded-full bg-blue-600 hover:bg-blue-700 text-white px-5 text-xs sm:text-sm">
+                          Explore Service Details <ArrowRight className="h-4 w-4 ml-1.5" />
+                        </Button>
+                      </Link>
+                      <Link href={`/contact?service=${encodeURIComponent(service.title)}`}>
+                        <Button
+                          variant="outline"
+                          className="rounded-full border-slate-200 dark:border-slate-800 px-4 text-xs sm:text-sm text-slate-700 dark:text-slate-300 hover:bg-slate-50 dark:hover:bg-slate-800"
+                        >
+                          Inquire Now
                         </Button>
                       </Link>
                     </div>

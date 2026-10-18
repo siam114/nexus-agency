@@ -63,7 +63,7 @@ export const servicesData: Service[] = [
       "Payment gateway & app integrations",
       "Post-launch store administration guidance",
     ],
-    link: "/services#shopify-development",
+    link: "/services/shopify-development",
   },
   {
     id: "figma-to-website",
@@ -83,7 +83,7 @@ export const servicesData: Service[] = [
       "Interactive animations & UI component states",
       "Cross-browser tested frontend build",
     ],
-    link: "/services#figma-to-website",
+    link: "/services/figma-to-website",
   },
   {
     id: "wordpress-development",
@@ -103,7 +103,7 @@ export const servicesData: Service[] = [
       "Security hardening & speed configuration",
       "Maintenance & backup setup",
     ],
-    link: "/services#wordpress-development",
+    link: "/services/wordpress-development",
   },
   {
     id: "seo-services",
@@ -123,7 +123,7 @@ export const servicesData: Service[] = [
       "Crawl error identification & recommendations",
       "Site speed & mobile usability enhancements",
     ],
-    link: "/services#seo-services",
+    link: "/services/seo-services",
   },
   {
     id: "ads-management",
@@ -143,7 +143,7 @@ export const servicesData: Service[] = [
       "Target audience & keyword research maps",
       "Scheduled transparent reporting",
     ],
-    link: "/services#ads-management",
+    link: "/services/ads-management",
   },
 ];
 

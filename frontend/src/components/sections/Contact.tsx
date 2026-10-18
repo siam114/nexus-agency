@@ -1,11 +1,32 @@
 "use client";
 
 import * as React from "react";
+import { useSearchParams } from "next/navigation";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import { Send, CheckCircle2 } from "lucide-react";
 
-export function Contact() {
+const SERVICE_PARAM_MAP: Record<string, string> = {
+  "shopify development": "Shopify Development",
+  "shopify-development": "Shopify Development",
+  shopify: "Shopify Development",
+  "figma to website conversion": "Figma to Website Conversion",
+  "figma-to-website-conversion": "Figma to Website Conversion",
+  "figma-to-website": "Figma to Website Conversion",
+  figma: "Figma to Website Conversion",
+  "wordpress development": "WordPress Development",
+  "wordpress-development": "WordPress Development",
+  wordpress: "WordPress Development",
+  "seo services": "SEO Services",
+  "seo-services": "SEO Services",
+  seo: "SEO Services",
+  "ads management": "Ads Management",
+  "ads-management": "Ads Management",
+  ads: "Ads Management",
+};
+
+function ContactFormContent() {
+  const searchParams = useSearchParams();
   const [submitted, setSubmitted] = React.useState(false);
   const [formData, setFormData] = React.useState({
     name: "",
@@ -14,9 +35,20 @@ export function Contact() {
     message: "",
   });
 
+  // Synchronize preselected service from URL query parameter
+  React.useEffect(() => {
+    const rawService = searchParams?.get("service");
+    if (rawService) {
+      const decoded = decodeURIComponent(rawService).trim().toLowerCase();
+      const matched = SERVICE_PARAM_MAP[decoded];
+      if (matched) {
+        setFormData((prev) => ({ ...prev, service: matched }));
+      }
+    }
+  }, [searchParams]);
+
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    // Front-end state handling
     setSubmitted(true);
   };
 
@@ -146,5 +178,19 @@ export function Contact() {
         </div>
       </div>
     </section>
+  );
+}
+
+export function Contact() {
+  return (
+    <React.Suspense
+      fallback={
+        <div className="py-24 text-center">
+          <div className="inline-block h-8 w-8 animate-spin rounded-full border-4 border-solid border-blue-600 border-r-transparent align-[-0.125em]" />
+        </div>
+      }
+    >
+      <ContactFormContent />
+    </React.Suspense>
   );
 }
