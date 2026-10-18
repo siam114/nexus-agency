@@ -27,23 +27,35 @@ export function Process() {
           </p>
         </div>
 
-        {/* 4 Process Step Cards with Connecting Arrows */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 relative">
+        {/* 4 Process Step Cards */}
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
           {processSteps.map((step, idx) => {
             const Icon = iconMap[step.iconName as keyof typeof iconMap] || Search;
 
             return (
-              <div key={step.step} className="relative flex">
+              <div key={step.step} className="flex">
                 <Card className="w-full flex flex-col justify-between p-6 rounded-2xl border border-slate-200/80 dark:border-slate-800 bg-white dark:bg-slate-900 shadow-sm hover:shadow-md transition-all">
                   <div>
-                    {/* Step Number & Icon */}
-                    <div className="flex items-center gap-3 mb-5">
-                      <div className="flex h-8 w-8 items-center justify-center rounded-full bg-blue-600 text-white font-bold text-xs shadow-sm shadow-blue-500/30">
-                        {step.step}
+                    {/* Step Number, Icon & Sequence Indicator */}
+                    <div className="flex items-center justify-between mb-5">
+                      <div className="flex items-center gap-2.5">
+                        <div className="flex h-8 w-8 items-center justify-center rounded-full bg-blue-600 text-white font-bold text-xs shadow-sm shadow-blue-500/30">
+                          {step.step}
+                        </div>
+                        <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-blue-50 dark:bg-blue-950/60 text-blue-600 dark:text-blue-400">
+                          <Icon className="h-4 w-4" />
+                        </div>
                       </div>
-                      <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-blue-50 dark:bg-blue-950/60 text-blue-600 dark:text-blue-400">
-                        <Icon className="h-4 w-4" />
-                      </div>
+
+                      {/* Clean in-card flow arrow, strictly inside card with zero overflow */}
+                      {idx < processSteps.length - 1 && (
+                        <div
+                          className="hidden lg:flex items-center text-slate-300 dark:text-slate-600"
+                          aria-hidden="true"
+                        >
+                          <ArrowRight className="h-4 w-4" />
+                        </div>
+                      )}
                     </div>
 
                     {/* Step Title */}
@@ -57,13 +69,6 @@ export function Process() {
                     </p>
                   </div>
                 </Card>
-
-                {/* Connecting arrow between cards on desktop */}
-                {idx < processSteps.length - 1 && (
-                  <div className="hidden lg:flex absolute -right-3 top-1/2 -translate-y-1/2 z-10 h-6 w-6 items-center justify-center rounded-full bg-slate-100 dark:bg-slate-800 text-slate-400 pointer-events-none">
-                    <ArrowRight className="h-3.5 w-3.5" />
-                  </div>
-                )}
               </div>
             );
           })}
@@ -72,4 +77,3 @@ export function Process() {
     </section>
   );
 }
-
