@@ -105,7 +105,13 @@ export function Navbar() {
               </Link>
             );
           })}
-          <div className="pt-3">
+          <div className="pt-3 border-t border-slate-100 dark:border-slate-800 flex items-center justify-between px-3">
+            <span className="text-sm font-medium text-slate-600 dark:text-slate-400">
+              Appearance
+            </span>
+            <ThemeToggle />
+          </div>
+          <div className="pt-1">
             <Link href="/contact" onClick={() => setMobileMenuOpen(false)}>
               <Button className="w-full rounded-full bg-blue-600 hover:bg-blue-700 text-white">
                 Start a Project <ArrowRight className="h-4 w-4 ml-1" />
