@@ -6,6 +6,7 @@ export interface ProjectMetric {
 
 export interface Project {
   id: string;
+  slug: string;
   title: string;
   category: string;
   tags: string[];
@@ -14,8 +15,59 @@ export interface Project {
   client?: string;
   year?: string;
   link?: string;
+  liveUrl?: string;
   featured?: boolean;
   metrics?: ProjectMetric[];
+}
+
+export interface ProjectDetailFeature {
+  title: string;
+  description: string;
+  iconName?: string;
+}
+
+export interface ProjectDetail {
+  id: string;
+  slug: string;
+  title: string;
+  category: string;
+  serviceSlug: string;
+  client: string;
+  year: string;
+  tags: string[];
+  image: string;
+  liveUrl?: string;
+  summary: string;
+  metaTitle: string;
+  metaDescription: string;
+  metrics: ProjectMetric[];
+  overview: {
+    purpose: string;
+    requirements: string;
+    audience: string;
+    goals: string[];
+  };
+  challenge: {
+    summary: string;
+    points: string[];
+  };
+  solution: {
+    summary: string;
+    points: string[];
+  };
+  features: ProjectDetailFeature[];
+  showcase: {
+    title: string;
+    description: string;
+    desktopAspect: string;
+    mobileAspect: string;
+  };
+  technologies: string[];
+  servicesProvided: string[];
+  outcome: {
+    summary: string;
+    highlights: string[];
+  };
 }
 
 export interface Service {

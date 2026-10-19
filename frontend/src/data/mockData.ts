@@ -171,6 +171,7 @@ export const servicesData: Service[] = [
 export const projectsData: Project[] = [
   {
     id: "1",
+    slug: "outdoor-essentials-store",
     title: "Outdoor Essentials Store",
     category: "Shopify Development",
     tags: ["Shopify Development", "Liquid Customization", "E-commerce"],
@@ -188,6 +189,7 @@ export const projectsData: Project[] = [
   },
   {
     id: "2",
+    slug: "apex-cloud-saas-interface",
     title: "Apex Cloud SaaS Interface",
     category: "Figma to Website Conversion",
     tags: ["Figma to Website Conversion", "Next.js", "Tailwind CSS"],
@@ -205,6 +207,7 @@ export const projectsData: Project[] = [
   },
   {
     id: "3",
+    slug: "veritas-advisory-corporate-site",
     title: "Veritas Advisory Corporate Site",
     category: "WordPress Development",
     tags: ["WordPress Development", "Custom Theme", "Business Site"],
@@ -222,6 +225,7 @@ export const projectsData: Project[] = [
   },
   {
     id: "4",
+    slug: "ecoliving-home-technical-audit",
     title: "EcoLiving Home Technical Audit",
     category: "SEO",
     tags: ["SEO", "Technical SEO", "Metadata Architecture"],
@@ -239,6 +243,7 @@ export const projectsData: Project[] = [
   },
   {
     id: "5",
+    slug: "nordic-living-multi-channel-ads",
     title: "Nordic Living Multi-Channel Ads",
     category: "Ads Management",
     tags: ["Ads Management", "Google Ads", "Meta Ads"],
@@ -256,6 +261,7 @@ export const projectsData: Project[] = [
   },
   {
     id: "6",
+    slug: "lumiere-beauty-storefront",
     title: "Lumière Beauty Storefront",
     category: "Shopify Development",
     tags: ["Shopify Development", "Theme Customization", "Mobile Responsive"],
@@ -273,6 +279,7 @@ export const projectsData: Project[] = [
   },
   {
     id: "7",
+    slug: "venturecraft-digital-platform",
     title: "VentureCraft Digital Platform",
     category: "Custom Website Development",
     tags: ["Custom Website Development", "React / Next.js", "Tailwind CSS"],

@@ -41,7 +41,7 @@ export function Projects() {
               className="overflow-hidden p-0 group flex flex-col justify-between rounded-2xl border border-slate-200/80 dark:border-slate-800 bg-white dark:bg-slate-900 shadow-sm hover:shadow-xl transition-all duration-300"
             >
               {/* Project Image */}
-              <div className="relative h-52 w-full overflow-hidden bg-slate-100 dark:bg-slate-800">
+              <Link href={`/projects/${project.slug}`} className="block relative h-52 w-full overflow-hidden bg-slate-100 dark:bg-slate-800">
                 <Image
                   src={project.image}
                   alt={project.title}
@@ -49,7 +49,7 @@ export function Projects() {
                   className="object-cover group-hover:scale-105 transition-transform duration-500"
                   sizes="(max-width: 768px) 100vw, 33vw"
                 />
-              </div>
+              </Link>
 
               {/* Project Body */}
               <div className="p-6 flex flex-col flex-1 justify-between">
@@ -68,7 +68,7 @@ export function Projects() {
 
                   {/* Title */}
                   <h3 className="text-lg font-bold text-slate-900 dark:text-white group-hover:text-blue-600 transition-colors">
-                    {project.title}
+                    <Link href={`/projects/${project.slug}`}>{project.title}</Link>
                   </h3>
 
                   {/* Description */}
@@ -77,7 +77,7 @@ export function Projects() {
                   </p>
                 </div>
 
-                {/* Metrics & Case Study Link */}
+                {/* Metrics & View Project Link */}
                 <div className="mt-6 pt-4 border-t border-slate-100 dark:border-slate-800">
                   {project.metrics && (
                     <div className="grid grid-cols-2 gap-3 mb-4">
@@ -107,10 +107,10 @@ export function Projects() {
                   )}
 
                   <Link
-                    href={`/portfolio`}
-                    className="inline-flex items-center gap-1 text-xs font-semibold text-blue-600 dark:text-blue-400 hover:text-blue-700"
+                    href={`/projects/${project.slug}`}
+                    className="inline-flex items-center gap-1.5 text-xs font-semibold text-blue-600 dark:text-blue-400 hover:text-blue-700 transition-colors"
                   >
-                    Case study <ArrowRight className="h-3.5 w-3.5 ml-0.5" />
+                    View Project <ArrowRight className="h-3.5 w-3.5 ml-0.5" />
                   </Link>
                 </div>
               </div>
