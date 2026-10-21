@@ -715,3 +715,4 @@ export const projectDetailsData: Record<string, ProjectDetail> = {
     },
   },
 };
+
