@@ -155,6 +155,7 @@ export interface ITeamMember {
   image: string;
   skills: string[];
   socials?: ITeamMemberSocials;
+  featured?: boolean;
   published: boolean;
   sortOrder: number;
   createdAt?: Date;
@@ -168,6 +169,8 @@ export interface ITestimonial {
   company?: string;
   content: string;
   avatar?: string;
+  rating?: number;
+  featured?: boolean;
   published: boolean;
   sortOrder: number;
   createdAt?: Date;

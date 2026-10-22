@@ -90,10 +90,16 @@ export interface ProcessStep {
 export interface Testimonial {
   id: string;
   name: string;
-  role: string;
-  company: string;
+  role?: string;
+  company?: string;
   content: string;
-  avatar: string;
+  avatar?: string;
+  rating?: number;
+  published?: boolean;
+  featured?: boolean;
+  sortOrder?: number;
+  createdAt?: string;
+  updatedAt?: string;
 }
 
 export interface TeamMember {
@@ -102,6 +108,11 @@ export interface TeamMember {
   role: string;
   bio?: string;
   image: string;
+  skills?: string[];
+  published?: boolean;
+  featured?: boolean;
+  sortOrder?: number;
+  createdAt?: string;
   socials?: {
     github?: string;
     linkedin?: string;

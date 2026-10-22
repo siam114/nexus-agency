@@ -2,29 +2,36 @@
 
 import * as React from "react";
 import Image from "next/image";
-import { testimonialsData } from "@/data/mockData";
+import { useLiveTestimonials } from "@/lib/liveContent";
 import { Card } from "@/components/ui/card";
-import { ChevronLeft, ChevronRight, Quote } from "lucide-react";
+import { ChevronLeft, ChevronRight, Quote, Star } from "lucide-react";
+
+const DEFAULT_AVATAR =
+  "https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=200&q=80";
 
 export function Testimonials() {
+  const testimonials = useLiveTestimonials();
   const [startIndex, setStartIndex] = React.useState(0);
 
   const prev = () => {
     setStartIndex((current) =>
-      current === 0 ? testimonialsData.length - 1 : current - 1
+      current === 0 ? Math.max(testimonials.length - 1, 0) : current - 1
     );
   };
 
   const next = () => {
     setStartIndex((current) =>
-      current === testimonialsData.length - 1 ? 0 : current + 1
+      current >= testimonials.length - 1 ? 0 : current + 1
     );
   };
 
-  const displayedTestimonials = [
-    ...testimonialsData.slice(startIndex),
-    ...testimonialsData.slice(0, startIndex),
-  ];
+  const displayedTestimonials =
+    testimonials.length > 0
+      ? [
+          ...testimonials.slice(startIndex),
+          ...testimonials.slice(0, startIndex),
+        ]
+      : [];
 
   return (
     <section className="py-12 lg:py-16">
@@ -70,28 +77,38 @@ export function Testimonials() {
               className="p-6 sm:p-7 flex flex-col justify-between rounded-2xl border border-slate-200/80 dark:border-slate-800 bg-white dark:bg-slate-900 shadow-sm hover:shadow-md transition-all"
             >
               <div>
-                <Quote className="h-7 w-7 text-blue-600/30 dark:text-blue-400/30 mb-4" />
+                <div className="flex items-center justify-between mb-4">
+                  <Quote className="h-7 w-7 text-blue-600/30 dark:text-blue-400/30" />
+                  {t.rating && (
+                    <div className="flex items-center gap-0.5 text-amber-400">
+                      {Array.from({ length: t.rating }).map((_, i) => (
+                        <Star key={i} className="h-3 w-3 fill-current" />
+                      ))}
+                    </div>
+                  )}
+                </div>
                 <p className="text-xs sm:text-sm text-slate-700 dark:text-slate-300 leading-relaxed">
                   &ldquo;{t.content}&rdquo;
                 </p>
               </div>
 
               <div className="mt-6 pt-5 border-t border-slate-100 dark:border-slate-800 flex items-center gap-3">
-                <div className="relative h-10 w-10 shrink-0 rounded-full overflow-hidden bg-slate-100">
+                <div className="relative h-10 w-10 shrink-0 rounded-full overflow-hidden bg-slate-100 dark:bg-slate-800">
                   <Image
-                    src={t.avatar}
+                    src={t.avatar || DEFAULT_AVATAR}
                     alt={t.name}
                     fill
+                    unoptimized
                     className="object-cover"
                     sizes="40px"
                   />
                 </div>
-                <div>
-                  <h4 className="text-xs sm:text-sm font-bold text-slate-900 dark:text-white leading-tight">
+                <div className="truncate">
+                  <h4 className="text-xs sm:text-sm font-bold text-slate-900 dark:text-white leading-tight truncate">
                     {t.name}
                   </h4>
-                  <p className="text-[11px] text-slate-500 dark:text-slate-400 mt-0.5">
-                    {t.role}, {t.company}
+                  <p className="text-[11px] text-slate-500 dark:text-slate-400 mt-0.5 truncate">
+                    {t.role || "Client"}{t.company ? `, ${t.company}` : ""}
                   </p>
                 </div>
               </div>

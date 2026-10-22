@@ -16,6 +16,7 @@ export const createTeamMemberSchema = z.object({
     })
     .optional(),
   published: z.boolean().default(true),
+  featured: z.boolean().default(false),
   sortOrder: z.number().int().default(0),
 });
 

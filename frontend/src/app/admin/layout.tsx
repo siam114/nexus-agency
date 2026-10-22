@@ -17,14 +17,18 @@ import {
   Menu,
   X,
   Shield,
+  Users,
+  Quote,
 } from "lucide-react";
 import { cn } from "@/lib/utils";
 
 const NAV_ITEMS = [
   { label: "Dashboard", href: "/admin", icon: LayoutDashboard },
   { label: "Projects", href: "/admin/projects", icon: FolderKanban },
-  { label: "Inquiries", href: "/admin/inquiries", icon: Mail },
   { label: "Services", href: "/admin/services", icon: Layers },
+  { label: "Team Members", href: "/admin/team", icon: Users },
+  { label: "Testimonials", href: "/admin/testimonials", icon: Quote },
+  { label: "Inquiries", href: "/admin/inquiries", icon: Mail },
   { label: "Settings", href: "/admin/settings", icon: Settings },
 ];
 

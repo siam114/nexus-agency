@@ -4,12 +4,14 @@ import * as React from "react";
 import Link from "next/link";
 import { Card } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
-import { projectsData, servicesData, teamData } from "@/data/mockData";
+import { projectsData, servicesData } from "@/data/mockData";
+import { getAdminTeam, getAdminTestimonials } from "@/lib/liveContent";
 import {
   FolderKanban,
   Layers,
   Mail,
   Users,
+  Quote,
   ArrowRight,
   Plus,
   ExternalLink,
@@ -20,6 +22,17 @@ import {
 
 export default function AdminDashboardPage() {
   const [inquiriesCount] = React.useState(3);
+  const [teamMembersCount, setTeamMembersCount] = React.useState(() => getAdminTeam().length);
+  const [testimonialsCount, setTestimonialsCount] = React.useState(() => getAdminTestimonials().length);
+
+  React.useEffect(() => {
+    const handleUpdate = () => {
+      setTeamMembersCount(getAdminTeam().length);
+      setTestimonialsCount(getAdminTestimonials().length);
+    };
+    window.addEventListener("nexus_content_update", handleUpdate);
+    return () => window.removeEventListener("nexus_content_update", handleUpdate);
+  }, []);
 
   const stats = [
     {
@@ -39,20 +52,28 @@ export default function AdminDashboardPage() {
       href: "/admin/services",
     },
     {
+      label: "Team Members",
+      value: teamMembersCount.toString(),
+      icon: Users,
+      color: "text-amber-600 dark:text-amber-400",
+      bg: "bg-amber-50 dark:bg-amber-950/60",
+      href: "/admin/team",
+    },
+    {
+      label: "Testimonials",
+      value: testimonialsCount.toString(),
+      icon: Quote,
+      color: "text-indigo-600 dark:text-indigo-400",
+      bg: "bg-indigo-50 dark:bg-indigo-950/60",
+      href: "/admin/testimonials",
+    },
+    {
       label: "Client Inquiries",
       value: inquiriesCount.toString(),
       icon: Mail,
       color: "text-emerald-600 dark:text-emerald-400",
       bg: "bg-emerald-50 dark:bg-emerald-950/60",
       href: "/admin/inquiries",
-    },
-    {
-      label: "Team Members",
-      value: teamData.length.toString(),
-      icon: Users,
-      color: "text-amber-600 dark:text-amber-400",
-      bg: "bg-amber-50 dark:bg-amber-950/60",
-      href: "/admin",
     },
   ];
 
@@ -88,7 +109,7 @@ export default function AdminDashboardPage() {
       </div>
 
       {/* KPI Stats Grid */}
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5">
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-4">
         {stats.map((stat) => {
           const Icon = stat.icon;
           return (

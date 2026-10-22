@@ -1,9 +1,10 @@
 import type { Metadata } from "next";
 import Image from "next/image";
 import Link from "next/link";
-import { teamData, testimonialsData } from "@/data/mockData";
 import { Card } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
+import { TeamGrid } from "@/components/sections/TeamGrid";
+import { TestimonialsGrid } from "@/components/sections/TestimonialsGrid";
 import {
   Sparkles,
   ArrowRight,
@@ -11,15 +12,7 @@ import {
   Smartphone,
   ShieldCheck,
   MessageSquare,
-  Quote,
 } from "lucide-react";
-import {
-  GithubIcon,
-  LinkedinIcon,
-  FacebookIcon,
-  WhatsappIcon,
-  PortfolioIcon,
-} from "@/components/ui/SocialIcons";
 
 export const metadata: Metadata = {
   title: "About Us | NexusAgency",
@@ -182,96 +175,7 @@ export default function AboutPage() {
             </h2>
           </div>
 
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5 gap-6">
-            {teamData.map((member) => (
-              <Card key={member.id} className="overflow-hidden p-0 rounded-2xl border border-slate-200/80 dark:border-slate-800 bg-white dark:bg-slate-900 shadow-sm group">
-                <div className="relative h-64 w-full overflow-hidden bg-slate-100 dark:bg-slate-800">
-                  <Image
-                    src={member.image}
-                    alt={member.name}
-                    fill
-                    className="object-cover group-hover:scale-105 transition-transform duration-500"
-                    sizes="(max-width: 768px) 100vw, 33vw"
-                  />
-                </div>
-                <div className="p-5">
-                  <h3 className="text-base font-bold text-slate-900 dark:text-white">
-                    {member.name}
-                  </h3>
-                  <div className="text-xs font-medium text-blue-600 dark:text-blue-400 mt-0.5 mb-2">
-                    {member.role}
-                  </div>
-                  <p className="text-xs text-slate-500 dark:text-slate-400 leading-relaxed mb-4">
-                    {member.bio}
-                  </p>
-
-                  {/* Social Icons */}
-                  <div className="flex items-center gap-1.5 text-slate-400 dark:text-slate-500 pt-3 border-t border-slate-100 dark:border-slate-800 flex-wrap">
-                    {member.socials?.website && (
-                      <a
-                        href={member.socials.website}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        aria-label={`${member.name} Portfolio`}
-                        title={`${member.name} Portfolio`}
-                        className="hover:text-blue-600 dark:hover:text-blue-400 transition-colors p-1 rounded-md hover:bg-slate-100 dark:hover:bg-slate-800"
-                      >
-                        <PortfolioIcon className="h-3.5 w-3.5" />
-                      </a>
-                    )}
-                    {member.socials?.github && (
-                      <a
-                        href={member.socials.github}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        aria-label={`${member.name} GitHub`}
-                        title={`${member.name} GitHub`}
-                        className="hover:text-slate-900 dark:hover:text-white transition-colors p-1 rounded-md hover:bg-slate-100 dark:hover:bg-slate-800"
-                      >
-                        <GithubIcon className="h-3.5 w-3.5" />
-                      </a>
-                    )}
-                    {member.socials?.linkedin && (
-                      <a
-                        href={member.socials.linkedin}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        aria-label={`${member.name} LinkedIn`}
-                        title={`${member.name} LinkedIn`}
-                        className="hover:text-blue-600 dark:hover:text-blue-400 transition-colors p-1 rounded-md hover:bg-slate-100 dark:hover:bg-slate-800"
-                      >
-                        <LinkedinIcon className="h-3.5 w-3.5" />
-                      </a>
-                    )}
-                    {member.socials?.facebook && (
-                      <a
-                        href={member.socials.facebook}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        aria-label={`${member.name} Facebook`}
-                        title={`${member.name} Facebook`}
-                        className="hover:text-blue-600 dark:hover:text-blue-400 transition-colors p-1 rounded-md hover:bg-slate-100 dark:hover:bg-slate-800"
-                      >
-                        <FacebookIcon className="h-3.5 w-3.5" />
-                      </a>
-                    )}
-                    {member.socials?.whatsapp && (
-                      <a
-                        href={member.socials.whatsapp}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        aria-label={`${member.name} WhatsApp`}
-                        title={`${member.name} WhatsApp`}
-                        className="hover:text-emerald-600 dark:hover:text-emerald-400 transition-colors p-1 rounded-md hover:bg-slate-100 dark:hover:bg-slate-800"
-                      >
-                        <WhatsappIcon className="h-3.5 w-3.5" />
-                      </a>
-                    )}
-                  </div>
-                </div>
-              </Card>
-            ))}
-          </div>
+          <TeamGrid />
         </div>
 
         {/* Testimonials */}
@@ -285,25 +189,7 @@ export default function AboutPage() {
             </h2>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-            {testimonialsData.map((t) => (
-              <Card key={t.id} className="p-8 relative rounded-2xl border border-slate-200/80 dark:border-slate-800 bg-white dark:bg-slate-900 shadow-sm">
-                <Quote className="h-8 w-8 text-blue-600/20 absolute top-6 right-6" />
-                <p className="text-sm italic text-slate-700 dark:text-slate-300 leading-relaxed mb-6">
-                  &ldquo;{t.content}&rdquo;
-                </p>
-                <div className="flex items-center gap-4">
-                  <div className="relative h-11 w-11 rounded-full overflow-hidden">
-                    <Image src={t.avatar} alt={t.name} fill className="object-cover" sizes="44px" />
-                  </div>
-                  <div>
-                    <div className="font-bold text-slate-900 dark:text-white text-sm">{t.name}</div>
-                    <div className="text-xs text-slate-500">{t.role}, {t.company}</div>
-                  </div>
-                </div>
-              </Card>
-            ))}
-          </div>
+          <TestimonialsGrid />
         </div>
 
         {/* Bottom CTA */}

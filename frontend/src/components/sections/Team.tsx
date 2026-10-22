@@ -1,6 +1,8 @@
+"use client";
+
 import Link from "next/link";
 import Image from "next/image";
-import { teamData } from "@/data/mockData";
+import { useLiveTeam } from "@/lib/liveContent";
 import { Card } from "@/components/ui/card";
 import { ArrowRight } from "lucide-react";
 import {
@@ -12,6 +14,8 @@ import {
 } from "@/components/ui/SocialIcons";
 
 export function Team() {
+  const members = useLiveTeam();
+
   return (
     <section id="team" className="py-12 lg:py-16 bg-slate-50/50 dark:bg-slate-950/40">
       <div className="mx-auto max-w-7xl px-6">
@@ -43,9 +47,9 @@ export function Team() {
           </div>
         </div>
 
-        {/* 5 Team Member Cards */}
+        {/* Dynamic Team Member Cards */}
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-5">
-          {teamData.map((member) => (
+          {members.map((member) => (
             <Card
               key={member.id}
               className="overflow-hidden p-0 rounded-2xl border border-slate-200/80 dark:border-slate-800 bg-white dark:bg-slate-900 shadow-sm hover:shadow-lg transition-all group"
@@ -56,6 +60,7 @@ export function Team() {
                   src={member.image}
                   alt={member.name}
                   fill
+                  unoptimized
                   className="object-cover group-hover:scale-105 transition-transform duration-500"
                   sizes="(max-width: 640px) 100vw, (max-width: 1024px) 33vw, 20vw"
                 />
