@@ -5,7 +5,10 @@ import { isDbConnected } from "../config/db.js";
 import { slugify } from "../utils/slugify.js";
 
 // In-memory store for fallback operations
-let fallbackProjects: IProject[] = [...initialProjects];
+let fallbackProjects: IProject[] = initialProjects.map((p, idx) => ({
+  ...p,
+  id: p.id || p.slug || `project-${idx + 1}`,
+}));
 
 export const projectService = {
   async getPublished(filter?: { category?: string; featured?: boolean }) {

@@ -17,6 +17,8 @@ export interface Project {
   link?: string;
   liveUrl?: string;
   featured?: boolean;
+  published?: boolean;
+  sortOrder?: number;
   metrics?: ProjectMetric[];
 }
 
@@ -36,6 +38,7 @@ export interface ProjectDetail {
   year: string;
   tags: string[];
   image: string;
+  gallery?: string[];
   liveUrl?: string;
   summary: string;
   metaTitle: string;
@@ -68,6 +71,9 @@ export interface ProjectDetail {
     summary: string;
     highlights: string[];
   };
+  featured?: boolean;
+  published?: boolean;
+  sortOrder?: number;
 }
 
 export interface Service {

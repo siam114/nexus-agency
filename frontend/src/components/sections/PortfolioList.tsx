@@ -8,6 +8,7 @@ import { Card } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Calendar, Building2, ArrowRight, FolderKanban } from "lucide-react";
 import { cn } from "@/lib/utils";
+import { useLiveProjects } from "@/lib/liveContent";
 
 interface PortfolioListProps {
   projects: Project[];
@@ -23,13 +24,15 @@ const CATEGORIES = [
   "Ads Management",
 ];
 
-export function PortfolioList({ projects }: PortfolioListProps) {
+export function PortfolioList({ projects: fallbackProjects }: PortfolioListProps) {
+  const liveProjects = useLiveProjects();
+  const effectiveProjects = liveProjects.length > 0 ? liveProjects : fallbackProjects;
   const [selectedCategory, setSelectedCategory] = React.useState<string>("All Projects");
 
   const filteredProjects =
     selectedCategory === "All Projects"
-      ? projects
-      : projects.filter((p) => p.category === selectedCategory);
+      ? effectiveProjects
+      : effectiveProjects.filter((p) => p.category === selectedCategory);
 
   return (
     <div>

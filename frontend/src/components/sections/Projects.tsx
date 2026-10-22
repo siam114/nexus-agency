@@ -1,10 +1,18 @@
+"use client";
+
 import Link from "next/link";
 import Image from "next/image";
 import { projectsData } from "@/data/mockData";
 import { Card } from "@/components/ui/card";
 import { ArrowRight, TrendingUp, BarChart2 } from "lucide-react";
+import { useLiveProjects } from "@/lib/liveContent";
 
 export function Projects() {
+  const liveProjects = useLiveProjects();
+  const allProjects = liveProjects.length > 0 ? liveProjects : projectsData;
+  const featuredProjects = allProjects.filter((p) => p.featured);
+  const displayProjects = (featuredProjects.length > 0 ? featuredProjects : allProjects).slice(0, 3);
+
   return (
     <section id="portfolio" className="py-12 lg:py-16 bg-slate-50/50 dark:bg-slate-950/40">
       <div className="mx-auto max-w-7xl px-6">
@@ -35,9 +43,9 @@ export function Projects() {
 
         {/* 3 Visual Project Cards */}
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-          {projectsData.slice(0, 3).map((project) => (
+          {displayProjects.map((project) => (
             <Card
-              key={project.id}
+              key={project.id || project.slug}
               className="overflow-hidden p-0 group flex flex-col justify-between rounded-2xl border border-slate-200/80 dark:border-slate-800 bg-white dark:bg-slate-900 shadow-sm hover:shadow-xl transition-all duration-300"
             >
               {/* Project Image */}
