@@ -2,6 +2,7 @@
 
 import * as React from "react";
 import Link from "next/link";
+import { usePathname } from "next/navigation";
 import { Logo } from "@/components/ui/Logo";
 import { Mail, Phone, MapPin } from "lucide-react";
 import { personalLinks } from "@/data/personalLinks";
@@ -14,6 +15,12 @@ import {
 } from "@/components/ui/SocialIcons";
 
 export function Footer() {
+  const pathname = usePathname();
+
+  // Do not render public footer on admin dashboard pages
+  if (pathname.startsWith("/admin")) {
+    return null;
+  }
   return (
     <footer className="border-t border-slate-200/80 dark:border-slate-800 bg-white dark:bg-slate-950 pt-12 pb-10 transition-colors">
       <div className="mx-auto max-w-7xl px-6">
