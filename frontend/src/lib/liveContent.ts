@@ -30,7 +30,9 @@ export function getAdminTeam(): TeamMember[] {
     if (saved) {
       const parsed: TeamMember[] = JSON.parse(saved);
       if (Array.isArray(parsed) && parsed.length > 0) {
-        return parsed.sort((a, b) => (a.sortOrder ?? 0) - (b.sortOrder ?? 0));
+        return parsed
+          .map((m, idx) => ({ ...m, id: m.id || `member-${idx + 1}` }))
+          .sort((a, b) => (a.sortOrder ?? 0) - (b.sortOrder ?? 0));
       }
     }
   } catch {
@@ -59,7 +61,9 @@ export function getAdminTestimonials(): Testimonial[] {
     if (saved) {
       const parsed: Testimonial[] = JSON.parse(saved);
       if (Array.isArray(parsed) && parsed.length > 0) {
-        return parsed.sort((a, b) => (a.sortOrder ?? 0) - (b.sortOrder ?? 0));
+        return parsed
+          .map((t, idx) => ({ ...t, id: t.id || `testimonial-${idx + 1}` }))
+          .sort((a, b) => (a.sortOrder ?? 0) - (b.sortOrder ?? 0));
       }
     }
   } catch {
@@ -115,7 +119,11 @@ export function useLiveTeam(): TeamMember[] {
         if (res.ok) {
           const data = await res.json();
           if (data.success && Array.isArray(data.data) && data.data.length > 0) {
-            setMembers(data.data);
+            const normalized = data.data.map((m: TeamMember, idx: number) => ({
+              ...m,
+              id: m.id || `member-${idx + 1}`,
+            }));
+            setMembers(normalized);
           }
         }
       } catch {
@@ -175,7 +183,11 @@ export function useLiveTestimonials(): Testimonial[] {
         if (res.ok) {
           const data = await res.json();
           if (data.success && Array.isArray(data.data) && data.data.length > 0) {
-            setTestimonials(data.data);
+            const normalized = data.data.map((t: Testimonial, idx: number) => ({
+              ...t,
+              id: t.id || `testimonial-${idx + 1}`,
+            }));
+            setTestimonials(normalized);
           }
         }
       } catch {

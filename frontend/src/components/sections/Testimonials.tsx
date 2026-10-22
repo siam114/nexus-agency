@@ -71,9 +71,9 @@ export function Testimonials() {
 
         {/* 3 Testimonial Cards */}
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-          {displayedTestimonials.map((t) => (
+          {displayedTestimonials.map((t, idx) => (
             <Card
-              key={t.id}
+              key={t.id || `testimonial-${idx}-${t.name}`}
               className="p-6 sm:p-7 flex flex-col justify-between rounded-2xl border border-slate-200/80 dark:border-slate-800 bg-white dark:bg-slate-900 shadow-sm hover:shadow-md transition-all"
             >
               <div>

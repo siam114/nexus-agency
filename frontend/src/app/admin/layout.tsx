@@ -36,14 +36,19 @@ function AdminShell({ children }: { children: React.ReactNode }) {
   const { user, logout, loading, isAuthenticated } = useAdminAuth();
   const pathname = usePathname();
   const [sidebarOpen, setSidebarOpen] = React.useState(false);
+  const mounted = React.useSyncExternalStore(
+    () => () => {},
+    () => true,
+    () => false
+  );
 
   // If on login page, render clean standalone container
   if (pathname === "/admin/login") {
     return <>{children}</>;
   }
 
-  // Prevent flash while checking auth
-  if (loading) {
+  // Prevent hydration mismatch between server and client
+  if (!mounted || loading) {
     return (
       <div className="min-h-screen flex items-center justify-center bg-slate-950 text-slate-400">
         <div className="flex items-center gap-3">

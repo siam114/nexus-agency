@@ -49,9 +49,9 @@ export function Team() {
 
         {/* Dynamic Team Member Cards */}
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-5">
-          {members.map((member) => (
+          {members.map((member, idx) => (
             <Card
-              key={member.id}
+              key={member.id || `team-member-${idx}-${member.name}`}
               className="overflow-hidden p-0 rounded-2xl border border-slate-200/80 dark:border-slate-800 bg-white dark:bg-slate-900 shadow-sm hover:shadow-lg transition-all group"
             >
               {/* Member Portrait */}

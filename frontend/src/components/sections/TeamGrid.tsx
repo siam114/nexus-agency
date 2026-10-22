@@ -16,9 +16,9 @@ export function TeamGrid() {
 
   return (
     <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5 gap-6 mb-24">
-      {members.map((member) => (
+      {members.map((member, idx) => (
         <Card
-          key={member.id}
+          key={member.id || `team-member-grid-${idx}-${member.name}`}
           className="overflow-hidden p-0 rounded-2xl border border-slate-200/80 dark:border-slate-800 bg-white dark:bg-slate-900 shadow-sm hover:shadow-xl transition-all duration-300 group"
         >
           <div className="relative h-64 w-full overflow-hidden bg-slate-100 dark:bg-slate-800">
@@ -114,3 +114,4 @@ export function TeamGrid() {
     </div>
   );
 }
+

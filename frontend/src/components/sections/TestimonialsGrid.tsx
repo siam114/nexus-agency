@@ -13,9 +13,9 @@ export function TestimonialsGrid() {
 
   return (
     <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-      {testimonials.map((t) => (
+      {testimonials.map((t, idx) => (
         <Card
-          key={t.id}
+          key={t.id || `testimonials-grid-${idx}-${t.name}`}
           className="p-8 relative rounded-2xl border border-slate-200/80 dark:border-slate-800 bg-white dark:bg-slate-900 shadow-sm flex flex-col justify-between"
         >
           <Quote className="h-8 w-8 text-blue-600/20 absolute top-6 right-6" />
@@ -59,3 +59,4 @@ export function TestimonialsGrid() {
     </div>
   );
 }
+

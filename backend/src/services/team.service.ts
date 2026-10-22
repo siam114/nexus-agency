@@ -3,7 +3,10 @@ import { ITeamMember } from "../types/index.js";
 import { initialTeam } from "../data/initialData.js";
 import { isDbConnected } from "../config/db.js";
 
-let fallbackTeam: ITeamMember[] = [...initialTeam];
+let fallbackTeam: ITeamMember[] = initialTeam.map((m, idx) => ({
+  ...m,
+  id: m.id || (idx + 1).toString(),
+}));
 
 export const teamService = {
   async getPublished() {

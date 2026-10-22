@@ -3,7 +3,10 @@ import { ITestimonial } from "../types/index.js";
 import { initialTestimonials } from "../data/initialData.js";
 import { isDbConnected } from "../config/db.js";
 
-let fallbackTestimonials: ITestimonial[] = [...initialTestimonials];
+let fallbackTestimonials: ITestimonial[] = initialTestimonials.map((t, idx) => ({
+  ...t,
+  id: t.id || (idx + 1).toString(),
+}));
 
 export const testimonialService = {
   async getPublished() {
