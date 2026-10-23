@@ -6,6 +6,7 @@ import { Card } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { projectsData, servicesData } from "@/data/mockData";
 import { getAdminTeam, getAdminTestimonials } from "@/lib/liveContent";
+import { useAdminAuth } from "@/lib/adminAuth";
 import {
   FolderKanban,
   Layers,
@@ -21,6 +22,7 @@ import {
 } from "lucide-react";
 
 export default function AdminDashboardPage() {
+  const { user } = useAdminAuth();
   const [inquiriesCount] = React.useState(3);
   const [teamMembersCount, setTeamMembersCount] = React.useState(() => getAdminTeam().length);
   const [testimonialsCount, setTestimonialsCount] = React.useState(() => getAdminTestimonials().length);
