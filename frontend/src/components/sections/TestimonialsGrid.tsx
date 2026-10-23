@@ -16,9 +16,9 @@ export function TestimonialsGrid() {
       {testimonials.map((t, idx) => (
         <Card
           key={t.id || `testimonials-grid-${idx}-${t.name}`}
-          className="p-8 relative rounded-2xl border border-slate-200/80 dark:border-slate-800 bg-white dark:bg-slate-900 shadow-sm flex flex-col justify-between"
+          className="group p-8 relative rounded-2xl border border-slate-200/80 dark:border-slate-800 bg-white dark:bg-slate-900 shadow-sm flex flex-col justify-between transition-all duration-500 ease-[cubic-bezier(0.25,1,0.5,1)] hover:-translate-y-1.5 hover:border-blue-500/40 hover:shadow-xl hover:shadow-blue-500/10 cursor-pointer"
         >
-          <Quote className="h-8 w-8 text-blue-600/20 absolute top-6 right-6" />
+          <Quote className="h-8 w-8 text-blue-600/20 group-hover:text-blue-600/40 group-hover:scale-110 transition-all duration-500 absolute top-6 right-6" />
 
           <div>
             {t.rating && (

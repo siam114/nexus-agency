@@ -34,15 +34,15 @@ export function Process() {
 
             return (
               <div key={step.step} className="flex">
-                <Card className="w-full flex flex-col justify-between p-6 rounded-2xl border border-slate-200/80 dark:border-slate-800 bg-white dark:bg-slate-900 shadow-sm hover:shadow-md transition-all">
+                <Card className="group w-full flex flex-col justify-between p-6 rounded-2xl border border-slate-200/80 dark:border-slate-800 bg-white dark:bg-slate-900 shadow-sm transition-all duration-500 ease-[cubic-bezier(0.25,1,0.5,1)] hover:-translate-y-1.5 hover:border-blue-500/40 hover:shadow-xl hover:shadow-blue-500/10 cursor-pointer">
                   <div>
                     {/* Step Number, Icon & Sequence Indicator */}
                     <div className="flex items-center justify-between mb-5">
                       <div className="flex items-center gap-2.5">
-                        <div className="flex h-8 w-8 items-center justify-center rounded-full bg-blue-600 text-white font-bold text-xs shadow-sm shadow-blue-500/30">
+                        <div className="flex h-8 w-8 items-center justify-center rounded-full bg-blue-600 text-white font-bold text-xs shadow-sm shadow-blue-500/30 group-hover:scale-110 transition-transform duration-300">
                           {step.step}
                         </div>
-                        <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-blue-50 dark:bg-blue-950/60 text-blue-600 dark:text-blue-400">
+                        <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-blue-50 dark:bg-blue-950/60 text-blue-600 dark:text-blue-400 group-hover:bg-blue-600 group-hover:text-white transition-all duration-300">
                           <Icon className="h-4 w-4" />
                         </div>
                       </div>
@@ -50,7 +50,7 @@ export function Process() {
                       {/* Clean in-card flow arrow, strictly inside card with zero overflow */}
                       {idx < processSteps.length - 1 && (
                         <div
-                          className="hidden lg:flex items-center text-slate-300 dark:text-slate-600"
+                          className="hidden lg:flex items-center text-slate-300 dark:text-slate-600 group-hover:translate-x-1 group-hover:text-blue-500 transition-all duration-300"
                           aria-hidden="true"
                         >
                           <ArrowRight className="h-4 w-4" />
@@ -59,7 +59,7 @@ export function Process() {
                     </div>
 
                     {/* Step Title */}
-                    <h3 className="text-base sm:text-lg font-bold text-slate-900 dark:text-white mb-2">
+                    <h3 className="text-base sm:text-lg font-bold text-slate-900 dark:text-white mb-2 group-hover:text-blue-600 dark:group-hover:text-blue-400 transition-colors duration-300">
                       {step.title}
                     </h3>
 

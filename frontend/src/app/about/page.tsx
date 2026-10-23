@@ -67,14 +67,15 @@ export default function AboutPage() {
 
         {/* Story Section */}
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center mb-28">
-          <div className="relative h-96 lg:h-[480px] rounded-3xl overflow-hidden border border-slate-200 dark:border-slate-800">
+          <div className="group relative h-96 lg:h-[480px] rounded-3xl overflow-hidden border border-slate-200 dark:border-slate-800 shadow-md transition-all duration-700 ease-[cubic-bezier(0.25,1,0.5,1)] hover:shadow-2xl hover:border-blue-500/40">
             <Image
               src="https://images.unsplash.com/photo-1522071820081-009f0129c71c?auto=format&fit=crop&w=1000&q=80"
               alt="NexusAgency Team Collaborating"
               fill
-              className="object-cover"
+              className="object-cover transition-transform duration-700 ease-[cubic-bezier(0.25,1,0.5,1)] group-hover:scale-105"
               sizes="(max-width: 1024px) 100vw, 50vw"
             />
+            <div className="absolute inset-0 bg-gradient-to-t from-slate-950/50 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none" />
           </div>
 
           <div className="space-y-6">
@@ -88,42 +89,36 @@ export default function AboutPage() {
               We work directly with store owners, growing brands, and service businesses that need reliable digital implementation. Rather than offering bloated consulting packages, we focus on what moves the needle:
             </p>
             <ul className="space-y-2 text-sm text-slate-700 dark:text-slate-300 font-medium">
-              <li className="flex items-center gap-2">
-                <span className="h-1.5 w-1.5 rounded-full bg-blue-600" />
-                <span><strong>E-commerce website development</strong> on Shopify with custom Liquid themes.</span>
-              </li>
-              <li className="flex items-center gap-2">
-                <span className="h-1.5 w-1.5 rounded-full bg-blue-600" />
-                <span><strong>Figma-to-website implementation</strong> with responsive, clean code.</span>
-              </li>
-              <li className="flex items-center gap-2">
-                <span className="h-1.5 w-1.5 rounded-full bg-blue-600" />
-                <span><strong>WordPress website solutions</strong> for businesses and service providers.</span>
-              </li>
-              <li className="flex items-center gap-2">
-                <span className="h-1.5 w-1.5 rounded-full bg-blue-600" />
-                <span><strong>Custom website development</strong> built for bespoke functionality and scale.</span>
-              </li>
-              <li className="flex items-center gap-2">
-                <span className="h-1.5 w-1.5 rounded-full bg-blue-600" />
-                <span><strong>Search engine optimization</strong> to improve site structure and visibility.</span>
-              </li>
-              <li className="flex items-center gap-2">
-                <span className="h-1.5 w-1.5 rounded-full bg-blue-600" />
-                <span><strong>Paid advertising management</strong> across Google and Meta platforms.</span>
-              </li>
+              {[
+                { bold: "E-commerce website development", text: "on Shopify with custom Liquid themes." },
+                { bold: "Figma-to-website implementation", text: "with responsive, clean code." },
+                { bold: "WordPress website solutions", text: "for businesses and service providers." },
+                { bold: "Custom website development", text: "built for bespoke functionality and scale." },
+                { bold: "Search engine optimization", text: "to improve site structure and visibility." },
+                { bold: "Paid advertising management", text: "across Google and Meta platforms." },
+              ].map((item, idx) => (
+                <li
+                  key={idx}
+                  className="flex items-center gap-3 p-1.5 -mx-1.5 rounded-xl transition-all duration-300 hover:bg-slate-100/70 dark:hover:bg-slate-800/40 hover:translate-x-1"
+                >
+                  <span className="h-1.5 w-1.5 rounded-full bg-blue-600 shrink-0" />
+                  <span>
+                    <strong>{item.bold}</strong> {item.text}
+                  </span>
+                </li>
+              ))}
             </ul>
 
             <div className="pt-4 flex flex-wrap gap-8 border-t border-slate-100 dark:border-slate-800">
-              <div>
+              <div className="p-3 -m-3 rounded-2xl transition-all duration-300 hover:bg-blue-50/60 dark:hover:bg-blue-950/30 hover:-translate-y-1">
                 <div className="text-2xl font-extrabold text-blue-600">6</div>
                 <div className="text-xs text-slate-500 mt-1 font-medium">Core Services</div>
               </div>
-              <div>
+              <div className="p-3 -m-3 rounded-2xl transition-all duration-300 hover:bg-blue-50/60 dark:hover:bg-blue-950/30 hover:-translate-y-1">
                 <div className="text-2xl font-extrabold text-blue-600">Direct</div>
                 <div className="text-xs text-slate-500 mt-1 font-medium">Builder Access</div>
               </div>
-              <div>
+              <div className="p-3 -m-3 rounded-2xl transition-all duration-300 hover:bg-blue-50/60 dark:hover:bg-blue-950/30 hover:-translate-y-1">
                 <div className="text-2xl font-extrabold text-blue-600">Data-Led</div>
                 <div className="text-xs text-slate-500 mt-1 font-medium">Optimization</div>
               </div>
@@ -143,20 +138,37 @@ export default function AboutPage() {
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-            {values.map((v) => {
+            {values.map((v, index) => {
               const Icon = v.icon;
               return (
-                <Card key={v.title} className="p-6 flex flex-col justify-between rounded-2xl border border-slate-200/80 dark:border-slate-800 bg-white dark:bg-slate-900 shadow-sm">
-                  <div>
-                    <div className="flex h-12 w-12 items-center justify-center rounded-xl bg-blue-50 dark:bg-blue-950/80 text-blue-600 dark:text-blue-400 mb-5">
-                      <Icon className="h-6 w-6" />
+                <Card
+                  key={v.title}
+                  className="group relative overflow-hidden rounded-2xl border border-slate-200/80 dark:border-slate-800/80 bg-white dark:bg-slate-900/90 p-7 shadow-sm transition-all duration-500 ease-[cubic-bezier(0.25,1,0.5,1)] hover:-translate-y-2 hover:border-blue-500/50 hover:shadow-[0_20px_40px_-15px_rgba(37,99,235,0.18)] dark:hover:shadow-[0_20px_40px_-15px_rgba(59,130,246,0.25)] flex flex-col justify-between cursor-pointer"
+                >
+                  {/* Gentle gradient glow on hover */}
+                  <div className="absolute inset-0 bg-gradient-to-br from-blue-500/[0.07] via-transparent to-indigo-500/[0.04] opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none" />
+                  
+                  {/* Top glowing accent sheen */}
+                  <div className="absolute top-0 left-0 right-0 h-[2px] bg-gradient-to-r from-transparent via-blue-500 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
+
+                  <div className="relative z-10">
+                    <div className="flex h-13 w-13 items-center justify-center rounded-xl bg-blue-50 dark:bg-blue-950/80 text-blue-600 dark:text-blue-400 mb-6 border border-blue-100 dark:border-blue-900/50 transition-all duration-500 ease-[cubic-bezier(0.25,1,0.5,1)] group-hover:scale-110 group-hover:bg-blue-600 group-hover:text-white group-hover:border-blue-600 group-hover:shadow-lg group-hover:shadow-blue-500/30">
+                      <Icon className="h-6 w-6 transition-transform duration-500 ease-[cubic-bezier(0.25,1,0.5,1)] group-hover:rotate-6" />
                     </div>
-                    <h3 className="text-lg font-bold text-slate-900 dark:text-white mb-2">
+                    <h3 className="text-lg font-bold text-slate-900 dark:text-white mb-2.5 transition-colors duration-300 group-hover:text-blue-600 dark:group-hover:text-blue-400">
                       {v.title}
                     </h3>
-                    <p className="text-sm text-slate-600 dark:text-slate-400 leading-relaxed">
+                    <p className="text-sm text-slate-600 dark:text-slate-400 leading-relaxed transition-colors duration-300 group-hover:text-slate-700 dark:group-hover:text-slate-300">
                       {v.description}
                     </p>
+                  </div>
+
+                  {/* Subtle footer pill */}
+                  <div className="relative z-10 mt-6 pt-4 border-t border-slate-100 dark:border-slate-800/80 flex items-center justify-between">
+                    <span className="text-[11px] font-semibold tracking-wider uppercase text-slate-400 dark:text-slate-500 group-hover:text-blue-600 dark:group-hover:text-blue-400 transition-colors duration-300">
+                      Principle 0{index + 1}
+                    </span>
+                    <span className="h-1.5 w-1.5 rounded-full bg-slate-300 dark:bg-slate-700 group-hover:bg-blue-500 group-hover:scale-150 transition-all duration-300" />
                   </div>
                 </Card>
               );
@@ -200,9 +212,13 @@ export default function AboutPage() {
           <p className="text-slate-600 dark:text-slate-400 text-sm mb-6">
             Tell us about your requirements for Shopify, Figma conversion, WordPress, SEO, or Ads management.
           </p>
-          <Link href="/contact">
-            <Button size="lg" className="rounded-full bg-blue-600 hover:bg-blue-700 text-white px-7">
-              Start a Project <ArrowRight className="h-4 w-4 ml-1.5" />
+          <Link href="/contact" className="inline-block">
+            <Button
+              size="lg"
+              className="group rounded-full bg-blue-600 hover:bg-blue-500 text-white px-8 shadow-lg shadow-blue-500/25 hover:shadow-xl hover:shadow-blue-500/35 hover:-translate-y-0.5 transition-all duration-300"
+            >
+              Start a Project
+              <ArrowRight className="h-4 w-4 ml-2 transition-transform duration-300 group-hover:translate-x-1" />
             </Button>
           </Link>
         </div>
