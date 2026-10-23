@@ -4,7 +4,7 @@ import * as React from "react";
 import { useSearchParams } from "next/navigation";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
-import { Send, CheckCircle2 } from "lucide-react";
+import { Send, CheckCircle2, Loader2, AlertCircle } from "lucide-react";
 import { personalLinks } from "@/data/personalLinks";
 import { WhatsappIcon, PortfolioIcon } from "@/components/ui/SocialIcons";
 
@@ -43,7 +43,11 @@ function ContactFormContent() {
     return SERVICE_PARAM_MAP[decoded] || "";
   }, [rawService]);
 
+  const [isSubmitting, setIsSubmitting] = React.useState(false);
+  const [errorMsg, setErrorMsg] = React.useState<string | null>(null);
   const [submitted, setSubmitted] = React.useState(false);
+  const [successInfo, setSuccessInfo] = React.useState({ name: "", service: "" });
+
   const [formData, setFormData] = React.useState(() => ({
     name: "",
     email: "",
@@ -59,9 +63,54 @@ function ContactFormContent() {
     }
   }
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    setSubmitted(true);
+    setIsSubmitting(true);
+    setErrorMsg(null);
+
+    const backendUrl =
+      process.env.NEXT_PUBLIC_BACKEND_URL || "http://localhost:5000/api/v1";
+
+    try {
+      const response = await fetch(`${backendUrl}/contact`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          name: formData.name.trim(),
+          email: formData.email.trim(),
+          service: formData.service || undefined,
+          message: formData.message.trim(),
+        }),
+      });
+
+      const resData = await response.json();
+
+      if (!response.ok) {
+        const errorText =
+          resData.message ||
+          (Array.isArray(resData.errors) && resData.errors[0]?.message) ||
+          "Failed to send your inquiry. Please try again or chat directly on WhatsApp.";
+        throw new Error(errorText);
+      }
+
+      setSuccessInfo({
+        name: formData.name.trim(),
+        service: formData.service,
+      });
+      setSubmitted(true);
+      setFormData({ name: "", email: "", service: "", message: "" });
+    } catch (err: unknown) {
+      const message =
+        err instanceof Error
+          ? err.message
+          : "Network connection error. Please try again or message directly via WhatsApp.";
+      console.error("Contact submission error:", err);
+      setErrorMsg(message);
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   const handleChange = (
@@ -108,35 +157,58 @@ function ContactFormContent() {
         </div>
 
         <div className="mx-auto max-w-2xl">
-          <Card className="p-8">
+          <Card className="p-8 border border-slate-200/80 dark:border-slate-800 bg-white dark:bg-slate-900 shadow-lg rounded-3xl">
             {submitted ? (
-              <div className="py-12 text-center space-y-4">
-                <div className="mx-auto flex h-14 w-14 items-center justify-center rounded-full bg-green-100 text-green-600 dark:bg-green-950 dark:text-green-400">
-                  <CheckCircle2 className="h-8 w-8" />
+              <div className="py-10 text-center space-y-4">
+                <div className="mx-auto flex h-16 w-16 items-center justify-center rounded-full bg-emerald-100 text-emerald-600 dark:bg-emerald-950/80 dark:text-emerald-400 shadow-md shadow-emerald-500/20 animate-in zoom-in-75 duration-300">
+                  <CheckCircle2 className="h-9 w-9" />
                 </div>
-                <h3 className="text-2xl font-bold text-zinc-900 dark:text-white">
-                  Message Sent!
+                <h3 className="text-2xl sm:text-3xl font-extrabold text-zinc-900 dark:text-white">
+                  Message Sent to SM SIAM!
                 </h3>
-                <p className="text-sm text-zinc-600 dark:text-zinc-400 max-w-md mx-auto">
-                  Thank you for reaching out, {formData.name || "friend"}! We will review your request regarding{" "}
+                <p className="text-sm text-zinc-600 dark:text-zinc-400 max-w-md mx-auto leading-relaxed">
+                  Thank you for reaching out, <strong className="text-zinc-900 dark:text-white">{successInfo.name || "friend"}</strong>! An instant email notification has been dispatched to SM SIAM regarding{" "}
                   <span className="font-semibold text-blue-600 dark:text-blue-400">
-                    {formData.service || "our services"}
-                  </span>{" "}
-                  and get back to you within 24 hours.
+                    {successInfo.service || "your project"}
+                  </span>. We will review your goals and reply to your inbox within 24 hours.
                 </p>
-                <Button
-                  variant="outline"
-                  size="sm"
-                  onClick={() => {
-                    setSubmitted(false);
-                    setFormData({ name: "", email: "", service: "", message: "" });
-                  }}
-                >
-                  Send another message
-                </Button>
+                <div className="pt-2">
+                  <Button
+                    variant="outline"
+                    size="sm"
+                    className="rounded-full px-6 hover:bg-blue-50 dark:hover:bg-blue-950/40"
+                    onClick={() => {
+                      setSubmitted(false);
+                      setSuccessInfo({ name: "", service: "" });
+                      setFormData({ name: "", email: "", service: "", message: "" });
+                    }}
+                  >
+                    Send another inquiry
+                  </Button>
+                </div>
               </div>
             ) : (
               <form onSubmit={handleSubmit} className="space-y-6">
+                {errorMsg && (
+                  <div className="p-4 rounded-2xl border border-red-500/30 bg-red-50/70 dark:bg-red-950/40 text-red-700 dark:text-red-300 text-sm flex items-start gap-3 animate-in fade-in duration-300">
+                    <AlertCircle className="h-5 w-5 shrink-0 mt-0.5 text-red-600 dark:text-red-400" />
+                    <div className="space-y-1">
+                      <div className="font-semibold">Unable to send inquiry</div>
+                      <div>{errorMsg}</div>
+                      <div className="pt-1">
+                        <a
+                          href={personalLinks.whatsapp}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="font-medium underline hover:text-red-800 dark:hover:text-red-200"
+                        >
+                          Message directly via WhatsApp &rarr;
+                        </a>
+                      </div>
+                    </div>
+                  </div>
+                )}
+
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
                   <div>
                     <label className="block text-sm font-medium text-zinc-700 dark:text-zinc-300 mb-2">
@@ -149,7 +221,8 @@ function ContactFormContent() {
                       placeholder="Jane Doe"
                       value={formData.name}
                       onChange={handleChange}
-                      className="w-full rounded-xl border border-zinc-300 dark:border-zinc-700 bg-white dark:bg-zinc-800/50 px-4 py-2.5 text-sm text-zinc-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-blue-500"
+                      disabled={isSubmitting}
+                      className="w-full rounded-xl border border-zinc-300 dark:border-zinc-700 bg-white dark:bg-zinc-800/50 px-4 py-2.5 text-sm text-zinc-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-blue-500 disabled:opacity-60"
                     />
                   </div>
                   <div>
@@ -163,7 +236,8 @@ function ContactFormContent() {
                       placeholder="jane@example.com"
                       value={formData.email}
                       onChange={handleChange}
-                      className="w-full rounded-xl border border-zinc-300 dark:border-zinc-700 bg-white dark:bg-zinc-800/50 px-4 py-2.5 text-sm text-zinc-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-blue-500"
+                      disabled={isSubmitting}
+                      className="w-full rounded-xl border border-zinc-300 dark:border-zinc-700 bg-white dark:bg-zinc-800/50 px-4 py-2.5 text-sm text-zinc-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-blue-500 disabled:opacity-60"
                     />
                   </div>
                 </div>
@@ -177,7 +251,8 @@ function ContactFormContent() {
                     required
                     value={formData.service}
                     onChange={handleChange}
-                    className="w-full rounded-xl border border-zinc-300 dark:border-zinc-700 bg-white dark:bg-zinc-800/50 px-4 py-2.5 text-sm text-zinc-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-blue-500"
+                    disabled={isSubmitting}
+                    className="w-full rounded-xl border border-zinc-300 dark:border-zinc-700 bg-white dark:bg-zinc-800/50 px-4 py-2.5 text-sm text-zinc-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-blue-500 disabled:opacity-60"
                   >
                     <option value="">Select a Service</option>
                     <option value="Shopify Development">Shopify Development</option>
@@ -197,15 +272,32 @@ function ContactFormContent() {
                     name="message"
                     rows={4}
                     required
+                    minLength={10}
                     placeholder="Briefly describe your project, timeline, and goals..."
                     value={formData.message}
                     onChange={handleChange}
-                    className="w-full rounded-xl border border-zinc-300 dark:border-zinc-700 bg-white dark:bg-zinc-800/50 px-4 py-2.5 text-sm text-zinc-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-blue-500"
+                    disabled={isSubmitting}
+                    className="w-full rounded-xl border border-zinc-300 dark:border-zinc-700 bg-white dark:bg-zinc-800/50 px-4 py-2.5 text-sm text-zinc-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-blue-500 disabled:opacity-60"
                   />
                 </div>
 
-                <Button type="submit" size="lg" className="w-full">
-                  <Send className="h-4 w-4" /> Send Proposal Request
+                <Button
+                  type="submit"
+                  size="lg"
+                  disabled={isSubmitting}
+                  className="w-full rounded-full bg-blue-600 hover:bg-blue-500 text-white shadow-lg shadow-blue-500/25 transition-all duration-300 hover:shadow-xl hover:shadow-blue-500/35 hover:-translate-y-0.5"
+                >
+                  {isSubmitting ? (
+                    <>
+                      <Loader2 className="h-4 w-4 animate-spin mr-2" />
+                      Sending Inquiry to SM SIAM...
+                    </>
+                  ) : (
+                    <>
+                      <Send className="h-4 w-4 mr-2" />
+                      Send Proposal Request
+                    </>
+                  )}
                 </Button>
               </form>
             )}

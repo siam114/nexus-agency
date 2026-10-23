@@ -1,5 +1,6 @@
 import { Request, Response, NextFunction } from "express";
 import { contactService } from "../services/contact.service.js";
+import { mailService } from "../services/mail.service.js";
 import { apiResponse } from "../utils/apiResponse.js";
 import { InquiryStatus } from "../types/index.js";
 import { getParam } from "../utils/params.js";
@@ -9,10 +10,34 @@ export const contactController = {
     try {
       const ipAddress =
         (req.headers["x-forwarded-for"] as string) || req.socket.remoteAddress;
+      const cleanIp =
+        typeof ipAddress === "string" ? ipAddress.split(",")[0].trim() : undefined;
 
       const created = await contactService.create({
         ...req.body,
-        ipAddress: typeof ipAddress === "string" ? ipAddress.split(",")[0].trim() : undefined,
+        ipAddress: cleanIp,
+      });
+
+      // Send email notifications asynchronously (non-blocking for fast UI response)
+      Promise.allSettled([
+        mailService.sendContactNotification({
+          name: req.body.name,
+          email: req.body.email,
+          company: req.body.company,
+          service: req.body.service,
+          message: req.body.message,
+          ipAddress: cleanIp,
+        }),
+        mailService.sendClientConfirmation({
+          name: req.body.name,
+          email: req.body.email,
+          company: req.body.company,
+          service: req.body.service,
+          message: req.body.message,
+          ipAddress: cleanIp,
+        }),
+      ]).catch(() => {
+        // Handled internally in mailService
       });
 
       return apiResponse.created(
@@ -77,4 +102,3 @@ export const contactController = {
     }
   },
 };
-
