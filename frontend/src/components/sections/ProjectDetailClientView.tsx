@@ -661,3 +661,4 @@ export function ProjectDetailClientView({
     </div>
   );
 }
+

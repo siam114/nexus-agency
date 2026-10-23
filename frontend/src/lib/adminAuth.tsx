@@ -14,16 +14,22 @@ interface AdminAuthContextType {
   user: AdminUser | null;
   token: string | null;
   loading: boolean;
-  login: (email: string, password: string) => Promise<{ success: boolean; error?: string }>;
+  login: (
+    email: string,
+    password: string,
+  ) => Promise<{ success: boolean; error?: string }>;
   logout: () => void;
   isAuthenticated: boolean;
 }
 
-const AdminAuthContext = React.createContext<AdminAuthContextType | undefined>(undefined);
+const AdminAuthContext = React.createContext<AdminAuthContextType | undefined>(
+  undefined,
+);
 
 const TOKEN_KEY = "nexus_admin_jwt";
 const USER_KEY = "nexus_admin_user";
-const BACKEND_URL = process.env.NEXT_PUBLIC_BACKEND_URL || "http://localhost:5000/api/v1";
+const BACKEND_URL =
+  process.env.NEXT_PUBLIC_BACKEND_URL || "http://localhost:5000/api/v1";
 
 export function AdminAuthProvider({ children }: { children: React.ReactNode }) {
   const [token, setToken] = React.useState<string | null>(() => {
@@ -63,7 +69,10 @@ export function AdminAuthProvider({ children }: { children: React.ReactNode }) {
     }
   }, [pathname, token, loading, router]);
 
-  const login = async (email: string, password: string): Promise<{ success: boolean; error?: string }> => {
+  const login = async (
+    email: string,
+    password: string,
+  ): Promise<{ success: boolean; error?: string }> => {
     try {
       // First try real backend API
       try {
@@ -89,7 +98,8 @@ export function AdminAuthProvider({ children }: { children: React.ReactNode }) {
 
       // Offline / dev fallback: allow default admin credentials
       if (
-        (email.trim().toLowerCase() === "smsiam987@gmail.com" || email.trim() === "admin@nexusagency.com") &&
+        (email.trim().toLowerCase() === "smsiam987@gmail.com" ||
+          email.trim() === "admin@nexusagency.com") &&
         password === "AdminPassword123!"
       ) {
         const fallbackUser: AdminUser = {
@@ -106,9 +116,15 @@ export function AdminAuthProvider({ children }: { children: React.ReactNode }) {
         return { success: true };
       }
 
-      return { success: false, error: "Invalid email or password. Please check your credentials." };
+      return {
+        success: false,
+        error: "Invalid email or password. Please check your credentials.",
+      };
     } catch (err) {
-      return { success: false, error: (err as Error).message || "An unexpected login error occurred." };
+      return {
+        success: false,
+        error: (err as Error).message || "An unexpected login error occurred.",
+      };
     }
   };
 
