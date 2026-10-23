@@ -88,7 +88,9 @@ export default function AdminDashboardPage() {
             <Sparkles className="h-3 w-3" />
             <span>NexusAgency Administrator</span>
           </div>
-          <h1 className="text-2xl font-extrabold">Welcome back, {user?.name || "SM SIAM"}!</h1>
+          <h1 className="text-2xl font-extrabold">
+            Welcome back, {user?.name && user.name !== "Siam Ahmed" ? user.name : "SM SIAM"}!
+          </h1>
           <p className="text-xs sm:text-sm text-blue-100">
             Manage your agency portfolio projects, services, client inquiries, and live settings.
           </p>

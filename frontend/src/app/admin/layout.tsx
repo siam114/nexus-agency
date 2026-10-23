@@ -142,7 +142,7 @@ function AdminShell({ children }: { children: React.ReactNode }) {
           <div className="flex items-center justify-between p-2.5 rounded-xl bg-slate-50 dark:bg-slate-800/60 border border-slate-200/60 dark:border-slate-800">
             <div className="truncate pr-2">
               <div className="text-xs font-bold text-slate-900 dark:text-white truncate">
-                {user?.name || "Admin"}
+                {user?.name && user.name !== "Siam Ahmed" ? user.name : "SM SIAM"}
               </div>
               <div className="text-[10px] text-slate-500 dark:text-slate-400 truncate">
                 {user?.email || "smsiam987@gmail.com"}

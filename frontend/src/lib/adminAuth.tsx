@@ -45,7 +45,17 @@ export function AdminAuthProvider({ children }: { children: React.ReactNode }) {
     if (typeof window === "undefined") return null;
     try {
       const stored = localStorage.getItem(USER_KEY);
-      return stored ? JSON.parse(stored) : null;
+      if (stored) {
+        const parsed = JSON.parse(stored);
+        if (parsed && parsed.name === "Siam Ahmed") {
+          parsed.name = "SM SIAM";
+          try {
+            localStorage.setItem(USER_KEY, JSON.stringify(parsed));
+          } catch {}
+        }
+        return parsed;
+      }
+      return null;
     } catch {
       return null;
     }
