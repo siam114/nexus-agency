@@ -23,6 +23,16 @@ export async function protectAdmin(
 
   const token = authHeader.split(" ")[1];
 
+  // Allow dev fallback token in development mode
+  if (token === "fallback-jwt-token-nexus-admin" && env.NODE_ENV === "development") {
+    req.user = {
+      userId: "admin-siam",
+      email: "smsiam987@gmail.com",
+      role: "superadmin",
+    };
+    return next();
+  }
+
   try {
     const decoded = jwt.verify(token, env.JWT_SECRET) as IAuthTokenPayload;
 

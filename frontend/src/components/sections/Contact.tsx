@@ -95,6 +95,26 @@ function ContactFormContent() {
         throw new Error(errorText);
       }
 
+      // Sync immediately into local storage cache for instant admin board visibility
+      try {
+        const existing = localStorage.getItem("nexus_admin_inquiries");
+        const list = existing ? JSON.parse(existing) : [];
+        const newRecord = {
+          id: resData?.data?.id || `inq-${Date.now()}`,
+          name: formData.name.trim(),
+          email: formData.email.trim(),
+          service: formData.service || "General Inquiry",
+          message: formData.message.trim(),
+          status: "new",
+          createdAt: new Date().toISOString(),
+        };
+        const updated = [newRecord, ...list.filter((x: { id: string }) => x.id !== newRecord.id)];
+        localStorage.setItem("nexus_admin_inquiries", JSON.stringify(updated));
+        if (typeof window !== "undefined") {
+          window.dispatchEvent(new Event("nexus_content_update"));
+        }
+      } catch {}
+
       setSuccessInfo({
         name: formData.name.trim(),
         service: formData.service,

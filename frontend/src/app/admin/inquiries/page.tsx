@@ -12,6 +12,7 @@ import {
   Trash2,
   X,
   Reply,
+  RefreshCw,
 } from "lucide-react";
 import { cn } from "@/lib/utils";
 
@@ -120,9 +121,136 @@ export default function AdminInquiriesPage() {
     return INITIAL_INQUIRIES;
   });
 
+  const [loading, setLoading] = React.useState(false);
   const [search, setSearch] = React.useState("");
   const [statusFilter, setStatusFilter] = React.useState<string>("all");
   const [selectedInquiry, setSelectedInquiry] = React.useState<Inquiry | null>(null);
+
+  const handleManualRefresh = React.useCallback(() => {
+    setLoading(true);
+    const backendUrl =
+      process.env.NEXT_PUBLIC_BACKEND_URL || "http://localhost:5000/api/v1";
+    const token =
+      typeof window !== "undefined"
+        ? localStorage.getItem("nexus_admin_jwt")
+        : null;
+
+    fetch(`${backendUrl}/admin/inquiries`, {
+      headers: {
+        "Content-Type": "application/json",
+        ...(token ? { Authorization: `Bearer ${token}` } : {}),
+      },
+    })
+      .then((res) => res.json())
+      .then((data) => {
+        if (data.success && Array.isArray(data.data)) {
+          const liveList: Inquiry[] = data.data.map((item: {
+            _id?: string;
+            id?: string;
+            name: string;
+            email: string;
+            company?: string;
+            service?: string;
+            message: string;
+            status?: InquiryStatus;
+            createdAt?: string;
+          }) => ({
+            id: item._id || item.id || `inq-${Date.now()}`,
+            name: item.name,
+            email: item.email,
+            company: item.company || "",
+            service: item.service || "General Inquiry",
+            message: item.message,
+            status: (item.status as InquiryStatus) || "new",
+            createdAt: item.createdAt || new Date().toISOString(),
+          }));
+
+          if (liveList.length > 0) {
+            setInquiries((prev) => {
+              const liveIds = new Set(liveList.map((x) => x.id));
+              const nonDuplicates = prev.filter((x) => !liveIds.has(x.id));
+              const combined = [...liveList, ...nonDuplicates];
+              try {
+                localStorage.setItem("nexus_admin_inquiries", JSON.stringify(combined));
+              } catch {}
+              return combined;
+            });
+          }
+        }
+      })
+      .catch((err) => {
+        console.warn("Manual refresh error:", err);
+      })
+      .finally(() => {
+        setLoading(false);
+      });
+  }, []);
+
+  React.useEffect(() => {
+    let ignore = false;
+    const backendUrl =
+      process.env.NEXT_PUBLIC_BACKEND_URL || "http://localhost:5000/api/v1";
+    const token =
+      typeof window !== "undefined"
+        ? localStorage.getItem("nexus_admin_jwt")
+        : null;
+
+    fetch(`${backendUrl}/admin/inquiries`, {
+      headers: {
+        "Content-Type": "application/json",
+        ...(token ? { Authorization: `Bearer ${token}` } : {}),
+      },
+    })
+      .then((res) => res.json())
+      .then((data) => {
+        if (!ignore && data?.success && Array.isArray(data.data)) {
+          const liveList: Inquiry[] = data.data.map((item: {
+            _id?: string;
+            id?: string;
+            name: string;
+            email: string;
+            company?: string;
+            service?: string;
+            message: string;
+            status?: InquiryStatus;
+            createdAt?: string;
+          }) => ({
+            id: item._id || item.id || `inq-${Date.now()}`,
+            name: item.name,
+            email: item.email,
+            company: item.company || "",
+            service: item.service || "General Inquiry",
+            message: item.message,
+            status: (item.status as InquiryStatus) || "new",
+            createdAt: item.createdAt || new Date().toISOString(),
+          }));
+
+          if (liveList.length > 0) {
+            setInquiries((prev) => {
+              const liveIds = new Set(liveList.map((x) => x.id));
+              const nonDuplicates = prev.filter((x) => !liveIds.has(x.id));
+              const combined = [...liveList, ...nonDuplicates];
+              try {
+                localStorage.setItem("nexus_admin_inquiries", JSON.stringify(combined));
+              } catch {}
+              return combined;
+            });
+          }
+        }
+      })
+      .catch(() => {
+        // use local cache silently
+      });
+
+    const handleUpdate = () => {
+      handleManualRefresh();
+    };
+    window.addEventListener("nexus_content_update", handleUpdate);
+    return () => {
+      ignore = true;
+      window.removeEventListener("nexus_content_update", handleUpdate);
+    };
+  }, [handleManualRefresh]);
 
   React.useEffect(() => {
     if (typeof window !== "undefined") {
@@ -130,21 +258,55 @@ export default function AdminInquiriesPage() {
     }
   }, [inquiries]);
 
-  const updateStatus = (id: string, newStatus: InquiryStatus) => {
+  const updateStatus = async (id: string, newStatus: InquiryStatus) => {
     setInquiries((prev) =>
       prev.map((item) => (item.id === id ? { ...item, status: newStatus } : item))
     );
     if (selectedInquiry?.id === id) {
       setSelectedInquiry((prev) => (prev ? { ...prev, status: newStatus } : null));
     }
+
+    const backendUrl =
+      process.env.NEXT_PUBLIC_BACKEND_URL || "http://localhost:5000/api/v1";
+    const token =
+      typeof window !== "undefined"
+        ? localStorage.getItem("nexus_admin_jwt")
+        : null;
+
+    try {
+      await fetch(`${backendUrl}/admin/inquiries/${id}/status`, {
+        method: "PATCH",
+        headers: {
+          "Content-Type": "application/json",
+          ...(token ? { Authorization: `Bearer ${token}` } : {}),
+        },
+        body: JSON.stringify({ status: newStatus }),
+      });
+    } catch {}
   };
 
-  const deleteInquiry = (id: string) => {
+  const deleteInquiry = async (id: string) => {
     if (confirm("Are you sure you want to delete this client inquiry?")) {
       setInquiries((prev) => prev.filter((item) => item.id !== id));
       if (selectedInquiry?.id === id) {
         setSelectedInquiry(null);
       }
+
+      const backendUrl =
+        process.env.NEXT_PUBLIC_BACKEND_URL || "http://localhost:5000/api/v1";
+      const token =
+        typeof window !== "undefined"
+          ? localStorage.getItem("nexus_admin_jwt")
+          : null;
+
+      try {
+        await fetch(`${backendUrl}/admin/inquiries/${id}`, {
+          method: "DELETE",
+          headers: {
+            ...(token ? { Authorization: `Bearer ${token}` } : {}),
+          },
+        });
+      } catch {}
     }
   };
 
@@ -179,12 +341,23 @@ export default function AdminInquiriesPage() {
             <span>Lead Inquiries</span>
           </div>
           <h1 className="text-2xl sm:text-3xl font-extrabold tracking-tight">
-            Client Inquiries & Messages
+            Client Inquiries &amp; Messages
           </h1>
           <p className="text-sm text-slate-500 dark:text-slate-400">
             Review incoming project briefs, contact form submissions, and follow up with potential clients.
           </p>
         </div>
+
+        <Button
+          variant="outline"
+          size="sm"
+          onClick={handleManualRefresh}
+          disabled={loading}
+          className="rounded-full text-xs flex items-center gap-1.5 hover:bg-slate-50 dark:hover:bg-slate-800 self-start sm:self-auto"
+        >
+          <RefreshCw className={cn("h-3.5 w-3.5", loading && "animate-spin")} />
+          <span>{loading ? "Syncing..." : "Refresh"}</span>
+        </Button>
       </div>
 
       {/* KPI Stats */}
