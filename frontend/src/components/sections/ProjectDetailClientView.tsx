@@ -55,8 +55,8 @@ export function ProjectDetailClientView({
   const contactUrlWithParam = `/contact?service=${encodeURIComponent(project.category)}`;
 
   return (
-    <div className="py-10 sm:py-16">
-      <div className="mx-auto max-w-7xl px-6">
+    <div className="py-10 sm:py-14 lg:py-16">
+      <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         {/* =========================================================================
             SECTION 1: Breadcrumb Navigation
            ========================================================================= */}

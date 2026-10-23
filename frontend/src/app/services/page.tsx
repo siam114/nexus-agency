@@ -33,10 +33,10 @@ const iconMap = {
 
 export default function ServicesPage() {
   return (
-    <div className="py-16 sm:py-24">
-      <div className="mx-auto max-w-7xl px-6">
+    <div className="py-12 sm:py-16 lg:py-20">
+      <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         {/* Header */}
-        <div className="max-w-3xl mx-auto text-center mb-20">
+        <div className="max-w-3xl mx-auto text-center mb-16 sm:mb-20">
           <div className="inline-flex items-center gap-2 rounded-full border border-blue-500/20 bg-blue-50/50 dark:bg-blue-950/30 px-4 py-1.5 text-xs font-semibold text-blue-600 dark:text-blue-400 mb-6">
             <Sparkles className="h-3.5 w-3.5" />
             <span>CAPABILITIES &amp; SERVICES</span>
@@ -50,7 +50,7 @@ export default function ServicesPage() {
         </div>
 
         {/* Services In-Depth List */}
-        <div className="space-y-12 mb-28">
+        <div className="space-y-10 sm:space-y-12 mb-20 sm:mb-24">
           {servicesData.map((service, index) => {
             const Icon =
               iconMap[service.iconName as keyof typeof iconMap] || ShoppingCart;
@@ -150,7 +150,7 @@ export default function ServicesPage() {
         </div>
 
         {/* How We Work Process Section */}
-        <div className="rounded-3xl border border-slate-200/80 dark:border-slate-800 bg-slate-50/50 dark:bg-slate-900/40 p-8 sm:p-14 mb-28">
+        <div className="rounded-3xl border border-slate-200/80 dark:border-slate-800 bg-slate-50/50 dark:bg-slate-900/40 p-6 sm:p-10 lg:p-12 mb-20 sm:mb-24">
           <div className="max-w-2xl mb-12">
             <span className="text-xs font-semibold uppercase tracking-wider text-blue-600 dark:text-blue-400">
               OUR PROCESS

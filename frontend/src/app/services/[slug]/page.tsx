@@ -99,8 +99,8 @@ export default async function ServiceDetailPage({
   const contactUrlWithParam = `/contact?service=${encodeURIComponent(service.title)}`;
 
   return (
-    <div className="py-10 sm:py-16">
-      <div className="mx-auto max-w-7xl px-6">
+    <div className="py-10 sm:py-14 lg:py-16">
+      <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         {/* =========================================================================
             SECTION A: Breadcrumb Navigation
            ========================================================================= */}

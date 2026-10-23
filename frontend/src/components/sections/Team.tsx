@@ -91,10 +91,10 @@ export function Team() {
   const step2 = isSmallPhone ? 280 : isMobile ? 320 : isTablet ? 450 : 540;
 
   return (
-    <section id="team" className="py-14 lg:py-24 bg-slate-50/50 dark:bg-slate-950/40 overflow-hidden select-none">
-      <div className="mx-auto max-w-7xl px-6">
+    <section id="team" className="py-16 sm:py-20 lg:py-24 bg-slate-50/50 dark:bg-slate-950/40 overflow-hidden select-none">
+      <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         {/* Section Header */}
-        <div className="flex flex-col md:flex-row md:items-end justify-between mb-10 gap-6">
+        <div className="flex flex-col md:flex-row md:items-end justify-between mb-12 sm:mb-16 gap-6">
           <div className="max-w-xl">
             <div className="inline-flex items-center gap-1.5 rounded-full border border-blue-200/80 dark:border-blue-900/60 bg-blue-50/70 dark:bg-blue-950/40 px-3.5 py-1.5 text-[11px] font-semibold tracking-wider text-blue-600 dark:text-blue-400 uppercase mb-3 shadow-xs">
               <Sparkles className="h-3 w-3 animate-spin duration-3000" />

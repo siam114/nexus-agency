@@ -48,10 +48,10 @@ const contactDetails = [
 
 export default function ContactPage() {
   return (
-    <div className="py-16 sm:py-24">
-      <div className="mx-auto max-w-7xl px-6">
+    <div className="py-12 sm:py-16 lg:py-20">
+      <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         {/* Contact Info Grid */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 mb-16">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 mb-12 sm:mb-16">
           {contactDetails.map((item) => {
             const Icon = item.icon;
             const cardContent = (
@@ -99,7 +99,7 @@ export default function ContactPage() {
         <Contact />
 
         {/* FAQs */}
-        <div className="mt-20 sm:mt-28 max-w-3xl mx-auto">
+        <div className="mt-16 sm:mt-20 max-w-3xl mx-auto">
           <div className="text-center mb-10 sm:mb-12">
             <span className="text-xs font-semibold uppercase tracking-wider text-blue-600 dark:text-blue-400">
               FREQUENTLY ASKED QUESTIONS

@@ -140,9 +140,9 @@ function ContactFormContent() {
   };
 
   return (
-    <section id="contact" className="py-24 bg-zinc-50/50 dark:bg-zinc-950/40">
-      <div className="mx-auto max-w-7xl px-6">
-        <div className="mx-auto max-w-2xl text-center mb-16">
+    <section id="contact" className="py-8 sm:py-12 w-full">
+      <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+        <div className="mx-auto max-w-2xl text-center mb-10 sm:mb-12">
           <h2 className="text-xs font-semibold uppercase tracking-wider text-blue-600 dark:text-blue-400">
             Let&apos;s Collaborate
           </h2>
