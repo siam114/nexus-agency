@@ -58,7 +58,7 @@ const INITIAL_INQUIRIES: Inquiry[] = [
     company: "Lumina Wellness",
     service: "Custom Website Development",
     message:
-      "Hi Siam, we loved your portfolio case studies! We are a healthcare clinic network looking to overhaul our public portal with appointment scheduling inquiries, clinic location finder, and accessible typography. Please let us know your current availability.",
+      "Hi SM SIAM, we loved your portfolio case studies! We are a healthcare clinic network looking to overhaul our public portal with appointment scheduling inquiries, clinic location finder, and accessible typography. Please let us know your current availability.",
     status: "new",
     createdAt: "2026-10-19T18:45:00.000Z",
   },

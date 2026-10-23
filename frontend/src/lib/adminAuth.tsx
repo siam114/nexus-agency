@@ -105,7 +105,7 @@ export function AdminAuthProvider({ children }: { children: React.ReactNode }) {
         const fallbackUser: AdminUser = {
           id: "admin-siam",
           email: "smsiam987@gmail.com",
-          name: "Siam Ahmed",
+          name: "SM SIAM",
           role: "superadmin",
         };
         const fallbackToken = "fallback-jwt-token-nexus-admin";

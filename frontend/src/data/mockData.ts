@@ -331,7 +331,7 @@ export const processSteps: ProcessStep[] = [
 export const teamData: TeamMember[] = [
   {
     id: "1",
-    name: "Siam Ahmed",
+    name: "SM SIAM",
     role: "Founder & Lead Developer",
     bio: "Specializes in Shopify theme engineering, responsive web development, and frontend architecture.",
     image:

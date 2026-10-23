@@ -27,7 +27,7 @@ async function runSeed() {
   // 1. Seed Administrator User
   const adminEmail = process.env.INITIAL_ADMIN_EMAIL || "smsiam987@gmail.com";
   const adminPassword = process.env.INITIAL_ADMIN_PASSWORD || "AdminPassword123!";
-  const adminName = process.env.INITIAL_ADMIN_NAME || "Siam Ahmed";
+  const adminName = process.env.INITIAL_ADMIN_NAME || "SM SIAM";
 
   const existingAdmin = await User.findOne({ email: adminEmail });
   if (!existingAdmin) {
@@ -41,7 +41,9 @@ async function runSeed() {
     });
     logger.info(`Created Initial Admin user: ${adminEmail}`);
   } else {
-    logger.info(`Admin user already exists: ${adminEmail}`);
+    existingAdmin.name = adminName;
+    await existingAdmin.save();
+    logger.info(`Admin user name updated to: ${adminName}`);
   }
 
   // 2. Seed Projects
@@ -65,6 +67,7 @@ async function runSeed() {
   logger.info(`Seeded ${initialServices.length} Services.`);
 
   // 4. Seed Team Members
+  await TeamMember.deleteMany({ name: "Siam Ahmed" });
   for (const member of initialTeam) {
     await TeamMember.findOneAndUpdate(
       { name: member.name },

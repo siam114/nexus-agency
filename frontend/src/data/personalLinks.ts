@@ -1,5 +1,5 @@
 export const personalLinks = {
-  name: "Siam Ahmed",
+  name: "SM SIAM",
   role: "Founder & Lead Developer",
   portfolio: "https://siam-portfolio-theta.vercel.app/",
   github: "https://github.com/siam114",

@@ -61,7 +61,7 @@ export const authService = {
         user: {
           id: "fallback-admin-id",
           email: "smsiam987@gmail.com",
-          name: "Siam Ahmed",
+          name: "SM SIAM",
           role: "admin",
           lastLogin: new Date(),
         },

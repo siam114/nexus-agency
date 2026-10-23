@@ -853,7 +853,7 @@ export const initialServices: IService[] = [
 
 export const initialTeam: ITeamMember[] = [
   {
-    name: "Siam Ahmed",
+    name: "SM SIAM",
     role: "Founder & Lead Developer",
     bio: "Specializes in Shopify theme engineering, responsive web development, and frontend architecture.",
     image:
