@@ -330,21 +330,6 @@ export const processSteps: ProcessStep[] = [
 
 export const teamData: TeamMember[] = [
   {
-    id: "1",
-    name: "SM SIAM",
-    role: "Founder & Lead Developer",
-    bio: "Specializes in Shopify theme engineering, responsive web development, and frontend architecture.",
-    image:
-      "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&w=400&q=80",
-    socials: {
-      website: personalLinks.portfolio,
-      github: personalLinks.github,
-      linkedin: personalLinks.linkedin,
-      facebook: personalLinks.facebook,
-      whatsapp: personalLinks.whatsapp,
-    },
-  },
-  {
     id: "2",
     name: "Sarah Khan",
     role: "UI/UX & Figma Specialist",
@@ -356,6 +341,8 @@ export const teamData: TeamMember[] = [
       linkedin: "https://linkedin.com",
       website: "https://example.com",
     },
+    published: true,
+    sortOrder: 1,
   },
   {
     id: "3",
@@ -369,6 +356,25 @@ export const teamData: TeamMember[] = [
       linkedin: "https://linkedin.com",
       website: "https://example.com",
     },
+    published: true,
+    sortOrder: 2,
+  },
+  {
+    id: "1",
+    name: "SM SIAM",
+    role: "Founder & Lead Developer",
+    bio: "Specializes in Shopify theme engineering, responsive web development, and frontend architecture.",
+    image:
+      "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&w=400&q=80",
+    socials: {
+      website: personalLinks.portfolio,
+      github: personalLinks.github,
+      linkedin: personalLinks.linkedin,
+      facebook: personalLinks.facebook,
+      whatsapp: personalLinks.whatsapp,
+    },
+    published: true,
+    sortOrder: 3,
   },
   {
     id: "4",
@@ -382,6 +388,8 @@ export const teamData: TeamMember[] = [
       linkedin: "https://linkedin.com",
       website: "https://example.com",
     },
+    published: true,
+    sortOrder: 4,
   },
   {
     id: "5",
@@ -395,6 +403,8 @@ export const teamData: TeamMember[] = [
       linkedin: "https://linkedin.com",
       website: "https://example.com",
     },
+    published: true,
+    sortOrder: 5,
   },
 ];
 

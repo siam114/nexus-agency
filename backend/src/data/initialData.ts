@@ -853,6 +853,26 @@ export const initialServices: IService[] = [
 
 export const initialTeam: ITeamMember[] = [
   {
+    name: "Sarah Khan",
+    role: "UI/UX & Figma Specialist",
+    bio: "Focuses on design system consistency, accessible layouts, and seamless Figma-to-code collaboration.",
+    image:
+      "https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=400&q=80",
+    skills: ["Figma", "Design Systems", "Wireframing", "UI Prototyping"],
+    published: true,
+    sortOrder: 1,
+  },
+  {
+    name: "David Miller",
+    role: "WordPress & Frontend Developer",
+    bio: "Crafts clean, maintainable WordPress themes and responsive web layouts tailored to client requirements.",
+    image:
+      "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?auto=format&fit=crop&w=400&q=80",
+    skills: ["WordPress", "PHP", "CSS3", "JavaScript"],
+    published: true,
+    sortOrder: 2,
+  },
+  {
     name: "SM SIAM",
     role: "Founder & Lead Developer",
     bio: "Specializes in Shopify theme engineering, responsive web development, and frontend architecture.",
@@ -866,26 +886,6 @@ export const initialTeam: ITeamMember[] = [
       facebook: "https://www.facebook.com/sumsuzzaman.siam",
       whatsapp: "https://api.whatsapp.com/send/?phone=8801567989506",
     },
-    published: true,
-    sortOrder: 1,
-  },
-  {
-    name: "Sarah Khan",
-    role: "UI/UX & Figma Specialist",
-    bio: "Focuses on design system consistency, accessible layouts, and seamless Figma-to-code collaboration.",
-    image:
-      "https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=400&q=80",
-    skills: ["Figma", "Design Systems", "Wireframing", "UI Prototyping"],
-    published: true,
-    sortOrder: 2,
-  },
-  {
-    name: "David Miller",
-    role: "WordPress & Frontend Developer",
-    bio: "Crafts clean, maintainable WordPress themes and responsive web layouts tailored to client requirements.",
-    image:
-      "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?auto=format&fit=crop&w=400&q=80",
-    skills: ["WordPress", "PHP", "CSS3", "JavaScript"],
     published: true,
     sortOrder: 3,
   },
