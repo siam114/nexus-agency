@@ -96,3 +96,32 @@ button:not(:disabled):not(.no-press):active,
 ::-webkit-scrollbar-thumb:hover {
   background: rgba(148, 163, 184, 0.5);
 }
+
+/* Subtle Ambient Floating & Glowing Animations */
+@keyframes soft-float {
+  0%, 100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-4px);
+  }
+}
+
+@keyframes soft-pulse-glow {
+  0%, 100% {
+    opacity: 0.15;
+    transform: scale(1);
+  }
+  50% {
+    opacity: 0.28;
+    transform: scale(1.05);
+  }
+}
+
+.animate-soft-float {
+  animation: soft-float 5s ease-in-out infinite;
+}
+
+.animate-soft-glow {
+  animation: soft-pulse-glow 9s ease-in-out infinite;
+}

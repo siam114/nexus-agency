@@ -20,6 +20,16 @@ export function Team() {
 
   const [selectedIdx, setSelectedIdx] = React.useState<number | null>(null);
 
+  // Track window width for accurate responsive horizontal spacing
+  const [windowWidth, setWindowWidth] = React.useState<number>(1200);
+
+  React.useEffect(() => {
+    const handleResize = () => setWindowWidth(window.innerWidth);
+    handleResize();
+    window.addEventListener("resize", handleResize);
+    return () => window.removeEventListener("resize", handleResize);
+  }, []);
+
   // Default active index is SM SIAM (the 3rd card, index 2)
   const activeIndex = React.useMemo(() => {
     if (selectedIdx !== null) return selectedIdx;
@@ -53,7 +63,7 @@ export function Team() {
     setActiveIndex((prev) => (prev + 1) % count);
   }, [count, setActiveIndex]);
 
-  // Touch swipe support for mobile
+  // Touch swipe support for mobile devices
   const touchStartX = React.useRef<number | null>(null);
   const handleTouchStart = (e: React.TouchEvent) => {
     touchStartX.current = e.touches[0].clientX;
@@ -73,14 +83,20 @@ export function Team() {
     return null;
   }
 
+  // Responsive horizontal spacing between cards
+  const isMobile = windowWidth < 640;
+  const isTablet = windowWidth >= 640 && windowWidth < 1024;
+  const step1 = isMobile ? 180 : isTablet ? 240 : 285;
+  const step2 = isMobile ? 320 : isTablet ? 450 : 540;
+
   return (
     <section id="team" className="py-14 lg:py-24 bg-slate-50/50 dark:bg-slate-950/40 overflow-hidden select-none">
       <div className="mx-auto max-w-7xl px-6">
         {/* Section Header */}
         <div className="flex flex-col md:flex-row md:items-end justify-between mb-10 gap-6">
           <div className="max-w-xl">
-            <div className="inline-flex items-center gap-1.5 rounded-full border border-blue-200/80 dark:border-blue-900/60 bg-blue-50/70 dark:bg-blue-950/40 px-3 py-1 text-[11px] font-semibold tracking-wider text-blue-600 dark:text-blue-400 uppercase mb-3">
-              <Sparkles className="h-3 w-3" />
+            <div className="inline-flex items-center gap-1.5 rounded-full border border-blue-200/80 dark:border-blue-900/60 bg-blue-50/70 dark:bg-blue-950/40 px-3.5 py-1.5 text-[11px] font-semibold tracking-wider text-blue-600 dark:text-blue-400 uppercase mb-3 shadow-xs">
+              <Sparkles className="h-3 w-3 animate-spin duration-3000" />
               <span>CORE TEAM</span>
             </div>
             <h2 className="text-3xl sm:text-4xl font-extrabold tracking-tight text-slate-900 dark:text-white">
@@ -98,14 +114,14 @@ export function Team() {
               <button
                 onClick={handlePrev}
                 aria-label="Previous Team Member"
-                className="h-10 w-10 rounded-full border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 flex items-center justify-center text-slate-700 dark:text-slate-300 hover:text-blue-600 dark:hover:text-blue-400 hover:border-blue-500/50 hover:shadow-md active:scale-90 transition-all duration-300 cursor-pointer shadow-2xs"
+                className="h-10 w-10 rounded-full border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 flex items-center justify-center text-slate-700 dark:text-slate-300 hover:text-blue-600 dark:hover:text-blue-400 hover:border-blue-500/50 hover:shadow-md active:scale-90 transition-all duration-300 cursor-pointer shadow-xs"
               >
                 <ChevronLeft className="h-5 w-5" />
               </button>
               <button
                 onClick={handleNext}
                 aria-label="Next Team Member"
-                className="h-10 w-10 rounded-full border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 flex items-center justify-center text-slate-700 dark:text-slate-300 hover:text-blue-600 dark:hover:text-blue-400 hover:border-blue-500/50 hover:shadow-md active:scale-90 transition-all duration-300 cursor-pointer shadow-2xs"
+                className="h-10 w-10 rounded-full border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 flex items-center justify-center text-slate-700 dark:text-slate-300 hover:text-blue-600 dark:hover:text-blue-400 hover:border-blue-500/50 hover:shadow-md active:scale-90 transition-all duration-300 cursor-pointer shadow-xs"
               >
                 <ChevronRight className="h-5 w-5" />
               </button>
@@ -120,76 +136,60 @@ export function Team() {
           </div>
         </div>
 
-        {/* Soft Gliding 5-Card Carousel Stage */}
+        {/* Soft Gliding 5-Card Stage */}
         <div
-          className="relative w-full h-[520px] sm:h-[560px] lg:h-[600px] flex items-center justify-center overflow-hidden py-4"
+          className="relative w-full h-[540px] sm:h-[580px] lg:h-[620px] flex items-center justify-center overflow-hidden py-4"
           onTouchStart={handleTouchStart}
           onTouchEnd={handleTouchEnd}
         >
           {members.map((member, idx) => {
-            // Compute normalized circular diff relative to activeIndex [-2, 2]
+            // Compute circular normalized diff relative to activeIndex [-2, 2]
             let diff = idx - activeIndex;
             while (diff > 2) diff -= count;
             while (diff < -2) diff += count;
 
             const isCenter = diff === 0;
-            const isVisible = Math.abs(diff) <= 2;
             const isFounder =
               member.role.toLowerCase().includes("founder") ||
               member.name.toLowerCase().includes("siam");
 
-            // Calculate responsive translate-X offset
-            // On desktop: center is 0, offset -1 is -290px, +1 is +290px, -2 is -530px, +2 is +530px
-            let xOffsetDesktop = diff * 290;
-            if (diff === -2) xOffsetDesktop = -520;
-            if (diff === 2) xOffsetDesktop = 520;
+            // Calculate exact pixel position for smooth hardware-accelerated slide
+            let xOffset = 0;
+            if (diff === -1) xOffset = -step1;
+            else if (diff === 1) xOffset = step1;
+            else if (diff === -2) xOffset = -step2;
+            else if (diff === 2) xOffset = step2;
 
-            let xOffsetTablet = diff * 220;
-            if (diff === -2) xOffsetTablet = -400;
-            if (diff === 2) xOffsetTablet = 400;
-
-            const xOffsetMobile = diff * 150;
-
-            // Z-Index and Scale
+            // Z-Index, Scale & Opacity
             const zIndex = isCenter ? 30 : Math.abs(diff) === 1 ? 20 : 10;
-            const scale = isCenter ? 1 : Math.abs(diff) === 1 ? 0.88 : 0.78;
-            const opacity = isCenter ? 1 : Math.abs(diff) === 1 ? 0.78 : 0.45;
+            const scale = isCenter ? 1 : Math.abs(diff) === 1 ? 0.88 : 0.76;
+            const opacity = isCenter ? 1 : Math.abs(diff) === 1 ? 0.78 : (isMobile ? 0 : 0.45);
 
             return (
               <div
                 key={member.id || member.name}
                 onClick={() => setActiveIndex(idx)}
                 style={{
-                  transform: `translateX(var(--tx)) scale(${scale})`,
+                  transform: `translate3d(calc(-50% + ${xOffset}px), -50%, 0) scale(${scale})`,
                   zIndex,
-                  opacity: isVisible ? opacity : 0,
-                  pointerEvents: isVisible ? "auto" : "none",
+                  opacity,
+                  transition: "all 650ms cubic-bezier(0.25, 1, 0.5, 1)",
                 }}
-                className={cn(
-                  "absolute top-1/2 -translate-y-1/2 cursor-pointer",
-                  // CSS variable --tx interpolated responsively
-                  "[--tx:0px]",
-                  `max-sm:[--tx:${xOffsetMobile}px]`,
-                  `sm:max-lg:[--tx:${xOffsetTablet}px]`,
-                  `lg:[--tx:${xOffsetDesktop}px]`,
-                  // Ultra-smooth, soft fluid spring-like deceleration transition
-                  "transition-all duration-700 ease-[cubic-bezier(0.25,1,0.5,1)] will-change-transform"
-                )}
+                className="absolute top-1/2 left-1/2 cursor-pointer will-change-transform"
               >
                 <Card
                   className={cn(
-                    "overflow-hidden p-0 rounded-3xl flex flex-col justify-between transition-all duration-700 ease-[cubic-bezier(0.25,1,0.5,1)] group",
-                    // Middle active card is wider (360px-380px) and prominently highlighted
+                    "overflow-hidden p-0 rounded-3xl flex flex-col justify-between transition-all duration-650 ease-[cubic-bezier(0.25,1,0.5,1)] group",
+                    // Middle active card is wider and highlighted
                     isCenter
                       ? "w-[310px] sm:w-[350px] lg:w-[380px] border-2 border-blue-500/90 dark:border-blue-500 bg-white dark:bg-slate-900 shadow-2xl shadow-blue-500/25 ring-4 ring-blue-500/15"
                       : "w-[240px] sm:w-[260px] lg:w-[280px] border border-slate-200/80 dark:border-slate-800 bg-white/95 dark:bg-slate-900/90 shadow-md hover:shadow-xl hover:opacity-95"
                   )}
                 >
-                  {/* Portrait Image - Middle card is 1:1 Aspect Ratio (Square) */}
+                  {/* Portrait Image - Strictly 1:1 Aspect Ratio (Square) for Center Card */}
                   <div
                     className={cn(
-                      "relative w-full overflow-hidden bg-slate-100 dark:bg-slate-800 transition-all duration-700 ease-[cubic-bezier(0.25,1,0.5,1)]",
-                      // Center card strictly adheres to 1:1 aspect-square
+                      "relative w-full overflow-hidden bg-slate-100 dark:bg-slate-800 transition-all duration-650 ease-[cubic-bezier(0.25,1,0.5,1)]",
                       isCenter ? "aspect-square w-full" : "aspect-[4/4.5] w-full"
                     )}
                   >
@@ -206,7 +206,7 @@ export function Team() {
                     {/* Spotlight Badge on Center Card */}
                     {isCenter && (
                       <div className="absolute top-3.5 left-3.5 right-3.5 flex items-center justify-between pointer-events-none">
-                        <span className="inline-flex items-center gap-1.5 rounded-full bg-blue-600/90 backdrop-blur-md px-3 py-1 text-[11px] font-bold text-white shadow-md tracking-wider uppercase">
+                        <span className="inline-flex items-center gap-1.5 rounded-full bg-blue-600/95 backdrop-blur-md px-3 py-1 text-[11px] font-bold text-white shadow-md tracking-wider uppercase">
                           {isFounder ? <Crown className="h-3.5 w-3.5" /> : <Sparkles className="h-3.5 w-3.5" />}
                           <span>{isFounder ? "Founder & Lead" : "Spotlight"}</span>
                         </span>

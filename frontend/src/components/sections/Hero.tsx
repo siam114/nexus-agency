@@ -5,9 +5,9 @@ import { ArrowRight, Calendar, TrendingUp } from "lucide-react";
 export function Hero() {
   return (
     <section id="hero" className="relative overflow-hidden pt-8 pb-12 lg:pt-12 lg:pb-16">
-      {/* Soft blue radial background glow */}
-      <div className="absolute top-1/4 right-1/4 w-[500px] h-[500px] bg-blue-500/10 dark:bg-blue-600/15 blur-[120px] pointer-events-none rounded-full" />
-      <div className="absolute top-1/2 left-1/3 w-[300px] h-[300px] bg-indigo-500/10 blur-[100px] pointer-events-none rounded-full" />
+      {/* Soft blue radial background glow with gentle breathing animation */}
+      <div className="absolute top-1/4 right-1/4 w-[500px] h-[500px] bg-blue-500/10 dark:bg-blue-600/15 blur-[120px] pointer-events-none rounded-full animate-soft-glow" />
+      <div className="absolute top-1/2 left-1/3 w-[300px] h-[300px] bg-indigo-500/10 blur-[100px] pointer-events-none rounded-full animate-soft-glow" style={{ animationDelay: "-4s" }} />
 
       <div className="relative mx-auto max-w-7xl px-6">
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-8 items-center">
