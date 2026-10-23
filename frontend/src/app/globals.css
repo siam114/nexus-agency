@@ -45,7 +45,7 @@ body {
   font-family: var(--font-geist-sans), system-ui, -apple-system, sans-serif;
 }
 
-/* Global Smooth Interactive Elements */
+/* Global Soft Interactive Elements */
 button,
 a,
 input,
@@ -53,25 +53,25 @@ textarea,
 select,
 [role="button"] {
   transition-property: color, background-color, border-color, box-shadow, transform, opacity, filter;
-  transition-duration: 200ms;
-  transition-timing-function: cubic-bezier(0.16, 1, 0.3, 1);
+  transition-duration: 250ms;
+  transition-timing-function: cubic-bezier(0.25, 1, 0.5, 1);
 }
 
-/* Button & Clickable Press States */
-button:not(:disabled):active,
-[role="button"]:not(:disabled):active {
-  transform: scale(0.97);
+/* Subtle, soft press states (gentle & cushioned) */
+button:not(:disabled):not(.no-press):active,
+[role="button"]:not(:disabled):not(.no-press):active {
+  transform: scale(0.985);
 }
 
 /* Eye Icon / Icon Button Smooth Hover & Active Transitions */
 .icon-btn-smooth {
-  transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+  transition: all 0.25s cubic-bezier(0.25, 1, 0.5, 1);
 }
 .icon-btn-smooth:hover {
-  transform: scale(1.12);
+  transform: scale(1.08);
 }
 .icon-btn-smooth:active {
-  transform: scale(0.88) rotate(-8deg);
+  transform: scale(0.94);
 }
 
 /* Smooth Focus States */
