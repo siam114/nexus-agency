@@ -150,9 +150,9 @@ export function ProjectDetailClientView({
               )}
 
               {/* Hero Action Buttons */}
-              <div className="flex flex-wrap items-center gap-3 pt-4">
-                <Link href={contactUrlWithParam}>
-                  <Button size="lg" className="rounded-full px-6 shadow-sm shadow-blue-500/20">
+              <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-3 pt-4 w-full sm:w-auto">
+                <Link href={contactUrlWithParam} className="w-full sm:w-auto flex-1">
+                  <Button size="lg" className="w-full justify-center rounded-full px-6 shadow-sm shadow-blue-500/20">
                     Discuss Similar Project <ArrowRight className="h-4 w-4 ml-1.5" />
                   </Button>
                 </Link>
@@ -163,7 +163,7 @@ export function ProjectDetailClientView({
                     href={project.liveUrl}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="inline-flex items-center gap-2 rounded-full border border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-900 px-5 py-2.5 text-sm font-semibold text-slate-800 dark:text-slate-200 hover:bg-slate-50 dark:hover:bg-slate-800 hover:border-blue-500/50 transition-colors shadow-xs"
+                    className="w-full sm:w-auto flex-1 inline-flex items-center justify-center gap-2 rounded-full border border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-900 px-5 py-2.5 text-sm font-semibold text-slate-800 dark:text-slate-200 hover:bg-slate-50 dark:hover:bg-slate-800 hover:border-blue-500/50 transition-colors shadow-xs"
                   >
                     <span>Visit Live Website</span>
                     <ExternalLink className="h-4 w-4 text-slate-500" />
@@ -171,8 +171,8 @@ export function ProjectDetailClientView({
                 )}
 
                 {project.serviceSlug && (
-                  <Link href={`/services/${project.serviceSlug}`}>
-                    <Button variant="outline" size="lg" className="rounded-full px-6">
+                  <Link href={`/services/${project.serviceSlug}`} className="w-full sm:w-auto flex-1">
+                    <Button variant="outline" size="lg" className="w-full justify-center rounded-full px-6">
                       View Service Details <ArrowUpRight className="h-4 w-4 ml-1" />
                     </Button>
                   </Link>
@@ -636,20 +636,20 @@ export function ProjectDetailClientView({
             <p className="mt-3 text-sm sm:text-base text-blue-100 max-w-lg leading-relaxed">
               Let&apos;s evaluate your goals and build a high-performance digital solution for {project.category}.
             </p>
-            <div className="mt-8 flex flex-wrap items-center justify-center gap-4">
-              <Link href={contactUrlWithParam}>
+            <div className="mt-8 flex flex-col sm:flex-row items-stretch sm:items-center justify-center gap-4 w-full max-w-md mx-auto">
+              <Link href={contactUrlWithParam} className="w-full sm:w-auto flex-1">
                 <Button
                   size="lg"
-                  className="rounded-full bg-white text-blue-700 hover:bg-blue-50 font-semibold px-8 shadow-md"
+                  className="w-full justify-center rounded-full bg-white text-blue-700 hover:bg-blue-50 font-semibold px-8 shadow-md"
                 >
                   Discuss Your Project <ArrowRight className="h-4 w-4 ml-1.5" />
                 </Button>
               </Link>
-              <Link href="/services">
+              <Link href="/services" className="w-full sm:w-auto flex-1">
                 <Button
                   variant="outline"
                   size="lg"
-                  className="rounded-full border-blue-400/50 bg-blue-800/40 text-white hover:bg-blue-800/80 px-6"
+                  className="w-full justify-center rounded-full border-blue-400/50 bg-blue-800/40 text-white hover:bg-blue-800/80 px-6"
                 >
                   View All Services
                 </Button>

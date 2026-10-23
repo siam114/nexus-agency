@@ -86,16 +86,16 @@ export default function ServicesPage() {
                       {service.description}
                     </p>
 
-                    <div className="pt-2 flex flex-wrap items-center gap-3">
-                      <Link href={service.link || `/services/${service.id}`}>
-                        <Button className="rounded-full bg-blue-600 hover:bg-blue-700 text-white px-5 text-xs sm:text-sm">
+                    <div className="pt-2 flex flex-col sm:flex-row items-stretch sm:items-center gap-3 w-full sm:w-auto">
+                      <Link href={service.link || `/services/${service.id}`} className="w-full sm:w-auto flex-1">
+                        <Button className="w-full justify-center rounded-full bg-blue-600 hover:bg-blue-700 text-white px-5 text-xs sm:text-sm">
                           Explore Service Details <ArrowRight className="h-4 w-4 ml-1.5" />
                         </Button>
                       </Link>
-                      <Link href={`/contact?service=${encodeURIComponent(service.title)}`}>
+                      <Link href={`/contact?service=${encodeURIComponent(service.title)}`} className="w-full sm:w-auto flex-1">
                         <Button
                           variant="outline"
-                          className="rounded-full border-slate-200 dark:border-slate-800 px-4 text-xs sm:text-sm text-slate-700 dark:text-slate-300 hover:bg-slate-50 dark:hover:bg-slate-800"
+                          className="w-full justify-center rounded-full border-slate-200 dark:border-slate-800 px-4 text-xs sm:text-sm text-slate-700 dark:text-slate-300 hover:bg-slate-50 dark:hover:bg-slate-800"
                         >
                           Inquire Now
                         </Button>

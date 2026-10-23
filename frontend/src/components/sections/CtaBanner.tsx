@@ -22,20 +22,20 @@ export function CtaBanner() {
             </div>
 
             {/* Right Buttons */}
-            <div className="flex flex-wrap items-center gap-3 sm:gap-4">
-              <Link href="/contact">
+            <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-3 sm:gap-4 w-full lg:w-auto">
+              <Link href="/contact" className="w-full sm:w-auto flex-1">
                 <Button
                   size="lg"
-                  className="bg-blue-600 hover:bg-blue-700 text-white rounded-full px-7 py-3 text-sm font-semibold shadow-md shadow-blue-500/25"
+                  className="w-full justify-center bg-blue-600 hover:bg-blue-700 text-white rounded-full px-7 py-3 text-sm font-semibold shadow-md shadow-blue-500/25"
                 >
                   Start a Project <ArrowRight className="h-4 w-4 ml-1.5" />
                 </Button>
               </Link>
-              <Link href="/contact">
+              <Link href="/contact" className="w-full sm:w-auto flex-1">
                 <Button
                   size="lg"
                   variant="outline"
-                  className="rounded-full px-6 py-3 text-sm font-semibold border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 text-slate-700 dark:text-slate-200 hover:bg-slate-50 dark:hover:bg-slate-800"
+                  className="w-full justify-center rounded-full px-6 py-3 text-sm font-semibold border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 text-slate-700 dark:text-slate-200 hover:bg-slate-50 dark:hover:bg-slate-800"
                 >
                   <Mail className="h-4 w-4 mr-2 text-slate-500" />
                   Contact Us

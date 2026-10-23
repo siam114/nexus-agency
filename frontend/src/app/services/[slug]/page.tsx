@@ -154,20 +154,20 @@ export default async function ServiceDetailPage({
                 {service.heroDescription}
               </p>
 
-              <div className="pt-2 flex flex-wrap items-center gap-3 sm:gap-4">
-                <Link href={contactUrlWithParam}>
+              <div className="pt-2 flex flex-col sm:flex-row items-stretch sm:items-center gap-3 sm:gap-4 w-full sm:w-auto">
+                <Link href={contactUrlWithParam} className="w-full sm:w-auto flex-1">
                   <Button
                     size="lg"
-                    className="bg-blue-600 hover:bg-blue-700 text-white rounded-full px-7 py-3.5 text-sm font-semibold shadow-md shadow-blue-500/25 transition-transform hover:-translate-y-0.5"
+                    className="w-full justify-center bg-blue-600 hover:bg-blue-700 text-white rounded-full px-7 py-3.5 text-sm font-semibold shadow-md shadow-blue-500/25 transition-transform hover:-translate-y-0.5"
                   >
                     Start Your Project <ArrowRight className="h-4 w-4 ml-1.5" />
                   </Button>
                 </Link>
-                <Link href="/work">
+                <Link href="/work" className="w-full sm:w-auto flex-1">
                   <Button
                     size="lg"
                     variant="outline"
-                    className="rounded-full px-6 py-3.5 text-sm font-semibold border-slate-200 dark:border-slate-800 bg-white/80 dark:bg-slate-900 text-slate-700 dark:text-slate-200 hover:bg-slate-50 dark:hover:bg-slate-800 transition-colors"
+                    className="w-full justify-center rounded-full px-6 py-3.5 text-sm font-semibold border-slate-200 dark:border-slate-800 bg-white/80 dark:bg-slate-900 text-slate-700 dark:text-slate-200 hover:bg-slate-50 dark:hover:bg-slate-800 transition-colors"
                   >
                     Explore Our Work
                   </Button>
@@ -595,20 +595,20 @@ export default async function ServiceDetailPage({
             <p className="mt-4 text-blue-100 max-w-xl text-sm sm:text-base leading-relaxed">
               {service.ctaDescription}
             </p>
-            <div className="mt-8 flex flex-wrap gap-4 justify-center">
-              <Link href={contactUrlWithParam}>
+            <div className="mt-8 flex flex-col sm:flex-row items-stretch sm:items-center gap-3 sm:gap-4 justify-center w-full max-w-md mx-auto">
+              <Link href={contactUrlWithParam} className="w-full sm:w-auto flex-1">
                 <Button
                   size="lg"
-                  className="rounded-full bg-white text-blue-600 hover:bg-slate-100 shadow-md font-semibold px-8"
+                  className="w-full justify-center rounded-full bg-white text-blue-600 hover:bg-slate-100 shadow-md font-semibold px-8"
                 >
                   Start Your Project <ArrowRight className="h-4 w-4 ml-1.5" />
                 </Button>
               </Link>
-              <Link href={contactUrlWithParam}>
+              <Link href={contactUrlWithParam} className="w-full sm:w-auto flex-1">
                 <Button
                   size="lg"
                   variant="outline"
-                  className="rounded-full border-blue-400 text-white hover:bg-white/10 px-7 font-semibold"
+                  className="w-full justify-center rounded-full border-blue-400 text-white hover:bg-white/10 px-7 font-semibold"
                 >
                   <Mail className="h-4 w-4 mr-2" />
                   Contact Us

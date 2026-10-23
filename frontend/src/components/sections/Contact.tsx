@@ -155,12 +155,12 @@ function ContactFormContent() {
         </div>
 
         {/* Direct Contact Options */}
-        <div className="mx-auto max-w-2xl text-center mb-8 flex flex-wrap items-center justify-center gap-3">
+        <div className="mx-auto max-w-2xl text-center mb-8 flex flex-col sm:flex-row items-stretch sm:items-center justify-center gap-3 w-full sm:w-auto">
           <a
             href={personalLinks.whatsapp}
             target="_blank"
             rel="noopener noreferrer"
-            className="inline-flex items-center gap-2 rounded-full border border-emerald-500/30 bg-emerald-50/80 dark:bg-emerald-950/40 px-4 py-2 text-xs font-semibold text-emerald-700 dark:text-emerald-400 hover:bg-emerald-100 dark:hover:bg-emerald-900/60 transition-colors shadow-sm"
+            className="w-full sm:w-auto flex-1 inline-flex items-center justify-center gap-2 rounded-full border border-emerald-500/30 bg-emerald-50/80 dark:bg-emerald-950/40 px-5 py-2.5 text-xs font-semibold text-emerald-700 dark:text-emerald-400 hover:bg-emerald-100 dark:hover:bg-emerald-900/60 transition-colors shadow-sm"
           >
             <WhatsappIcon className="h-4 w-4" />
             <span>Chat with me on WhatsApp</span>
@@ -169,7 +169,7 @@ function ContactFormContent() {
             href={personalLinks.portfolio}
             target="_blank"
             rel="noopener noreferrer"
-            className="inline-flex items-center gap-2 rounded-full border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 px-4 py-2 text-xs font-semibold text-slate-700 dark:text-slate-300 hover:text-blue-600 dark:hover:text-blue-400 hover:border-blue-500/40 transition-colors shadow-sm"
+            className="w-full sm:w-auto flex-1 inline-flex items-center justify-center gap-2 rounded-full border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 px-5 py-2.5 text-xs font-semibold text-slate-700 dark:text-slate-300 hover:text-blue-600 dark:hover:text-blue-400 hover:border-blue-500/40 transition-colors shadow-sm"
           >
             <PortfolioIcon className="h-4 w-4 text-blue-600" />
             <span>Explore Personal Portfolio</span>

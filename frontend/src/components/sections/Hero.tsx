@@ -32,20 +32,20 @@ export function Hero() {
             </p>
 
             {/* CTA Buttons */}
-            <div className="pt-2 flex flex-wrap items-center gap-3 sm:gap-4">
-              <Link href="/services">
+            <div className="pt-2 flex flex-col sm:flex-row items-stretch sm:items-center gap-3 sm:gap-4 w-full sm:w-auto">
+              <Link href="/services" className="w-full sm:w-auto flex-1">
                 <Button
                   size="lg"
-                  className="bg-blue-600 hover:bg-blue-700 text-white rounded-full px-7 py-3.5 text-sm font-semibold shadow-md shadow-blue-500/25 transition-transform hover:-translate-y-0.5"
+                  className="w-full justify-center bg-blue-600 hover:bg-blue-700 text-white rounded-full px-7 py-3.5 text-sm font-semibold shadow-md shadow-blue-500/25 transition-transform hover:-translate-y-0.5"
                 >
                   Explore Our Services <ArrowRight className="h-4 w-4 ml-1.5" />
                 </Button>
               </Link>
-              <Link href="/contact">
+              <Link href="/contact" className="w-full sm:w-auto flex-1">
                 <Button
                   size="lg"
                   variant="outline"
-                  className="rounded-full px-6 py-3.5 text-sm font-semibold border-slate-200 dark:border-slate-800 bg-white/80 dark:bg-slate-900 text-slate-700 dark:text-slate-200 hover:bg-slate-50 dark:hover:bg-slate-800 transition-colors"
+                  className="w-full justify-center rounded-full px-6 py-3.5 text-sm font-semibold border-slate-200 dark:border-slate-800 bg-white/80 dark:bg-slate-900 text-slate-700 dark:text-slate-200 hover:bg-slate-50 dark:hover:bg-slate-800 transition-colors"
                 >
                   <Calendar className="h-4 w-4 mr-2 text-slate-500" />
                   Start a Project
