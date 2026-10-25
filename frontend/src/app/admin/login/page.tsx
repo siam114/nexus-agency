@@ -5,7 +5,16 @@ import { useAdminAuth } from "@/lib/adminAuth";
 import { Card } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Logo } from "@/components/ui/Logo";
-import { Shield, Lock, Mail, ArrowRight, AlertCircle, Sparkles, Eye, EyeOff } from "lucide-react";
+import {
+  Shield,
+  Lock,
+  Mail,
+  ArrowRight,
+  AlertCircle,
+  Sparkles,
+  Eye,
+  EyeOff,
+} from "lucide-react";
 
 export default function AdminLoginPage() {
   const { login } = useAdminAuth();
@@ -44,7 +53,8 @@ export default function AdminLoginPage() {
             Admin Control Panel
           </h1>
           <p className="text-xs text-slate-500 dark:text-slate-400">
-            Sign in to manage projects, services, client inquiries, and website settings.
+            Sign in to manage projects, services, client inquiries, and website
+            settings.
           </p>
         </div>
 
@@ -145,4 +155,3 @@ export default function AdminLoginPage() {
     </div>
   );
 }
-
