@@ -32,7 +32,9 @@ export default function AdminServicesPage() {
   });
 
   const [search, setSearch] = React.useState("");
-  const [editingService, setEditingService] = React.useState<Service | null>(null);
+  const [editingService, setEditingService] = React.useState<Service | null>(
+    null,
+  );
 
   // Form states for editing
   const [editTitle, setEditTitle] = React.useState("");
@@ -72,9 +74,7 @@ export default function AdminServicesPage() {
         .filter(Boolean),
     };
 
-    setServices((prev) =>
-      prev.map((s) => (s.id === updated.id ? updated : s))
-    );
+    setServices((prev) => prev.map((s) => (s.id === updated.id ? updated : s)));
     setEditingService(null);
   };
 
@@ -90,7 +90,7 @@ export default function AdminServicesPage() {
   const totalFeatures = services.reduce((acc, s) => acc + s.features.length, 0);
   const totalDeliverables = services.reduce(
     (acc, s) => acc + (s.deliverables?.length || 0),
-    0
+    0,
   );
 
   return (
@@ -106,12 +106,17 @@ export default function AdminServicesPage() {
             Agency Services Management
           </h1>
           <p className="text-sm text-slate-500 dark:text-slate-400">
-            Manage your 6 core agency offerings, features, deliverables, and public service landing pages.
+            Manage your 6 core agency offerings, features, deliverables, and
+            public service landing pages.
           </p>
         </div>
 
         <Link href="/services" target="_blank">
-          <Button variant="outline" size="sm" className="rounded-xl border-slate-300 dark:border-slate-700">
+          <Button
+            variant="outline"
+            size="sm"
+            className="rounded-xl border-slate-300 dark:border-slate-700"
+          >
             <ExternalLink className="h-4 w-4 mr-2" />
             View Public Services
           </Button>
@@ -121,19 +126,25 @@ export default function AdminServicesPage() {
       {/* Stats */}
       <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
         <Card className="p-4 rounded-xl border-slate-200/80 dark:border-slate-800 bg-white dark:bg-slate-900">
-          <div className="text-xs font-semibold text-slate-500 dark:text-slate-400">Active Offerings</div>
+          <div className="text-xs font-semibold text-slate-500 dark:text-slate-400">
+            Active Offerings
+          </div>
           <div className="mt-1 text-2xl font-black text-slate-900 dark:text-white">
             {services.length} Services
           </div>
         </Card>
         <Card className="p-4 rounded-xl border-slate-200/80 dark:border-slate-800 bg-white dark:bg-slate-900">
-          <div className="text-xs font-semibold text-slate-500 dark:text-slate-400">Core Capabilities Listed</div>
+          <div className="text-xs font-semibold text-slate-500 dark:text-slate-400">
+            Core Capabilities Listed
+          </div>
           <div className="mt-1 text-2xl font-black text-purple-600 dark:text-purple-400">
             {totalFeatures} Features
           </div>
         </Card>
         <Card className="p-4 rounded-xl border-slate-200/80 dark:border-slate-800 bg-white dark:bg-slate-900">
-          <div className="text-xs font-semibold text-slate-500 dark:text-slate-400">Total Deliverables</div>
+          <div className="text-xs font-semibold text-slate-500 dark:text-slate-400">
+            Total Deliverables
+          </div>
           <div className="mt-1 text-2xl font-black text-blue-600 dark:text-blue-400">
             {totalDeliverables} Deliverables
           </div>
@@ -211,7 +222,10 @@ export default function AdminServicesPage() {
                 </div>
                 <div className="grid grid-cols-1 gap-1.5">
                   {service.features.slice(0, 3).map((feat, i) => (
-                    <div key={i} className="flex items-center gap-2 text-xs text-slate-700 dark:text-slate-300">
+                    <div
+                      key={i}
+                      className="flex items-center gap-2 text-xs text-slate-700 dark:text-slate-300"
+                    >
                       <Check className="h-3.5 w-3.5 text-emerald-500 shrink-0" />
                       <span className="truncate">{feat}</span>
                     </div>
@@ -261,7 +275,10 @@ export default function AdminServicesPage() {
                   Edit Content
                 </Button>
                 <Link href={`/services/${service.id}`} target="_blank">
-                  <Button size="sm" className="text-xs h-8 bg-purple-600 hover:bg-purple-700 text-white rounded-lg">
+                  <Button
+                    size="sm"
+                    className="text-xs h-8 bg-purple-600 hover:bg-purple-700 text-white rounded-lg"
+                  >
                     Preview Page
                   </Button>
                 </Link>
