@@ -36,7 +36,8 @@ import {
 } from "lucide-react";
 import { cn } from "@/lib/utils";
 
-const BACKEND_URL = process.env.NEXT_PUBLIC_BACKEND_URL || "http://localhost:5000/api/v1";
+const BACKEND_URL =
+  process.env.NEXT_PUBLIC_BACKEND_URL || "http://localhost:5000/api/v1";
 
 const CATEGORIES = [
   "All",
@@ -51,18 +52,27 @@ const CATEGORIES = [
 const DEFAULT_IMAGE =
   "https://images.unsplash.com/photo-1460925895917-afdab827c52f?auto=format&fit=crop&w=800&q=80";
 
-type EditTab = "general" | "images" | "overview" | "challenge_solution" | "features_seo";
+type EditTab =
+  | "general"
+  | "images"
+  | "overview"
+  | "challenge_solution"
+  | "features_seo";
 
 export default function AdminProjectsPage() {
   const { token } = useAdminAuth();
-  const [projects, setProjects] = React.useState<Project[]>(() => getAdminProjects());
+  const [projects, setProjects] = React.useState<Project[]>(() =>
+    getAdminProjects(),
+  );
   const [search, setSearch] = React.useState("");
   const [selectedCategory, setSelectedCategory] = React.useState("All");
 
   // Modals state
   const [showAddModal, setShowAddModal] = React.useState(false);
   const [showEditModal, setShowEditModal] = React.useState(false);
-  const [editingProjectId, setEditingProjectId] = React.useState<string | null>(null);
+  const [editingProjectId, setEditingProjectId] = React.useState<string | null>(
+    null,
+  );
   const [activeTab, setActiveTab] = React.useState<EditTab>("general");
   const [isSaving, setIsSaving] = React.useState(false);
   const [saveSuccess, setSaveSuccess] = React.useState(false);
@@ -81,7 +91,9 @@ export default function AdminProjectsPage() {
   const [editSlug, setEditSlug] = React.useState("");
   const [editOriginalSlug, setEditOriginalSlug] = React.useState("");
   const [editCategory, setEditCategory] = React.useState("Shopify Development");
-  const [editServiceSlug, setEditServiceSlug] = React.useState("shopify-development");
+  const [editServiceSlug, setEditServiceSlug] = React.useState(
+    "shopify-development",
+  );
   const [editClient, setEditClient] = React.useState("");
   const [editYear, setEditYear] = React.useState("");
   const [editLiveUrl, setEditLiveUrl] = React.useState("");
@@ -108,18 +120,26 @@ export default function AdminProjectsPage() {
 
   // Challenge & Solution
   const [editChallengeSummary, setEditChallengeSummary] = React.useState("");
-  const [editChallengePoints, setEditChallengePoints] = React.useState<string[]>([]);
+  const [editChallengePoints, setEditChallengePoints] = React.useState<
+    string[]
+  >([]);
   const [newChallengePoint, setNewChallengePoint] = React.useState("");
   const [editSolutionSummary, setEditSolutionSummary] = React.useState("");
-  const [editSolutionPoints, setEditSolutionPoints] = React.useState<string[]>([]);
+  const [editSolutionPoints, setEditSolutionPoints] = React.useState<string[]>(
+    [],
+  );
   const [newSolutionPoint, setNewSolutionPoint] = React.useState("");
 
   // Features, Outcomes & SEO
-  const [editFeatures, setEditFeatures] = React.useState<ProjectDetailFeature[]>([]);
+  const [editFeatures, setEditFeatures] = React.useState<
+    ProjectDetailFeature[]
+  >([]);
   const [newFeatureTitle, setNewFeatureTitle] = React.useState("");
   const [newFeatureDesc, setNewFeatureDesc] = React.useState("");
   const [editOutcomeSummary, setEditOutcomeSummary] = React.useState("");
-  const [editOutcomeHighlights, setEditOutcomeHighlights] = React.useState<string[]>([]);
+  const [editOutcomeHighlights, setEditOutcomeHighlights] = React.useState<
+    string[]
+  >([]);
   const [newOutcomeHighlight, setNewOutcomeHighlight] = React.useState("");
   const [editMetaTitle, setEditMetaTitle] = React.useState("");
   const [editMetaDescription, setEditMetaDescription] = React.useState("");
@@ -131,11 +151,15 @@ export default function AdminProjectsPage() {
       p.title.toLowerCase().includes(search.toLowerCase()) ||
       p.category.toLowerCase().includes(search.toLowerCase()) ||
       p.slug.toLowerCase().includes(search.toLowerCase());
-    const matchesCat = selectedCategory === "All" || p.category === selectedCategory;
+    const matchesCat =
+      selectedCategory === "All" || p.category === selectedCategory;
     return matchesSearch && matchesCat;
   });
 
-  const syncBackend = async (action: "update" | "create" | "delete", data: Partial<Project>) => {
+  const syncBackend = async (
+    action: "update" | "create" | "delete",
+    data: Partial<Project>,
+  ) => {
     if (!token) return;
     try {
       if (action === "update" && data.id) {
@@ -172,7 +196,9 @@ export default function AdminProjectsPage() {
   const handleTogglePublish = (project: Project) => {
     const isPub = project.published !== false;
     const updated: Project = { ...project, published: !isPub };
-    const updatedList = projects.map((p) => (p.id === project.id ? updated : p));
+    const updatedList = projects.map((p) =>
+      p.id === project.id ? updated : p,
+    );
     setProjects(updatedList);
     saveAdminProjects(updatedList);
 
@@ -186,7 +212,11 @@ export default function AdminProjectsPage() {
   };
 
   const handleDelete = (id: string, title: string) => {
-    if (confirm(`Are you sure you want to remove "${title}"? This cannot be undone.`)) {
+    if (
+      confirm(
+        `Are you sure you want to remove "${title}"? This cannot be undone.`,
+      )
+    ) {
       const projectToDelete = projects.find((p) => p.id === id);
       const updatedList = projects.filter((p) => p.id !== id);
       setProjects(updatedList);
@@ -212,7 +242,8 @@ export default function AdminProjectsPage() {
 
     const allDetails = getAdminProjectDetails();
     const detail: ProjectDetail | undefined =
-      allDetails[project.slug] || Object.values(allDetails).find((d) => d.id === project.id);
+      allDetails[project.slug] ||
+      Object.values(allDetails).find((d) => d.id === project.id);
 
     // Populate Tab 1: General
     setEditTitle(project.title);
@@ -220,10 +251,12 @@ export default function AdminProjectsPage() {
     setEditCategory(project.category);
     setEditServiceSlug(
       detail?.serviceSlug ||
-        project.category.toLowerCase().replace(/[^a-z0-9]+/g, "-")
+        project.category.toLowerCase().replace(/[^a-z0-9]+/g, "-"),
     );
     setEditClient(project.client || detail?.client || "");
-    setEditYear(project.year || detail?.year || new Date().getFullYear().toString());
+    setEditYear(
+      project.year || detail?.year || new Date().getFullYear().toString(),
+    );
     setEditLiveUrl(project.liveUrl || detail?.liveUrl || "");
     setEditSortOrder(project.sortOrder ?? 1);
     setEditFeatured(project.featured === true);
@@ -235,11 +268,11 @@ export default function AdminProjectsPage() {
     setNewGalleryUrl("");
     setEditDesktopAspect(
       detail?.showcase?.desktopAspect ||
-        "Clean navigation headers, multi-column gear grids, and prominent lifestyle banners."
+        "Clean navigation headers, multi-column gear grids, and prominent lifestyle banners.",
     );
     setEditMobileAspect(
       detail?.showcase?.mobileAspect ||
-        "Touch-optimized filters, sticky checkout controls, and fast-rendering product previews."
+        "Touch-optimized filters, sticky checkout controls, and fast-rendering product previews.",
     );
 
     // Populate Tab 3: Overview & Scope
@@ -249,8 +282,12 @@ export default function AdminProjectsPage() {
     setEditAudience(detail?.overview?.audience || "");
     setEditGoals(detail?.overview?.goals || []);
     setNewGoalInput("");
-    setEditTechnologies((detail?.technologies || project.tags || []).join(", "));
-    setEditServicesProvided((detail?.servicesProvided || [project.category]).join(", "));
+    setEditTechnologies(
+      (detail?.technologies || project.tags || []).join(", "),
+    );
+    setEditServicesProvided(
+      (detail?.servicesProvided || [project.category]).join(", "),
+    );
 
     // Populate Tab 4: Challenge & Solution
     setEditChallengeSummary(detail?.challenge?.summary || "");
@@ -268,11 +305,12 @@ export default function AdminProjectsPage() {
     setEditOutcomeHighlights(detail?.outcome?.highlights || []);
     setNewOutcomeHighlight("");
     setEditMetaTitle(
-      detail?.metaTitle || `${project.title} | ${project.category} Case Study | NexusAgency`
+      detail?.metaTitle ||
+        `${project.title} | ${project.category} Case Study | NexusAgency`,
     );
     setEditMetaDescription(
       detail?.metaDescription ||
-        `Explore how NexusAgency engineered ${project.title} for ${project.client || "our client partner"} with modern responsive web architecture.`
+        `Explore how NexusAgency engineered ${project.title} for ${project.client || "our client partner"} with modern responsive web architecture.`,
     );
 
     setShowEditModal(true);
@@ -373,7 +411,9 @@ export default function AdminProjectsPage() {
       ...editFeatures,
       {
         title: newFeatureTitle.trim(),
-        description: newFeatureDesc.trim() || "Engineered for optimal performance and user satisfaction.",
+        description:
+          newFeatureDesc.trim() ||
+          "Engineered for optimal performance and user satisfaction.",
       },
     ]);
     setNewFeatureTitle("");
@@ -389,13 +429,18 @@ export default function AdminProjectsPage() {
   const handleAddOutcomeHighlight = (e: React.FormEvent) => {
     e.preventDefault();
     if (!newOutcomeHighlight.trim()) return;
-    setEditOutcomeHighlights([...editOutcomeHighlights, newOutcomeHighlight.trim()]);
+    setEditOutcomeHighlights([
+      ...editOutcomeHighlights,
+      newOutcomeHighlight.trim(),
+    ]);
     setNewOutcomeHighlight("");
     setIsDirty(true);
   };
 
   const handleRemoveOutcomeHighlight = (index: number) => {
-    setEditOutcomeHighlights(editOutcomeHighlights.filter((_, i) => i !== index));
+    setEditOutcomeHighlights(
+      editOutcomeHighlights.filter((_, i) => i !== index),
+    );
     setIsDirty(true);
   };
 
@@ -425,10 +470,12 @@ export default function AdminProjectsPage() {
 
     // Check slug collision with other projects
     const collision = projects.find(
-      (p) => p.slug === cleanSlug && p.id !== editingProjectId
+      (p) => p.slug === cleanSlug && p.id !== editingProjectId,
     );
     if (collision) {
-      setModalError(`A project with slug "${cleanSlug}" already exists. Please choose a unique slug.`);
+      setModalError(
+        `A project with slug "${cleanSlug}" already exists. Please choose a unique slug.`,
+      );
       setActiveTab("general");
       return;
     }
@@ -453,7 +500,8 @@ export default function AdminProjectsPage() {
       title: editTitle.trim(),
       category: editCategory,
       tags: techArray.length > 0 ? techArray : [editCategory],
-      description: editSummary.trim() || "Professional agency project deliverable.",
+      description:
+        editSummary.trim() || "Professional agency project deliverable.",
       image: editImage.trim() || DEFAULT_IMAGE,
       client: editClient.trim() || undefined,
       year: editYear.trim() || new Date().getFullYear().toString(),
@@ -501,7 +549,8 @@ export default function AdminProjectsPage() {
           editRequirements.trim() ||
           "Full responsiveness, performant frontend code, intuitive user flow, and clean code architecture.",
         audience:
-          editAudience.trim() || "Online visitors, prospective clients, and target market users.",
+          editAudience.trim() ||
+          "Online visitors, prospective clients, and target market users.",
         goals:
           editGoals.length > 0
             ? editGoals
@@ -540,7 +589,8 @@ export default function AdminProjectsPage() {
           : [
               {
                 title: "Responsive Multi-Viewport Layout",
-                description: "Optimized for mobile, tablet, and desktop browsing.",
+                description:
+                  "Optimized for mobile, tablet, and desktop browsing.",
               },
             ],
       showcase: {
@@ -548,13 +598,20 @@ export default function AdminProjectsPage() {
         description:
           "Engineered to balance aesthetics with swift loading speeds across desktop and mobile.",
         desktopAspect:
-          editDesktopAspect.trim() || "Clean navigation, fluid grid alignment, and prominent branding.",
+          editDesktopAspect.trim() ||
+          "Clean navigation, fluid grid alignment, and prominent branding.",
         mobileAspect:
-          editMobileAspect.trim() || "Touch-friendly controls, fast tap targets, and streamlined layouts.",
+          editMobileAspect.trim() ||
+          "Touch-friendly controls, fast tap targets, and streamlined layouts.",
       },
-      technologies: techArray.length > 0 ? techArray : [editCategory, "Tailwind CSS", "Next.js"],
+      technologies:
+        techArray.length > 0
+          ? techArray
+          : [editCategory, "Tailwind CSS", "Next.js"],
       servicesProvided:
-        servicesArray.length > 0 ? servicesArray : [editCategory, "Responsive Web Development"],
+        servicesArray.length > 0
+          ? servicesArray
+          : [editCategory, "Responsive Web Development"],
       outcome: {
         summary:
           editOutcomeSummary.trim() ||
@@ -623,7 +680,8 @@ export default function AdminProjectsPage() {
       title: newTitle.trim(),
       category: newCategory,
       tags: [newCategory, "Web Development"],
-      description: newDescription.trim() || "Professional agency project deliverable.",
+      description:
+        newDescription.trim() || "Professional agency project deliverable.",
       image: newImage.trim() || DEFAULT_IMAGE,
       client: newClient.trim() || "Client Partner",
       year: new Date().getFullYear().toString(),
@@ -647,7 +705,8 @@ export default function AdminProjectsPage() {
       tags: [newCategory, "Web Development"],
       image: newImage.trim() || DEFAULT_IMAGE,
       gallery: [],
-      summary: newDescription.trim() || "Professional agency project deliverable.",
+      summary:
+        newDescription.trim() || "Professional agency project deliverable.",
       metaTitle: `${newTitle.trim()} | ${newCategory} Case Study | NexusAgency`,
       metaDescription: `Case study of ${newTitle.trim()} built by NexusAgency.`,
       metrics: [
@@ -655,17 +714,24 @@ export default function AdminProjectsPage() {
         { label: "Performance Score", value: "95+" },
       ],
       overview: {
-        purpose: "Project delivery aimed at elevating digital presence and brand reach.",
-        requirements: "Clean architecture, cross-device responsiveness, and high speed.",
+        purpose:
+          "Project delivery aimed at elevating digital presence and brand reach.",
+        requirements:
+          "Clean architecture, cross-device responsiveness, and high speed.",
         audience: "Prospective customers and targeted audience.",
-        goals: ["Deliver high quality frontend architecture.", "Ensure smooth mobile experience."],
+        goals: [
+          "Deliver high quality frontend architecture.",
+          "Ensure smooth mobile experience.",
+        ],
       },
       challenge: {
-        summary: "Need for modern, fast-loading interfaces with pixel-conscious layout fidelity.",
+        summary:
+          "Need for modern, fast-loading interfaces with pixel-conscious layout fidelity.",
         points: ["Cross-browser responsiveness.", "Fast mobile loading."],
       },
       solution: {
-        summary: "Crafted clean code architecture tailored to the client's specifications.",
+        summary:
+          "Crafted clean code architecture tailored to the client's specifications.",
         points: ["Modular layout control.", "Optimized frontend assets."],
       },
       features: [
@@ -683,7 +749,8 @@ export default function AdminProjectsPage() {
       technologies: [newCategory, "Tailwind CSS", "TypeScript"],
       servicesProvided: [newCategory],
       outcome: {
-        summary: "Delivered on schedule with 100% verified responsive fluidity.",
+        summary:
+          "Delivered on schedule with 100% verified responsive fluidity.",
         highlights: ["100% verified mobile usability.", "Fast page rendering."],
       },
       featured: true,
@@ -720,13 +787,18 @@ export default function AdminProjectsPage() {
             Projects Manager
           </h1>
           <p className="text-xs sm:text-sm text-slate-500 dark:text-slate-400">
-            Create, edit, toggle publication status, and manage portfolio case studies and live URLs.
+            Create, edit, toggle publication status, and manage portfolio case
+            studies and live URLs.
           </p>
         </div>
 
         <div className="flex items-center gap-2">
           <Link href="/projects" target="_blank">
-            <Button variant="outline" size="sm" className="rounded-xl border-slate-300 dark:border-slate-700">
+            <Button
+              variant="outline"
+              size="sm"
+              className="rounded-xl border-slate-300 dark:border-slate-700"
+            >
               <ExternalLink className="h-4 w-4 mr-2" />
               Public Portfolio
             </Button>
@@ -763,7 +835,7 @@ export default function AdminProjectsPage() {
                 "px-3 py-1.5 rounded-xl text-xs font-medium whitespace-nowrap transition-colors cursor-pointer",
                 selectedCategory === cat
                   ? "bg-blue-600 text-white font-semibold shadow-xs"
-                  : "bg-white dark:bg-slate-900 text-slate-600 dark:text-slate-400 border border-slate-200 dark:border-slate-800 hover:text-slate-900 dark:hover:text-white"
+                  : "bg-white dark:bg-slate-900 text-slate-600 dark:text-slate-400 border border-slate-200 dark:border-slate-800 hover:text-slate-900 dark:hover:text-white",
               )}
             >
               {cat}
@@ -842,7 +914,9 @@ export default function AdminProjectsPage() {
                         <div className="font-medium text-slate-700 dark:text-slate-300">
                           {project.client || "—"}
                         </div>
-                        <div className="text-[11px] text-slate-400">{project.year}</div>
+                        <div className="text-[11px] text-slate-400">
+                          {project.year}
+                        </div>
                       </td>
 
                       <td className="py-3.5 px-4 text-slate-500 dark:text-slate-400 font-mono text-xs">
@@ -856,7 +930,7 @@ export default function AdminProjectsPage() {
                             "inline-flex items-center gap-1 px-2.5 py-1 rounded-full text-xs font-semibold cursor-pointer transition-colors border",
                             isPublished
                               ? "bg-emerald-50 dark:bg-emerald-950/60 text-emerald-600 dark:text-emerald-400 border-emerald-200 dark:border-emerald-800"
-                              : "bg-amber-50 dark:bg-amber-950/60 text-amber-600 dark:text-amber-400 border-amber-200 dark:border-amber-800"
+                              : "bg-amber-50 dark:bg-amber-950/60 text-amber-600 dark:text-amber-400 border-amber-200 dark:border-amber-800",
                           )}
                           title="Click to toggle publication"
                         >
@@ -897,7 +971,9 @@ export default function AdminProjectsPage() {
 
                           {/* Delete Project Button */}
                           <button
-                            onClick={() => handleDelete(project.id, project.title)}
+                            onClick={() =>
+                              handleDelete(project.id, project.title)
+                            }
                             className="p-2 rounded-lg text-slate-400 hover:text-rose-600 hover:bg-rose-50 dark:hover:bg-rose-950/40 transition-colors cursor-pointer"
                             title="Delete project"
                           >
@@ -955,7 +1031,9 @@ export default function AdminProjectsPage() {
             {saveSuccess && (
               <div className="p-3.5 rounded-xl bg-emerald-50 dark:bg-emerald-950/40 border border-emerald-200 dark:border-emerald-800 text-emerald-600 dark:text-emerald-400 text-xs font-semibold flex items-center gap-2 animate-in fade-in">
                 <Check className="h-4 w-4 shrink-0" />
-                <span>Project updated successfully! Syncing live changes...</span>
+                <span>
+                  Project updated successfully! Syncing live changes...
+                </span>
               </div>
             )}
 
@@ -965,8 +1043,16 @@ export default function AdminProjectsPage() {
                 { id: "general", label: "1. General & Meta", icon: FileText },
                 { id: "images", label: "2. Images & Gallery", icon: ImageIcon },
                 { id: "overview", label: "3. Overview & Scope", icon: Globe },
-                { id: "challenge_solution", label: "4. Challenge & Solution", icon: Layers },
-                { id: "features_seo", label: "5. Features, Outcomes & SEO", icon: Sparkles },
+                {
+                  id: "challenge_solution",
+                  label: "4. Challenge & Solution",
+                  icon: Layers,
+                },
+                {
+                  id: "features_seo",
+                  label: "5. Features, Outcomes & SEO",
+                  icon: Sparkles,
+                },
               ].map((tab) => {
                 const Icon = tab.icon;
                 return (
@@ -978,7 +1064,7 @@ export default function AdminProjectsPage() {
                       "px-3 py-1.5 rounded-lg text-xs font-semibold transition-all flex items-center gap-1.5 cursor-pointer",
                       activeTab === tab.id
                         ? "bg-white dark:bg-slate-900 text-blue-600 dark:text-blue-400 shadow-xs"
-                        : "text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white"
+                        : "text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white",
                     )}
                   >
                     <Icon className="h-3.5 w-3.5" />
@@ -1041,7 +1127,9 @@ export default function AdminProjectsPage() {
                         onChange={(e) => {
                           setEditCategory(e.target.value);
                           setEditServiceSlug(
-                            e.target.value.toLowerCase().replace(/[^a-z0-9]+/g, "-")
+                            e.target.value
+                              .toLowerCase()
+                              .replace(/[^a-z0-9]+/g, "-"),
                           );
                           setIsDirty(true);
                         }}
@@ -1499,7 +1587,8 @@ export default function AdminProjectsPage() {
 
                     <div className="space-y-2">
                       <label className="font-semibold block text-slate-700 dark:text-slate-300">
-                        Friction Points &amp; Roadblocks ({editChallengePoints.length})
+                        Friction Points &amp; Roadblocks (
+                        {editChallengePoints.length})
                       </label>
                       <div className="flex items-center gap-2">
                         <input
@@ -1699,7 +1788,9 @@ export default function AdminProjectsPage() {
                         <input
                           type="text"
                           value={newOutcomeHighlight}
-                          onChange={(e) => setNewOutcomeHighlight(e.target.value)}
+                          onChange={(e) =>
+                            setNewOutcomeHighlight(e.target.value)
+                          }
                           placeholder="Add verified outcome highlight..."
                           className="flex-1 px-3 py-1.5 rounded-lg bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-xs"
                         />
