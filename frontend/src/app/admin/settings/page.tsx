@@ -54,44 +54,46 @@ export default function AdminSettingsPage() {
   const { user } = useAdminAuth();
 
   const [agencyName, setAgencyName] = React.useState(
-    () => getInitialSettings().agencyName || "NexusAgency"
+    () => getInitialSettings().agencyName || "NexusAgency",
   );
   const [tagline, setTagline] = React.useState(
-    () => getInitialSettings().tagline || "High-Impact Digital Solutions & Growth Engineering"
+    () =>
+      getInitialSettings().tagline ||
+      "High-Impact Digital Solutions & Growth Engineering",
   );
   const [location, setLocation] = React.useState(
-    () => getInitialSettings().location || "Dhaka, Bangladesh"
+    () => getInitialSettings().location || "Dhaka, Bangladesh",
   );
   const [availability, setAvailability] = React.useState(
-    () => getInitialSettings().availability || "Available for New Projects"
+    () => getInitialSettings().availability || "Available for New Projects",
   );
 
   const [founderName, setFounderName] = React.useState(
-    () => getInitialSettings().founderName || personalLinks.name
+    () => getInitialSettings().founderName || personalLinks.name,
   );
   const [founderRole, setFounderRole] = React.useState(
-    () => getInitialSettings().founderRole || personalLinks.role
+    () => getInitialSettings().founderRole || personalLinks.role,
   );
   const [email, setEmail] = React.useState(
-    () => getInitialSettings().email || personalLinks.email
+    () => getInitialSettings().email || personalLinks.email,
   );
   const [phone, setPhone] = React.useState(
-    () => getInitialSettings().phone || personalLinks.phoneDisplay
+    () => getInitialSettings().phone || personalLinks.phoneDisplay,
   );
   const [whatsapp, setWhatsapp] = React.useState(
-    () => getInitialSettings().whatsapp || personalLinks.whatsapp
+    () => getInitialSettings().whatsapp || personalLinks.whatsapp,
   );
   const [portfolio, setPortfolio] = React.useState(
-    () => getInitialSettings().portfolio || personalLinks.portfolio
+    () => getInitialSettings().portfolio || personalLinks.portfolio,
   );
   const [linkedin, setLinkedin] = React.useState(
-    () => getInitialSettings().linkedin || personalLinks.linkedin
+    () => getInitialSettings().linkedin || personalLinks.linkedin,
   );
   const [github, setGithub] = React.useState(
-    () => getInitialSettings().github || personalLinks.github
+    () => getInitialSettings().github || personalLinks.github,
   );
   const [facebook, setFacebook] = React.useState(
-    () => getInitialSettings().facebook || personalLinks.facebook
+    () => getInitialSettings().facebook || personalLinks.facebook,
   );
 
   const [saveSuccess, setSaveSuccess] = React.useState(false);
@@ -142,7 +144,8 @@ export default function AdminSettingsPage() {
             Agency & Contact Settings
           </h1>
           <p className="text-sm text-slate-500 dark:text-slate-400">
-            Update your public agency branding, contact credentials, social profiles, and admin security.
+            Update your public agency branding, contact credentials, social
+            profiles, and admin security.
           </p>
         </div>
 
@@ -390,7 +393,11 @@ export default function AdminSettingsPage() {
                 Active Administrator Account
               </div>
               <div className="text-slate-500 dark:text-slate-400">
-                Authenticated as: <span className="font-mono text-blue-600 dark:text-blue-400">{user?.email || "smsiam987@gmail.com"}</span> ({user?.role || "super_admin"})
+                Authenticated as:{" "}
+                <span className="font-mono text-blue-600 dark:text-blue-400">
+                  {user?.email || "smsiam987@gmail.com"}
+                </span>{" "}
+                ({user?.role || "super_admin"})
               </div>
             </div>
 
@@ -416,4 +423,3 @@ export default function AdminSettingsPage() {
     </div>
   );
 }
-
