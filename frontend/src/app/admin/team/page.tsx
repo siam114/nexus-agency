@@ -33,21 +33,30 @@ import {
 } from "@/components/ui/SocialIcons";
 import { cn } from "@/lib/utils";
 
-const BACKEND_URL = process.env.NEXT_PUBLIC_BACKEND_URL || "http://localhost:5000/api/v1";
+const BACKEND_URL =
+  process.env.NEXT_PUBLIC_BACKEND_URL || "http://localhost:5000/api/v1";
 
 const DEFAULT_AVATAR =
   "https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=400&q=80";
 
 export default function AdminTeamPage() {
   const { token } = useAdminAuth();
-  const [members, setMembers] = React.useState<TeamMember[]>(() => getAdminTeam());
+  const [members, setMembers] = React.useState<TeamMember[]>(() =>
+    getAdminTeam(),
+  );
   const [search, setSearch] = React.useState("");
-  const [statusFilter, setStatusFilter] = React.useState<"all" | "published" | "draft">("all");
+  const [statusFilter, setStatusFilter] = React.useState<
+    "all" | "published" | "draft"
+  >("all");
 
   // Modal states
   const [showFormModal, setShowFormModal] = React.useState(false);
-  const [editingMember, setEditingMember] = React.useState<TeamMember | null>(null);
-  const [previewMember, setPreviewMember] = React.useState<TeamMember | null>(null);
+  const [editingMember, setEditingMember] = React.useState<TeamMember | null>(
+    null,
+  );
+  const [previewMember, setPreviewMember] = React.useState<TeamMember | null>(
+    null,
+  );
 
   // Form states
   const [formName, setFormName] = React.useState("");
@@ -67,7 +76,10 @@ export default function AdminTeamPage() {
 
   const fileInputRef = React.useRef<HTMLInputElement | null>(null);
 
-  const syncBackend = async (action: "create" | "update" | "delete", memberData: Partial<TeamMember>) => {
+  const syncBackend = async (
+    action: "create" | "update" | "delete",
+    memberData: Partial<TeamMember>,
+  ) => {
     if (!token) return;
     try {
       if (action === "create") {
@@ -208,7 +220,9 @@ export default function AdminTeamPage() {
 
     let updatedList: TeamMember[];
     if (editingMember) {
-      updatedList = members.map((m) => (m.id === memberPayload.id ? memberPayload : m));
+      updatedList = members.map((m) =>
+        m.id === memberPayload.id ? memberPayload : m,
+      );
       syncBackend("update", memberPayload);
     } else {
       updatedList = [...members, memberPayload];
@@ -230,7 +244,11 @@ export default function AdminTeamPage() {
   };
 
   const handleDeleteMember = (member: TeamMember) => {
-    if (confirm(`Are you sure you want to delete team member "${member.name}"? This action cannot be undone.`)) {
+    if (
+      confirm(
+        `Are you sure you want to delete team member "${member.name}"? This action cannot be undone.`,
+      )
+    ) {
       const updatedList = members.filter((m) => m.id !== member.id);
       setMembers(updatedList);
       saveAdminTeam(updatedList);
@@ -276,13 +294,18 @@ export default function AdminTeamPage() {
             Team Members
           </h1>
           <p className="text-sm text-slate-500 dark:text-slate-400">
-            Manage your agency specialists, roles, profile photos, social links, display ordering, and public visibility.
+            Manage your agency specialists, roles, profile photos, social links,
+            display ordering, and public visibility.
           </p>
         </div>
 
         <div className="flex items-center gap-2">
           <Link href="/team" target="_blank">
-            <Button variant="outline" size="sm" className="rounded-xl border-slate-300 dark:border-slate-700">
+            <Button
+              variant="outline"
+              size="sm"
+              className="rounded-xl border-slate-300 dark:border-slate-700"
+            >
               <ExternalLink className="h-4 w-4 mr-2" />
               View Public Team
             </Button>
@@ -301,29 +324,39 @@ export default function AdminTeamPage() {
       {/* KPI Stats */}
       <div className="grid grid-cols-2 sm:grid-cols-4 gap-4">
         <Card className="p-4 rounded-xl border-slate-200/80 dark:border-slate-800 bg-white dark:bg-slate-900">
-          <div className="text-xs font-semibold text-slate-500 dark:text-slate-400">Total Specialists</div>
-          <div className="mt-1 text-2xl font-black text-slate-900 dark:text-white">{totalMembers}</div>
+          <div className="text-xs font-semibold text-slate-500 dark:text-slate-400">
+            Total Specialists
+          </div>
+          <div className="mt-1 text-2xl font-black text-slate-900 dark:text-white">
+            {totalMembers}
+          </div>
         </Card>
         <Card className="p-4 rounded-xl border-emerald-200/80 dark:border-emerald-900/40 bg-emerald-50/50 dark:bg-emerald-950/20">
           <div className="text-xs font-semibold text-emerald-600 dark:text-emerald-400 flex items-center gap-1">
             <CheckCircle2 className="h-3 w-3" />
             <span>Published</span>
           </div>
-          <div className="mt-1 text-2xl font-black text-emerald-600 dark:text-emerald-400">{publishedCount}</div>
+          <div className="mt-1 text-2xl font-black text-emerald-600 dark:text-emerald-400">
+            {publishedCount}
+          </div>
         </Card>
         <Card className="p-4 rounded-xl border-amber-200/80 dark:border-amber-900/40 bg-amber-50/50 dark:bg-amber-950/20">
           <div className="text-xs font-semibold text-amber-600 dark:text-amber-400 flex items-center gap-1">
             <XCircle className="h-3 w-3" />
             <span>Drafts / Unpublished</span>
           </div>
-          <div className="mt-1 text-2xl font-black text-amber-600 dark:text-amber-400">{draftCount}</div>
+          <div className="mt-1 text-2xl font-black text-amber-600 dark:text-amber-400">
+            {draftCount}
+          </div>
         </Card>
         <Card className="p-4 rounded-xl border-purple-200/80 dark:border-purple-900/40 bg-purple-50/50 dark:bg-purple-950/20">
           <div className="text-xs font-semibold text-purple-600 dark:text-purple-400 flex items-center gap-1">
             <Star className="h-3 w-3" />
             <span>Featured</span>
           </div>
-          <div className="mt-1 text-2xl font-black text-purple-600 dark:text-purple-400">{featuredCount}</div>
+          <div className="mt-1 text-2xl font-black text-purple-600 dark:text-purple-400">
+            {featuredCount}
+          </div>
         </Card>
       </div>
 
@@ -338,12 +371,14 @@ export default function AdminTeamPage() {
           ].map((tab) => (
             <button
               key={tab.id}
-              onClick={() => setStatusFilter(tab.id as "all" | "published" | "draft")}
+              onClick={() =>
+                setStatusFilter(tab.id as "all" | "published" | "draft")
+              }
               className={cn(
                 "px-3 py-1.5 rounded-lg text-xs font-semibold transition-all flex items-center gap-1.5",
                 statusFilter === tab.id
                   ? "bg-white dark:bg-slate-900 text-blue-600 dark:text-blue-400 shadow-xs"
-                  : "text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white"
+                  : "text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white",
               )}
             >
               <span>{tab.label}</span>
@@ -375,9 +410,15 @@ export default function AdminTeamPage() {
             No team members found
           </div>
           <p className="text-xs text-slate-500 dark:text-slate-400 max-w-sm mx-auto">
-            {search ? "No members match your search keywords." : "Get started by adding your first agency specialist."}
+            {search
+              ? "No members match your search keywords."
+              : "Get started by adding your first agency specialist."}
           </p>
-          <Button size="sm" onClick={handleOpenAddModal} className="text-xs mt-2">
+          <Button
+            size="sm"
+            onClick={handleOpenAddModal}
+            className="text-xs mt-2"
+          >
             <Plus className="h-4 w-4 mr-1" />
             Add Team Member
           </Button>
@@ -394,7 +435,7 @@ export default function AdminTeamPage() {
                   "overflow-hidden rounded-2xl border bg-white dark:bg-slate-900 flex flex-col justify-between transition-all hover:shadow-lg group",
                   isPublished
                     ? "border-slate-200/80 dark:border-slate-800"
-                    : "border-amber-300/80 dark:border-amber-900/60 opacity-80"
+                    : "border-amber-300/80 dark:border-amber-900/60 opacity-80",
                 )}
               >
                 <div>
@@ -417,7 +458,7 @@ export default function AdminTeamPage() {
                           "px-2.5 py-1 rounded-full text-[10px] font-bold shadow-md transition-all flex items-center gap-1",
                           isPublished
                             ? "bg-emerald-600 text-white hover:bg-emerald-700"
-                            : "bg-amber-600 text-white hover:bg-amber-700"
+                            : "bg-amber-600 text-white hover:bg-amber-700",
                         )}
                         title="Click to toggle publication status"
                       >
@@ -487,15 +528,27 @@ export default function AdminTeamPage() {
 
                     {/* Social Indicators */}
                     <div className="flex items-center gap-1.5 text-slate-400 pt-2 border-t border-slate-100 dark:border-slate-800">
-                      {member.socials?.website && <PortfolioIcon className="h-3.5 w-3.5 text-blue-500" />}
-                      {member.socials?.github && <GithubIcon className="h-3.5 w-3.5 text-slate-700 dark:text-slate-300" />}
-                      {member.socials?.linkedin && <LinkedinIcon className="h-3.5 w-3.5 text-blue-600" />}
-                      {member.socials?.facebook && <FacebookIcon className="h-3.5 w-3.5 text-blue-500" />}
-                      {member.socials?.whatsapp && <WhatsappIcon className="h-3.5 w-3.5 text-emerald-500" />}
+                      {member.socials?.website && (
+                        <PortfolioIcon className="h-3.5 w-3.5 text-blue-500" />
+                      )}
+                      {member.socials?.github && (
+                        <GithubIcon className="h-3.5 w-3.5 text-slate-700 dark:text-slate-300" />
+                      )}
+                      {member.socials?.linkedin && (
+                        <LinkedinIcon className="h-3.5 w-3.5 text-blue-600" />
+                      )}
+                      {member.socials?.facebook && (
+                        <FacebookIcon className="h-3.5 w-3.5 text-blue-500" />
+                      )}
+                      {member.socials?.whatsapp && (
+                        <WhatsappIcon className="h-3.5 w-3.5 text-emerald-500" />
+                      )}
                       {!member.socials ||
-                        Object.values(member.socials).every((v) => !v) && (
-                          <span className="text-[10px] text-slate-400 italic">No social links</span>
-                        )}
+                        (Object.values(member.socials).every((v) => !v) && (
+                          <span className="text-[10px] text-slate-400 italic">
+                            No social links
+                          </span>
+                        ))}
                     </div>
                   </div>
                 </div>
@@ -551,7 +604,8 @@ export default function AdminTeamPage() {
                   {editingMember ? "Edit Team Member" : "Add New Team Member"}
                 </h2>
                 <p className="text-xs text-slate-500 dark:text-slate-400">
-                  Configure member profile details, biography, photo, and social profiles.
+                  Configure member profile details, biography, photo, and social
+                  profiles.
                 </p>
               </div>
               <button
@@ -898,7 +952,11 @@ export default function AdminTeamPage() {
             </div>
 
             <div className="flex justify-end pt-2">
-              <Button size="sm" onClick={() => setPreviewMember(null)} className="w-full text-xs rounded-xl">
+              <Button
+                size="sm"
+                onClick={() => setPreviewMember(null)}
+                className="w-full text-xs rounded-xl"
+              >
                 Close Preview
               </Button>
             </div>
@@ -908,4 +966,3 @@ export default function AdminTeamPage() {
     </div>
   );
 }
-
