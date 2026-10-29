@@ -19,7 +19,9 @@ app.use(
       if (!origin) return callback(null, true);
       if (
         env.ALLOWED_ORIGINS.includes(origin) ||
-        env.NODE_ENV === "development"
+        env.NODE_ENV === "development" ||
+        origin.endsWith(".vercel.app") ||
+        origin.endsWith(".onrender.com")
       ) {
         return callback(null, true);
       }
