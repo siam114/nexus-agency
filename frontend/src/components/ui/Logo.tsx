@@ -16,20 +16,28 @@ export function Logo({ className, iconSize = "md" }: LogoProps) {
 
   return (
     <Link href="/" className={cn("flex items-center gap-2.5 group select-none", className)}>
-      {/* Blue Brand Squircle with White Stylized Icon */}
+      {/* Brand Squircle with Favicon Sparkles Icon */}
       <div
         className={cn(
-          "flex items-center justify-center bg-blue-600 text-white font-bold shadow-md shadow-blue-500/25 transition-transform duration-200 group-hover:scale-105",
+          "flex items-center justify-center bg-gradient-to-br from-blue-500 to-blue-700 text-white shadow-md shadow-blue-500/25 transition-transform duration-200 group-hover:scale-105",
           iconDims
         )}
       >
         <svg
           viewBox="0 0 24 24"
-          className="h-5 w-5 fill-current"
+          className="h-4 w-4 sm:h-5 sm:w-5"
+          fill="none"
+          stroke="currentColor"
+          strokeWidth="2"
+          strokeLinecap="round"
+          strokeLinejoin="round"
           xmlns="http://www.w3.org/2000/svg"
         >
-          {/* Stylized geometric N ribbon logo */}
-          <path d="M4 4.5A1.5 1.5 0 0 1 5.5 3h2A1.5 1.5 0 0 1 9 4.5v8.2L15 4.5A1.5 1.5 0 0 1 16.5 3h2A1.5 1.5 0 0 1 20 4.5v15a1.5 1.5 0 0 1-1.5 1.5h-2a1.5 1.5 0 0 1-1.5-1.5v-8.2L9 19.5A1.5 1.5 0 0 1 7.5 21h-2A1.5 1.5 0 0 1 4 19.5v-15z" />
+          {/* Sparkles icon matching favicon (icon.svg) */}
+          <path d="M11.017 2.814a1 1 0 0 1 1.966 0l1.051 5.558a2 2 0 0 0 1.594 1.594l5.558 1.051a1 1 0 0 1 0 1.966l-5.558 1.051a2 2 0 0 0-1.594 1.594l-1.051 5.558a1 1 0 0 1-1.966 0l-1.051-5.558a2 2 0 0 0-1.594-1.594l-5.558-1.051a1 1 0 0 1 0-1.966l5.558-1.051a2 2 0 0 0 1.594-1.594z" />
+          <path d="M20 2v4" />
+          <path d="M22 4h-4" />
+          <circle cx="4" cy="20" r="2" />
         </svg>
       </div>
 
