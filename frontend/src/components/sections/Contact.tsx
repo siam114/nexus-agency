@@ -141,15 +141,15 @@ function ContactFormContent() {
 
   return (
     <section id="contact" className="py-8 sm:py-12 w-full">
-      <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-        <div className="mx-auto max-w-2xl text-center mb-10 sm:mb-12">
+      <div className="mx-auto max-w-[1600px] w-full px-4 sm:px-6 lg:px-8 xl:px-12 2xl:px-16">
+        <div className="mx-auto max-w-2xl 2xl:max-w-3xl text-center mb-10 sm:mb-12">
           <h2 className="text-xs font-semibold uppercase tracking-wider text-blue-600 dark:text-blue-400">
             Let&apos;s Collaborate
           </h2>
-          <p className="mt-2 text-3xl sm:text-4xl font-bold tracking-tight text-zinc-900 dark:text-white">
+          <p className="mt-2 text-3xl sm:text-4xl 2xl:text-5xl font-bold tracking-tight text-zinc-900 dark:text-white">
             Have a Project in Mind?
           </p>
-          <p className="mt-4 text-zinc-600 dark:text-zinc-400">
+          <p className="mt-4 text-zinc-600 dark:text-zinc-400 text-sm sm:text-base 2xl:text-lg">
             Tell us about your project goals and let&apos;s discuss your Shopify, WordPress, Figma conversion, custom website development, SEO, or advertising needs.
           </p>
         </div>
@@ -176,8 +176,8 @@ function ContactFormContent() {
           </a>
         </div>
 
-        <div className="mx-auto max-w-2xl">
-          <Card className="p-8 border border-slate-200/80 dark:border-slate-800 bg-white dark:bg-slate-900 shadow-lg rounded-3xl">
+        <div className="mx-auto max-w-2xl 2xl:max-w-3xl">
+          <Card className="p-6 sm:p-8 2xl:p-10 border border-slate-200/80 dark:border-slate-800 bg-white dark:bg-slate-900 shadow-lg rounded-3xl">
             {submitted ? (
               <div className="py-10 text-center space-y-4">
                 <div className="mx-auto flex h-16 w-16 items-center justify-center rounded-full bg-emerald-100 text-emerald-600 dark:bg-emerald-950/80 dark:text-emerald-400 shadow-md shadow-emerald-500/20 animate-in zoom-in-75 duration-300">

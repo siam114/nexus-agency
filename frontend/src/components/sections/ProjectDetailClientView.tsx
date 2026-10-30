@@ -56,7 +56,7 @@ export function ProjectDetailClientView({
 
   return (
     <div className="py-10 sm:py-14 lg:py-16">
-      <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+      <div className="mx-auto max-w-[1600px] w-full px-4 sm:px-6 lg:px-8 xl:px-12 2xl:px-16">
         {/* =========================================================================
             SECTION 1: Breadcrumb Navigation
            ========================================================================= */}

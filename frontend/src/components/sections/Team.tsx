@@ -87,23 +87,24 @@ export function Team() {
   const isMobile = windowWidth < 640;
   const isSmallPhone = windowWidth < 400;
   const isTablet = windowWidth >= 640 && windowWidth < 1024;
-  const step1 = isSmallPhone ? 150 : isMobile ? 180 : isTablet ? 240 : 285;
-  const step2 = isSmallPhone ? 280 : isMobile ? 320 : isTablet ? 450 : 540;
+  const isLargeDesktop = windowWidth >= 1536;
+  const step1 = isSmallPhone ? 150 : isMobile ? 180 : isTablet ? 240 : isLargeDesktop ? 340 : 285;
+  const step2 = isSmallPhone ? 280 : isMobile ? 320 : isTablet ? 450 : isLargeDesktop ? 650 : 540;
 
   return (
     <section id="team" className="py-16 sm:py-20 lg:py-24 bg-slate-50/50 dark:bg-slate-950/40 overflow-hidden select-none">
-      <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+      <div className="mx-auto max-w-[1600px] w-full px-4 sm:px-6 lg:px-8 xl:px-12 2xl:px-16">
         {/* Section Header */}
         <div className="flex flex-col md:flex-row md:items-end justify-between mb-12 sm:mb-16 gap-6">
-          <div className="max-w-xl">
+          <div className="max-w-xl 2xl:max-w-2xl">
             <div className="inline-flex items-center gap-1.5 rounded-full border border-blue-200/80 dark:border-blue-900/60 bg-blue-50/70 dark:bg-blue-950/40 px-3.5 py-1.5 text-[11px] font-semibold tracking-wider text-blue-600 dark:text-blue-400 uppercase mb-3 shadow-xs">
               <Sparkles className="h-3 w-3 animate-spin duration-3000" />
               <span>CORE TEAM</span>
             </div>
-            <h2 className="text-3xl sm:text-4xl font-extrabold tracking-tight text-slate-900 dark:text-white">
+            <h2 className="text-3xl sm:text-4xl 2xl:text-5xl font-extrabold tracking-tight text-slate-900 dark:text-white">
               Meet Our Team
             </h2>
-            <p className="mt-3 text-sm sm:text-base text-slate-500 dark:text-slate-400 leading-relaxed">
+            <p className="mt-3 text-sm sm:text-base 2xl:text-lg text-slate-500 dark:text-slate-400 leading-relaxed">
               A high-impact remote team of senior engineers, designers, and growth strategists
               focused on delivering real business results.
             </p>
@@ -139,7 +140,7 @@ export function Team() {
 
         {/* Soft Gliding 5-Card Stage */}
         <div
-          className="relative w-full h-[540px] sm:h-[580px] lg:h-[620px] flex items-center justify-center overflow-hidden py-4"
+          className="relative w-full h-[540px] sm:h-[580px] lg:h-[620px] 2xl:h-[660px] flex items-center justify-center overflow-hidden py-4"
           onTouchStart={handleTouchStart}
           onTouchEnd={handleTouchEnd}
         >
@@ -183,8 +184,8 @@ export function Team() {
                     "overflow-hidden p-0 rounded-3xl flex flex-col justify-between transition-all duration-650 ease-[cubic-bezier(0.25,1,0.5,1)] group",
                     // Middle active card is wider and highlighted
                     isCenter
-                      ? "w-[280px] min-[380px]:w-[320px] sm:w-[350px] lg:w-[380px] border-2 border-blue-500/90 dark:border-blue-500 bg-white dark:bg-slate-900 shadow-2xl shadow-blue-500/25 ring-4 ring-blue-500/15"
-                      : "w-[210px] min-[380px]:w-[240px] sm:w-[260px] lg:w-[280px] border border-slate-200/80 dark:border-slate-800 bg-white/95 dark:bg-slate-900/90 shadow-md hover:shadow-xl hover:opacity-95"
+                      ? "w-[280px] min-[380px]:w-[320px] sm:w-[350px] lg:w-[380px] 2xl:w-[410px] border-2 border-blue-500/90 dark:border-blue-500 bg-white dark:bg-slate-900 shadow-2xl shadow-blue-500/25 ring-4 ring-blue-500/15"
+                      : "w-[210px] min-[380px]:w-[240px] sm:w-[260px] lg:w-[280px] 2xl:w-[310px] border border-slate-200/80 dark:border-slate-800 bg-white/95 dark:bg-slate-900/90 shadow-md hover:shadow-xl hover:opacity-95"
                   )}
                 >
                   {/* Portrait Image - Strictly 1:1 Aspect Ratio (Square) for Center Card */}

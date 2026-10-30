@@ -84,8 +84,9 @@ export function TeamGrid() {
   const isMobile = windowWidth < 640;
   const isSmallPhone = windowWidth < 400;
   const isTablet = windowWidth >= 640 && windowWidth < 1024;
-  const step1 = isSmallPhone ? 150 : isMobile ? 180 : isTablet ? 240 : 285;
-  const step2 = isSmallPhone ? 280 : isMobile ? 320 : isTablet ? 450 : 540;
+  const isLargeDesktop = windowWidth >= 1536;
+  const step1 = isSmallPhone ? 150 : isMobile ? 180 : isTablet ? 240 : isLargeDesktop ? 340 : 285;
+  const step2 = isSmallPhone ? 280 : isMobile ? 320 : isTablet ? 450 : isLargeDesktop ? 650 : 540;
 
   return (
     <div className="w-full mb-20 select-none overflow-hidden">
@@ -109,7 +110,7 @@ export function TeamGrid() {
 
       {/* Soft Gliding 5-Card Stage */}
       <div
-        className="relative w-full h-[540px] sm:h-[580px] lg:h-[620px] flex items-center justify-center overflow-hidden py-4"
+        className="relative w-full h-[540px] sm:h-[580px] lg:h-[620px] 2xl:h-[660px] flex items-center justify-center overflow-hidden py-4"
         onTouchStart={handleTouchStart}
         onTouchEnd={handleTouchEnd}
       >
@@ -149,8 +150,8 @@ export function TeamGrid() {
                 className={cn(
                   "overflow-hidden p-0 rounded-3xl flex flex-col justify-between transition-all duration-650 ease-[cubic-bezier(0.25,1,0.5,1)] group",
                   isCenter
-                    ? "w-[280px] min-[380px]:w-[320px] sm:w-[350px] lg:w-[380px] border-2 border-blue-500/90 dark:border-blue-500 bg-white dark:bg-slate-900 shadow-2xl shadow-blue-500/25 ring-4 ring-blue-500/15"
-                    : "w-[210px] min-[380px]:w-[240px] sm:w-[260px] lg:w-[280px] border border-slate-200/80 dark:border-slate-800 bg-white/95 dark:bg-slate-900/90 shadow-md hover:shadow-xl hover:opacity-95"
+                    ? "w-[280px] min-[380px]:w-[320px] sm:w-[350px] lg:w-[380px] 2xl:w-[410px] border-2 border-blue-500/90 dark:border-blue-500 bg-white dark:bg-slate-900 shadow-2xl shadow-blue-500/25 ring-4 ring-blue-500/15"
+                    : "w-[210px] min-[380px]:w-[240px] sm:w-[260px] lg:w-[280px] 2xl:w-[310px] border border-slate-200/80 dark:border-slate-800 bg-white/95 dark:bg-slate-900/90 shadow-md hover:shadow-xl hover:opacity-95"
                 )}
               >
                 {/* Portrait Image - Strictly 1:1 Aspect Ratio (Square) for Center Card */}

@@ -34,9 +34,9 @@ const iconMap = {
 export default function ServicesPage() {
   return (
     <div className="py-12 sm:py-16 lg:py-20">
-      <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+      <div className="mx-auto max-w-[1600px] w-full px-4 sm:px-6 lg:px-8 xl:px-12 2xl:px-16">
         {/* Header */}
-        <div className="max-w-3xl mx-auto text-center mb-16 sm:mb-20">
+        <div className="max-w-3xl 2xl:max-w-4xl mx-auto text-center mb-16 sm:mb-20">
           <div className="inline-flex items-center gap-2 rounded-full border border-blue-500/20 bg-blue-50/50 dark:bg-blue-950/30 px-4 py-1.5 text-xs font-semibold text-blue-600 dark:text-blue-400 mb-6">
             <Sparkles className="h-3.5 w-3.5" />
             <span>CAPABILITIES &amp; SERVICES</span>
@@ -44,7 +44,7 @@ export default function ServicesPage() {
           <h1 className="text-4xl sm:text-5xl lg:text-6xl font-extrabold tracking-tight text-slate-900 dark:text-white leading-tight">
             Everything You Need to Grow Online
           </h1>
-          <p className="mt-6 text-lg text-slate-600 dark:text-slate-400 leading-relaxed">
+          <p className="mt-6 text-lg 2xl:text-xl text-slate-600 dark:text-slate-400 leading-relaxed">
             We combine website development, design implementation, search optimization, and paid advertising to help businesses strengthen their online presence.
           </p>
         </div>

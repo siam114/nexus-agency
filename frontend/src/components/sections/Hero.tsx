@@ -9,10 +9,10 @@ export function Hero() {
       <div className="absolute top-1/4 right-1/4 w-[500px] h-[500px] bg-blue-500/10 dark:bg-blue-600/15 blur-[120px] pointer-events-none rounded-full animate-soft-glow" />
       <div className="absolute top-1/2 left-1/3 w-[300px] h-[300px] bg-indigo-500/10 blur-[100px] pointer-events-none rounded-full animate-soft-glow" style={{ animationDelay: "-4s" }} />
 
-      <div className="relative mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+      <div className="relative mx-auto max-w-[1600px] w-full px-4 sm:px-6 lg:px-8 xl:px-12 2xl:px-16">
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-8 items-center">
           {/* Left Column: Copy & CTAs */}
-          <div className="lg:col-span-6 space-y-6 lg:space-y-7 text-left">
+          <div className="lg:col-span-6 space-y-6 lg:space-y-7 2xl:space-y-8 text-left">
             {/* Eyebrow Label */}
             <div className="inline-flex items-center gap-2 rounded-full border border-blue-200/80 dark:border-blue-900/60 bg-blue-50/70 dark:bg-blue-950/40 px-3.5 py-1.5 text-[11px] sm:text-xs font-semibold tracking-wider text-blue-600 dark:text-blue-400 uppercase">
               <span className="h-1.5 w-1.5 rounded-full bg-blue-600 dark:bg-blue-400" />
@@ -20,13 +20,13 @@ export function Hero() {
             </div>
 
             {/* Main Headline */}
-            <h1 className="text-4xl sm:text-5xl lg:text-[54px] font-extrabold tracking-tight text-slate-900 dark:text-white leading-[1.12]">
+            <h1 className="text-4xl sm:text-5xl lg:text-[54px] 2xl:text-6xl font-extrabold tracking-tight text-slate-900 dark:text-white leading-[1.12]">
               We Build Better Websites That{" "}
               <span className="text-blue-600 dark:text-blue-500">Help Your Business Grow.</span>
             </h1>
 
             {/* Supporting Paragraph */}
-            <p className="text-base sm:text-lg text-slate-600 dark:text-slate-400 leading-relaxed max-w-xl">
+            <p className="text-base sm:text-lg 2xl:text-xl text-slate-600 dark:text-slate-400 leading-relaxed max-w-xl 2xl:max-w-2xl">
               From high-converting Shopify stores and custom Figma-to-website development
               to WordPress solutions, SEO, and paid advertising, we help businesses build a stronger online presence and reach their growth goals.
             </p>
@@ -56,7 +56,7 @@ export function Hero() {
 
           {/* Right Column: Visual Composition Mockup */}
           <div className="lg:col-span-6 relative mt-6 lg:mt-0 flex justify-center lg:justify-end">
-            <div className="relative w-full max-w-[560px]">
+            <div className="relative w-full max-w-[560px] 2xl:max-w-[640px]">
               {/* Desktop Browser Window Mockup */}
               <div className="rounded-2xl border border-slate-200/90 dark:border-slate-800 bg-white dark:bg-slate-900 shadow-2xl overflow-hidden transition-all duration-300">
                 {/* Browser Top Bar */}

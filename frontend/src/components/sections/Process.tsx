@@ -13,22 +13,22 @@ const iconMap = {
 export function Process() {
   return (
     <section className="py-16 sm:py-20 lg:py-24">
-      <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+      <div className="mx-auto max-w-[1600px] w-full px-4 sm:px-6 lg:px-8 xl:px-12 2xl:px-16">
         {/* Section Header */}
-        <div className="max-w-2xl mb-12 sm:mb-16 text-left sm:text-center sm:mx-auto">
+        <div className="max-w-2xl 2xl:max-w-3xl mb-12 sm:mb-16 text-left sm:text-center sm:mx-auto">
           <div className="inline-flex items-center gap-1.5 rounded-full border border-blue-200/80 dark:border-blue-900/60 bg-blue-50/70 dark:bg-blue-950/40 px-3 py-1 text-[11px] font-semibold tracking-wider text-blue-600 dark:text-blue-400 uppercase mb-3">
             <span>OUR PROCESS</span>
           </div>
-          <h2 className="text-3xl sm:text-4xl font-extrabold tracking-tight text-slate-900 dark:text-white">
+          <h2 className="text-3xl sm:text-4xl 2xl:text-5xl font-extrabold tracking-tight text-slate-900 dark:text-white">
             How we work
           </h2>
-          <p className="mt-3 text-sm sm:text-base text-slate-500 dark:text-slate-400 leading-relaxed">
+          <p className="mt-3 text-sm sm:text-base 2xl:text-lg text-slate-500 dark:text-slate-400 leading-relaxed">
             A simple, transparent process to turn your ideas into real results.
           </p>
         </div>
 
         {/* 4 Process Step Cards */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 lg:gap-6 2xl:gap-8">
           {processSteps.map((step, idx) => {
             const Icon = iconMap[step.iconName as keyof typeof iconMap] || Search;
 
