@@ -5,6 +5,7 @@ import Image from "next/image";
 import { useLiveTestimonials } from "@/lib/liveContent";
 import { Card } from "@/components/ui/card";
 import { ChevronLeft, ChevronRight, Quote, Star } from "lucide-react";
+import { cn } from "@/lib/utils";
 
 const DEFAULT_AVATAR =
   "https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=200&q=80";
@@ -13,16 +14,31 @@ export function Testimonials() {
   const testimonials = useLiveTestimonials();
   const [startIndex, setStartIndex] = React.useState(0);
 
-  const prev = () => {
-    setStartIndex((current) =>
-      current === 0 ? Math.max(testimonials.length - 1, 0) : current - 1
-    );
-  };
-
-  const next = () => {
+  const next = React.useCallback(() => {
     setStartIndex((current) =>
       current >= testimonials.length - 1 ? 0 : current + 1
     );
+  }, [testimonials.length]);
+
+  const prev = React.useCallback(() => {
+    setStartIndex((current) =>
+      current === 0 ? Math.max(testimonials.length - 1, 0) : current - 1
+    );
+  }, [testimonials.length]);
+
+  // Touch swipe support for mobile
+  const touchStartX = React.useRef<number | null>(null);
+  const handleTouchStart = (e: React.TouchEvent) => {
+    touchStartX.current = e.touches[0].clientX;
+  };
+  const handleTouchEnd = (e: React.TouchEvent) => {
+    if (touchStartX.current === null) return;
+    const diff = touchStartX.current - e.changedTouches[0].clientX;
+    if (Math.abs(diff) > 40) {
+      if (diff > 0) next();
+      else prev();
+    }
+    touchStartX.current = null;
   };
 
   const displayedTestimonials =
@@ -55,14 +71,14 @@ export function Testimonials() {
             <button
               onClick={prev}
               aria-label="Previous testimonial"
-              className="flex h-9 w-9 items-center justify-center rounded-full border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 text-slate-600 dark:text-slate-400 hover:border-blue-500 hover:text-blue-600 transition-colors cursor-pointer"
+              className="flex h-9 w-9 items-center justify-center rounded-full border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 text-slate-600 dark:text-slate-400 hover:border-blue-500 hover:text-blue-600 active:scale-95 transition-all cursor-pointer shadow-xs"
             >
               <ChevronLeft className="h-4 w-4" />
             </button>
             <button
               onClick={next}
               aria-label="Next testimonial"
-              className="flex h-9 w-9 items-center justify-center rounded-full border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 text-slate-600 dark:text-slate-400 hover:border-blue-500 hover:text-blue-600 transition-colors cursor-pointer"
+              className="flex h-9 w-9 items-center justify-center rounded-full border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 text-slate-600 dark:text-slate-400 hover:border-blue-500 hover:text-blue-600 active:scale-95 transition-all cursor-pointer shadow-xs"
             >
               <ChevronRight className="h-4 w-4" />
             </button>
@@ -70,11 +86,15 @@ export function Testimonials() {
         </div>
 
         {/* 3 Testimonial Cards */}
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+        <div
+          className="grid grid-cols-1 md:grid-cols-3 gap-6"
+          onTouchStart={handleTouchStart}
+          onTouchEnd={handleTouchEnd}
+        >
           {displayedTestimonials.map((t, idx) => (
             <Card
               key={t.id || `testimonial-${idx}-${t.name}`}
-              className="p-6 sm:p-7 flex flex-col justify-between rounded-2xl border border-slate-200/80 dark:border-slate-800 bg-white dark:bg-slate-900 shadow-sm hover:shadow-md transition-all"
+              className="p-6 sm:p-7 flex flex-col justify-between rounded-2xl border border-slate-200/80 dark:border-slate-800 bg-white dark:bg-slate-900 shadow-sm hover:shadow-xl hover:-translate-y-1.5 hover:border-blue-500/40 dark:hover:border-blue-500/40 transition-all duration-500 ease-[cubic-bezier(0.25,1,0.5,1)]"
             >
               <div>
                 <div className="flex items-center justify-between mb-4">
@@ -115,6 +135,25 @@ export function Testimonials() {
             </Card>
           ))}
         </div>
+
+        {/* Carousel indicator dots */}
+        {testimonials.length > 1 && (
+          <div className="flex items-center justify-center gap-1.5 mt-8">
+            {testimonials.map((_, i) => (
+              <button
+                key={i}
+                onClick={() => setStartIndex(i)}
+                aria-label={`Go to slide ${i + 1}`}
+                className={cn(
+                  "h-1.5 rounded-full transition-all duration-300 cursor-pointer",
+                  startIndex === i
+                    ? "w-6 bg-blue-600 dark:bg-blue-400"
+                    : "w-1.5 bg-slate-300 dark:bg-slate-700 hover:bg-blue-400/50"
+                )}
+              />
+            ))}
+          </div>
+        )}
       </div>
     </section>
   );

@@ -12,7 +12,16 @@ import { cn } from "@/lib/utils";
 
 export function Navbar() {
   const [mobileMenuOpen, setMobileMenuOpen] = React.useState(false);
+  const [scrolled, setScrolled] = React.useState(false);
   const pathname = usePathname();
+
+  React.useEffect(() => {
+    const handleScroll = () => {
+      setScrolled(window.scrollY > 20);
+    };
+    window.addEventListener("scroll", handleScroll, { passive: true });
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, []);
 
   // Do not render public navbar on admin dashboard pages
   if (pathname.startsWith("/admin")) {
@@ -20,7 +29,14 @@ export function Navbar() {
   }
 
   return (
-    <header className="sticky top-0 z-50 w-full border-b border-slate-100 dark:border-slate-800/80 bg-white/95 dark:bg-slate-950/90 backdrop-blur-md transition-colors">
+    <header
+      className={cn(
+        "sticky top-0 z-50 w-full backdrop-blur-md transition-all duration-300",
+        scrolled
+          ? "border-b border-slate-200/90 dark:border-slate-800/90 bg-white/95 dark:bg-slate-950/95 shadow-md shadow-slate-900/5"
+          : "border-b border-slate-100/60 dark:border-slate-800/50 bg-white/80 dark:bg-slate-950/80"
+      )}
+    >
       <div className="mx-auto flex max-w-[1600px] w-full items-center justify-between px-4 sm:px-6 lg:px-8 xl:px-12 2xl:px-16 py-4">
         {/* Brand Logo */}
         <Logo />
