@@ -38,6 +38,7 @@ html {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   text-rendering: optimizeLegibility;
+  -webkit-tap-highlight-color: transparent;
 }
 
 body {
@@ -47,22 +48,26 @@ body {
   font-family: var(--font-geist-sans), system-ui, -apple-system, sans-serif;
 }
 
-/* Global Soft Interactive Elements */
+/* Global Soft Interactive Elements - Zero Tap Delay & Fluid Tactile Feedback */
 button,
 a,
 input,
 textarea,
 select,
 [role="button"] {
+  touch-action: manipulation;
+  cursor: pointer;
+  -webkit-tap-highlight-color: transparent;
   transition-property: color, background-color, border-color, box-shadow, transform, opacity, filter;
-  transition-duration: 250ms;
-  transition-timing-function: cubic-bezier(0.25, 1, 0.5, 1);
+  transition-duration: 200ms;
+  transition-timing-function: cubic-bezier(0.16, 1, 0.3, 1);
 }
 
-/* Subtle, soft press states (gentle & cushioned) */
+/* Crisp, subtle physical tactile press */
 button:not(:disabled):not(.no-press):active,
 [role="button"]:not(:disabled):not(.no-press):active {
-  transform: scale(0.985);
+  transform: scale(0.975);
+  transition-duration: 75ms;
 }
 
 /* Eye Icon / Icon Button Smooth Hover & Active Transitions */

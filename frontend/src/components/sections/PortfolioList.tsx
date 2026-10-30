@@ -43,10 +43,10 @@ export function PortfolioList({ projects: fallbackProjects }: PortfolioListProps
             key={category}
             onClick={() => setSelectedCategory(category)}
             className={cn(
-              "px-4 py-2 rounded-xl text-xs sm:text-sm font-medium transition-all duration-200 cursor-pointer",
+              "px-4 py-2 rounded-xl text-xs sm:text-sm font-medium transition-all duration-200 cursor-pointer active:scale-95 touch-manipulation select-none",
               selectedCategory === category
                 ? "bg-blue-600 text-white shadow-sm shadow-blue-500/20"
-                : "bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white"
+                : "bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white hover:bg-slate-200/70 dark:hover:bg-slate-700/60"
             )}
           >
             {category}

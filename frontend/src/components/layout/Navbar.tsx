@@ -23,6 +23,14 @@ export function Navbar() {
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
+  const [prevPathname, setPrevPathname] = React.useState(pathname);
+
+  // Automatically close mobile menu drawer on route navigation
+  if (prevPathname !== pathname) {
+    setPrevPathname(pathname);
+    setMobileMenuOpen(false);
+  }
+
   // Do not render public navbar on admin dashboard pages
   if (pathname.startsWith("/admin")) {
     return null;
@@ -90,9 +98,10 @@ export function Navbar() {
         <div className="flex md:hidden items-center gap-2">
           <ThemeToggle />
           <button
-            onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-            className="p-2 rounded-lg text-slate-700 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800"
+            onClick={() => setMobileMenuOpen((prev) => !prev)}
+            className="p-2 rounded-lg text-slate-700 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800 active:scale-95 transition-transform touch-manipulation cursor-pointer"
             aria-label="Toggle navigation menu"
+            aria-expanded={mobileMenuOpen}
           >
             {mobileMenuOpen ? (
               <X className="h-6 w-6" />
@@ -105,7 +114,7 @@ export function Navbar() {
 
       {/* Mobile Menu Drawer */}
       {mobileMenuOpen && (
-        <div className="md:hidden border-t border-slate-100 dark:border-slate-800 bg-white dark:bg-slate-950 px-6 py-5 space-y-3 shadow-lg">
+        <div className="md:hidden border-t border-slate-100 dark:border-slate-800 bg-white/98 dark:bg-slate-950/98 backdrop-blur-md px-6 py-5 space-y-3 shadow-xl transition-all duration-200">
           {navItems.map((item) => {
             const isHome = item.href === "/" && pathname === "/";
             const isActive =
@@ -122,7 +131,7 @@ export function Navbar() {
                 href={item.href}
                 onClick={() => setMobileMenuOpen(false)}
                 className={cn(
-                  "block px-3 py-2 rounded-xl text-base font-medium transition-colors",
+                  "block px-3 py-2.5 rounded-xl text-base font-medium transition-colors active:scale-[0.98] touch-manipulation",
                   isActive
                     ? "text-blue-600 dark:text-blue-400 bg-blue-50/70 dark:bg-blue-950/40 font-semibold"
                     : "text-slate-700 dark:text-slate-300 hover:text-blue-600 hover:bg-slate-50 dark:hover:bg-slate-900",
@@ -140,7 +149,7 @@ export function Navbar() {
           </div>
           <div className="pt-1">
             <Link href="/contact" onClick={() => setMobileMenuOpen(false)}>
-              <Button className="w-full rounded-full bg-blue-600 hover:bg-blue-700 text-white">
+              <Button className="w-full rounded-full bg-blue-600 hover:bg-blue-700 text-white active:scale-[0.98] touch-manipulation">
                 Start a Project <ArrowRight className="h-4 w-4 ml-1" />
               </Button>
             </Link>

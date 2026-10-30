@@ -71,14 +71,14 @@ export function Testimonials() {
             <button
               onClick={prev}
               aria-label="Previous testimonial"
-              className="flex h-9 w-9 items-center justify-center rounded-full border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 text-slate-600 dark:text-slate-400 hover:border-blue-500 hover:text-blue-600 active:scale-95 transition-all cursor-pointer shadow-xs"
+              className="flex h-9 w-9 items-center justify-center rounded-full border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 text-slate-600 dark:text-slate-400 hover:border-blue-500 hover:text-blue-600 active:scale-90 transition-all cursor-pointer shadow-xs touch-manipulation"
             >
               <ChevronLeft className="h-4 w-4" />
             </button>
             <button
               onClick={next}
               aria-label="Next testimonial"
-              className="flex h-9 w-9 items-center justify-center rounded-full border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 text-slate-600 dark:text-slate-400 hover:border-blue-500 hover:text-blue-600 active:scale-95 transition-all cursor-pointer shadow-xs"
+              className="flex h-9 w-9 items-center justify-center rounded-full border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 text-slate-600 dark:text-slate-400 hover:border-blue-500 hover:text-blue-600 active:scale-90 transition-all cursor-pointer shadow-xs touch-manipulation"
             >
               <ChevronRight className="h-4 w-4" />
             </button>
@@ -145,7 +145,7 @@ export function Testimonials() {
                 onClick={() => setStartIndex(i)}
                 aria-label={`Go to slide ${i + 1}`}
                 className={cn(
-                  "h-1.5 rounded-full transition-all duration-300 cursor-pointer",
+                  "h-1.5 rounded-full transition-all duration-200 cursor-pointer touch-manipulation active:scale-75",
                   startIndex === i
                     ? "w-6 bg-blue-600 dark:bg-blue-400"
                     : "w-1.5 bg-slate-300 dark:bg-slate-700 hover:bg-blue-400/50"
