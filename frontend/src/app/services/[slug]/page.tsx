@@ -595,22 +595,22 @@ export default async function ServiceDetailPage({
             <p className="mt-4 text-blue-100 max-w-xl text-sm sm:text-base leading-relaxed">
               {service.ctaDescription}
             </p>
-            <div className="mt-8 flex flex-col sm:flex-row items-stretch sm:items-center gap-3 sm:gap-4 justify-center w-full max-w-md mx-auto">
-              <Link href={contactUrlWithParam} className="w-full sm:w-auto flex-1">
+            <div className="mt-8 flex flex-col sm:flex-row items-stretch sm:items-center gap-3 sm:gap-4 justify-center w-full sm:w-auto max-w-2xl mx-auto">
+              <Link href={contactUrlWithParam} className="w-full sm:w-auto">
                 <Button
                   size="lg"
-                  className="w-full justify-center rounded-full bg-white text-blue-600 hover:bg-slate-100 shadow-md font-semibold px-8"
+                  className="w-full sm:w-auto justify-center rounded-full bg-white text-blue-600 hover:bg-slate-100 shadow-md font-semibold px-8 py-3.5 whitespace-nowrap"
                 >
-                  Start Your Project <ArrowRight className="h-4 w-4 ml-1.5" />
+                  Start Your Project <ArrowRight className="h-4 w-4 ml-1.5 shrink-0" />
                 </Button>
               </Link>
-              <Link href={contactUrlWithParam} className="w-full sm:w-auto flex-1">
+              <Link href={contactUrlWithParam} className="w-full sm:w-auto">
                 <Button
                   size="lg"
                   variant="outline"
-                  className="w-full justify-center rounded-full border-blue-400 text-white hover:bg-white/10 px-7 font-semibold"
+                  className="w-full sm:w-auto justify-center rounded-full border-blue-400 text-white hover:bg-white/10 px-7 py-3.5 font-semibold whitespace-nowrap"
                 >
-                  <Mail className="h-4 w-4 mr-2" />
+                  <Mail className="h-4 w-4 mr-2 shrink-0" />
                   Contact Us
                 </Button>
               </Link>

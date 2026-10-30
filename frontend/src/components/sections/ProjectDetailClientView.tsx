@@ -636,20 +636,20 @@ export function ProjectDetailClientView({
             <p className="mt-3 text-sm sm:text-base text-blue-100 max-w-lg leading-relaxed">
               Let&apos;s evaluate your goals and build a high-performance digital solution for {project.category}.
             </p>
-            <div className="mt-8 flex flex-col sm:flex-row items-stretch sm:items-center justify-center gap-4 w-full max-w-md mx-auto">
-              <Link href={contactUrlWithParam} className="w-full sm:w-auto flex-1">
+            <div className="mt-8 flex flex-col sm:flex-row items-stretch sm:items-center justify-center gap-4 w-full sm:w-auto max-w-2xl mx-auto">
+              <Link href={contactUrlWithParam} className="w-full sm:w-auto">
                 <Button
                   size="lg"
-                  className="w-full justify-center rounded-full bg-white text-blue-700 hover:bg-blue-50 font-semibold px-8 shadow-md"
+                  className="w-full sm:w-auto justify-center rounded-full bg-white text-blue-700 hover:bg-blue-50 font-semibold px-8 py-3.5 shadow-md whitespace-nowrap"
                 >
-                  Discuss Your Project <ArrowRight className="h-4 w-4 ml-1.5" />
+                  Discuss Your Project <ArrowRight className="h-4 w-4 ml-1.5 shrink-0" />
                 </Button>
               </Link>
-              <Link href="/services" className="w-full sm:w-auto flex-1">
+              <Link href="/services" className="w-full sm:w-auto">
                 <Button
                   variant="outline"
                   size="lg"
-                  className="w-full justify-center rounded-full border-blue-400/50 bg-blue-800/40 text-white hover:bg-blue-800/80 px-6"
+                  className="w-full sm:w-auto justify-center rounded-full border-blue-400/50 bg-blue-800/40 text-white hover:bg-blue-800/80 px-7 py-3.5 whitespace-nowrap"
                 >
                   View All Services
                 </Button>

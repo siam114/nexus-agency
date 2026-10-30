@@ -22,22 +22,22 @@ export function CtaBanner() {
             </div>
 
             {/* Right Buttons */}
-            <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-3 sm:gap-4 w-full lg:w-auto">
-              <Link href="/contact" className="w-full sm:w-auto flex-1">
+            <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-3 sm:gap-4 w-full lg:w-auto shrink-0">
+              <Link href="/contact" className="w-full sm:w-auto">
                 <Button
                   size="lg"
-                  className="w-full justify-center bg-blue-600 hover:bg-blue-700 text-white rounded-full px-7 py-3 text-sm font-semibold shadow-md shadow-blue-500/25"
+                  className="w-full sm:w-auto justify-center bg-blue-600 hover:bg-blue-700 text-white rounded-full px-8 py-3.5 text-sm font-semibold shadow-md shadow-blue-500/25 whitespace-nowrap"
                 >
-                  Start a Project <ArrowRight className="h-4 w-4 ml-1.5" />
+                  Start a Project <ArrowRight className="h-4 w-4 ml-1.5 shrink-0" />
                 </Button>
               </Link>
-              <Link href="/contact" className="w-full sm:w-auto flex-1">
+              <Link href="/contact" className="w-full sm:w-auto">
                 <Button
                   size="lg"
                   variant="outline"
-                  className="w-full justify-center rounded-full px-6 py-3 text-sm font-semibold border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 text-slate-700 dark:text-slate-200 hover:bg-slate-50 dark:hover:bg-slate-800"
+                  className="w-full sm:w-auto justify-center rounded-full px-7 py-3.5 text-sm font-semibold border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 text-slate-700 dark:text-slate-200 hover:bg-slate-50 dark:hover:bg-slate-800 whitespace-nowrap"
                 >
-                  <Mail className="h-4 w-4 mr-2 text-slate-500" />
+                  <Mail className="h-4 w-4 mr-2 text-slate-500 shrink-0" />
                   Contact Us
                 </Button>
               </Link>

@@ -87,15 +87,15 @@ export default function ServicesPage() {
                     </p>
 
                     <div className="pt-2 flex flex-col sm:flex-row items-stretch sm:items-center gap-3 w-full sm:w-auto">
-                      <Link href={service.link || `/services/${service.id}`} className="w-full sm:w-auto flex-1">
-                        <Button className="w-full justify-center rounded-full bg-blue-600 hover:bg-blue-700 text-white px-5 text-xs sm:text-sm">
-                          Explore Service Details <ArrowRight className="h-4 w-4 ml-1.5" />
+                      <Link href={service.link || `/services/${service.id}`} className="w-full sm:w-auto">
+                        <Button className="w-full sm:w-auto justify-center rounded-full bg-blue-600 hover:bg-blue-700 text-white px-5 py-2.5 text-xs sm:text-sm whitespace-nowrap">
+                          Explore Service Details <ArrowRight className="h-4 w-4 ml-1.5 shrink-0" />
                         </Button>
                       </Link>
-                      <Link href={`/contact?service=${encodeURIComponent(service.title)}`} className="w-full sm:w-auto flex-1">
+                      <Link href={`/contact?service=${encodeURIComponent(service.title)}`} className="w-full sm:w-auto">
                         <Button
                           variant="outline"
-                          className="w-full justify-center rounded-full border-slate-200 dark:border-slate-800 px-4 text-xs sm:text-sm text-slate-700 dark:text-slate-300 hover:bg-slate-50 dark:hover:bg-slate-800"
+                          className="w-full sm:w-auto justify-center rounded-full border-slate-200 dark:border-slate-800 px-5 py-2.5 text-xs sm:text-sm text-slate-700 dark:text-slate-300 hover:bg-slate-50 dark:hover:bg-slate-800 whitespace-nowrap"
                         >
                           Inquire Now
                         </Button>
