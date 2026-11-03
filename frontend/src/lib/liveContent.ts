@@ -233,7 +233,17 @@ export function getAdminTeam(): TeamMember[] {
     if (saved) {
       const parsed: TeamMember[] = JSON.parse(saved);
       if (Array.isArray(parsed) && parsed.length > 0) {
-        return parsed
+        // Automatically merge any missing default team member from defaultTeam
+        const existingIdentifiers = new Set(
+          parsed.flatMap((m) => [m.id, m.name?.toLowerCase().trim()].filter(Boolean))
+        );
+        const missingDefaultMembers = defaultTeam.filter(
+          (dm) =>
+            !existingIdentifiers.has(dm.id) &&
+            !existingIdentifiers.has(dm.name?.toLowerCase().trim())
+        );
+        const combined = [...parsed, ...missingDefaultMembers];
+        return combined
           .map((m, idx) => ({ ...m, id: m.id || `member-${idx + 1}` }))
           .sort((a, b) => (a.sortOrder ?? 0) - (b.sortOrder ?? 0));
       }

@@ -863,12 +863,23 @@ export const initialTeam: ITeamMember[] = [
     sortOrder: 1,
   },
   {
-    name: "David Miller",
-    role: "WordPress & Frontend Developer",
-    bio: "Crafts clean, maintainable WordPress themes and responsive web layouts tailored to client requirements.",
-    image:
-      "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?auto=format&fit=crop&w=400&q=80",
-    skills: ["WordPress", "PHP", "CSS3", "JavaScript"],
+    name: "MD Sumon",
+    role: "Shopify Specialist & Frontend Developer",
+    bio: "Specializes in custom Shopify theme development, Liquid template engineering, Next.js, TypeScript, and full-stack MERN web applications.",
+    image: "/images/team/md-sumon.jpg",
+    skills: [
+      "Shopify Liquid",
+      "Next.js",
+      "TypeScript",
+      "MERN Stack",
+      "React",
+      "Frontend Development",
+    ],
+    socials: {
+      linkedin: "https://www.linkedin.com/in/md-sumondev/",
+      facebook: "https://www.facebook.com/poet.lover.4455",
+      whatsapp: "https://wa.me/8801605647817",
+    },
     published: true,
     sortOrder: 2,
   },
@@ -890,6 +901,16 @@ export const initialTeam: ITeamMember[] = [
     sortOrder: 3,
   },
   {
+    name: "David Miller",
+    role: "WordPress & Frontend Developer",
+    bio: "Crafts clean, maintainable WordPress themes and responsive web layouts tailored to client requirements.",
+    image:
+      "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?auto=format&fit=crop&w=400&q=80",
+    skills: ["WordPress", "PHP", "CSS3", "JavaScript"],
+    published: true,
+    sortOrder: 4,
+  },
+  {
     name: "Nadia Rahman",
     role: "Technical SEO Specialist",
     bio: "Conducts technical site audits, structured metadata implementation, and search-friendly site architecture reviews.",
@@ -897,7 +918,7 @@ export const initialTeam: ITeamMember[] = [
       "https://images.unsplash.com/photo-1580489944761-15a19d654956?auto=format&fit=crop&w=400&q=80",
     skills: ["Technical SEO", "Schema Markup", "Sitemaps", "Core Web Vitals"],
     published: true,
-    sortOrder: 4,
+    sortOrder: 5,
   },
   {
     name: "James Carter",
@@ -907,7 +928,7 @@ export const initialTeam: ITeamMember[] = [
       "https://images.unsplash.com/photo-1539571696357-5a69c17a67c6?auto=format&fit=crop&w=400&q=80",
     skills: ["Google Ads", "Meta Ads", "Tag Manager", "Conversion Tracking"],
     published: true,
-    sortOrder: 5,
+    sortOrder: 6,
   },
 ];
 
