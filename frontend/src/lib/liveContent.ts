@@ -256,8 +256,20 @@ export function getAdminTeam(): TeamMember[] {
     if (saved) {
       const parsed: TeamMember[] = JSON.parse(saved);
       if (Array.isArray(parsed) && parsed.length > 0) {
+        // Strip out removed obsolete members
+        const deprecatedNames = new Set([
+          "sarah khan",
+          "david miller",
+          "nadia rahman",
+          "james carter",
+          "siam ahmed",
+        ]);
+        const cleaned = parsed.filter(
+          (m) => !deprecatedNames.has(m.name?.toLowerCase().trim())
+        );
+
         // Upgrade obsolete placeholder unsplash image if present while preserving all user dashboard edits
-        const cleanedParsed = parsed.map((m) => {
+        const cleanedParsed = cleaned.map((m) => {
           if (
             (m.id === "1" || m.name?.toLowerCase().includes("siam")) &&
             m.image?.includes("photo-1507003211169")
@@ -267,7 +279,7 @@ export function getAdminTeam(): TeamMember[] {
           return m;
         });
 
-        // Automatically merge any missing default team member from defaultTeam
+        // Automatically merge any missing default team member from defaultTeam (SM Siam, MD Sumon)
         const existingIdentifiers = new Set(
           cleanedParsed.flatMap((m) => [m.id, m.name?.toLowerCase().trim()].filter(Boolean))
         );
@@ -277,6 +289,12 @@ export function getAdminTeam(): TeamMember[] {
             !existingIdentifiers.has(dm.name?.toLowerCase().trim())
         );
         const combined = [...cleanedParsed, ...missingDefaultMembers];
+
+        // Keep localStorage updated with only active members
+        if (cleaned.length !== parsed.length) {
+          localStorage.setItem(STORAGE_KEYS.TEAM, JSON.stringify(combined));
+        }
+
         return combined
           .map((m, idx) => ({ ...m, id: m.id || `member-${idx + 1}` }))
           .sort((a, b) => (a.sortOrder ?? 0) - (b.sortOrder ?? 0));

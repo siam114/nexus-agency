@@ -9,9 +9,12 @@ async function startServer() {
   // Connect to MongoDB (or continue with in-memory fallback if unconfigured)
   await connectDB();
 
-  // Auto-sync initial team members into MongoDB if not present
+  // Auto-sync initial team members into MongoDB if not present and remove deprecated members
   if (isDbConnected()) {
     try {
+      await TeamMember.deleteMany({
+        name: { $nin: initialTeam.map((m) => m.name) },
+      });
       for (const member of initialTeam) {
         await TeamMember.findOneAndUpdate(
           { name: member.name },
@@ -19,7 +22,7 @@ async function startServer() {
           { upsert: true }
         );
       }
-      logger.info(`Verified team members in MongoDB.`);
+      logger.info(`Verified team members in MongoDB (active: ${initialTeam.length}).`);
     } catch (e) {
       logger.warn(`Auto-sync team members skipped: ${(e as Error).message}`);
     }

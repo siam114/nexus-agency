@@ -27,14 +27,14 @@ export function TeamGrid() {
     return () => window.removeEventListener("resize", handleResize);
   }, []);
 
-  // Default active index is SM SIAM (the 3rd card, index 2)
+  // Default active index is SM Siam
   const activeIndex = React.useMemo(() => {
     if (selectedIdx !== null) return selectedIdx;
-    if (!members || members.length === 0) return 2;
+    if (!members || members.length === 0) return 0;
     const siamIdx = members.findIndex((m) =>
       m.name.toLowerCase().includes("siam")
     );
-    return siamIdx !== -1 ? siamIdx : Math.min(2, members.length - 1);
+    return siamIdx !== -1 ? siamIdx : 0;
   }, [selectedIdx, members]);
 
   const count = members.length;

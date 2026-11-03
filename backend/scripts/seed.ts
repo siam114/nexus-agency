@@ -66,8 +66,10 @@ async function runSeed() {
   }
   logger.info(`Seeded ${initialServices.length} Services.`);
 
-  // 4. Seed Team Members
-  await TeamMember.deleteMany({ name: "Siam Ahmed" });
+  // 4. Seed Team Members (only active members)
+  await TeamMember.deleteMany({
+    name: { $nin: initialTeam.map((m) => m.name) },
+  });
   for (const member of initialTeam) {
     await TeamMember.findOneAndUpdate(
       { name: member.name },

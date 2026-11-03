@@ -853,12 +853,27 @@ export const initialServices: IService[] = [
 
 export const initialTeam: ITeamMember[] = [
   {
-    name: "Sarah Khan",
-    role: "UI/UX & Figma Specialist",
-    bio: "Focuses on design system consistency, accessible layouts, and seamless Figma-to-code collaboration.",
-    image:
-      "https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=400&q=80",
-    skills: ["Figma", "Design Systems", "Wireframing", "UI Prototyping"],
+    name: "SM Siam",
+    role: "Shopify Specialist & Web Developer",
+    bio: "SM Siam is a Shopify and Web Developer specializing in building modern, responsive, and user-friendly eCommerce websites. He focuses on Shopify theme customization, custom functionality, and creating seamless online shopping experiences. With a strong interest in web technologies, he also works with React, Node.js, and MongoDB to develop modern web solutions.",
+    image: "/images/team/sm-siam.png",
+    skills: [
+      "Shopify Store Development",
+      "Shopify Theme Customization",
+      "Liquid, HTML, CSS & JavaScript",
+      "React.js",
+      "Node.js & Express.js",
+      "MongoDB & REST APIs",
+      "Responsive Web Design",
+      "Basic SEO Optimization",
+    ],
+    socials: {
+      website: "https://siam-portfolio-theta.vercel.app/",
+      github: "https://github.com/siam114",
+      linkedin: "https://www.linkedin.com/in/sm-siam598",
+      facebook: "https://www.facebook.com/sumsuzzaman.siam",
+      whatsapp: "https://api.whatsapp.com/send/?phone=8801567989506",
+    },
     published: true,
     sortOrder: 1,
   },
@@ -882,61 +897,6 @@ export const initialTeam: ITeamMember[] = [
     },
     published: true,
     sortOrder: 2,
-  },
-  {
-    name: "SM Siam",
-    role: "Shopify Specialist & Web Developer",
-    bio: "SM Siam is a Shopify and Web Developer specializing in building modern, responsive, and user-friendly eCommerce websites. He focuses on Shopify theme customization, custom functionality, and creating seamless online shopping experiences. With a strong interest in web technologies, he also works with React, Node.js, and MongoDB to develop modern web solutions.",
-    image: "/images/team/sm-siam.png",
-    skills: [
-      "Shopify Store Development",
-      "Shopify Theme Customization",
-      "Liquid, HTML, CSS & JavaScript",
-      "React.js",
-      "Node.js & Express.js",
-      "MongoDB & REST APIs",
-      "Responsive Web Design",
-      "Basic SEO Optimization",
-    ],
-    socials: {
-      website: "https://siam-portfolio-theta.vercel.app/",
-      github: "https://github.com/siam114",
-      linkedin: "https://www.linkedin.com/in/sm-siam598",
-      facebook: "https://www.facebook.com/sumsuzzaman.siam",
-      whatsapp: "https://api.whatsapp.com/send/?phone=8801567989506",
-    },
-    published: true,
-    sortOrder: 3,
-  },
-  {
-    name: "David Miller",
-    role: "WordPress & Frontend Developer",
-    bio: "Crafts clean, maintainable WordPress themes and responsive web layouts tailored to client requirements.",
-    image:
-      "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?auto=format&fit=crop&w=400&q=80",
-    skills: ["WordPress", "PHP", "CSS3", "JavaScript"],
-    published: true,
-    sortOrder: 4,
-  },
-  {
-    name: "Nadia Rahman",
-    role: "Technical SEO Specialist",
-    bio: "Conducts technical site audits, structured metadata implementation, and search-friendly site architecture reviews.",
-    image:
-      "https://images.unsplash.com/photo-1580489944761-15a19d654956?auto=format&fit=crop&w=400&q=80",
-    skills: ["Technical SEO", "Schema Markup", "Sitemaps", "Core Web Vitals"],
-    published: true,
-    sortOrder: 5,
-  },
-  {
-    name: "James Carter",
-    role: "Ads Campaign Specialist",
-    bio: "Manages audience targeting, campaign setups, and conversion tracking across Google and Meta ad platforms.",
-    image:
-      "https://images.unsplash.com/photo-1539571696357-5a69c17a67c6?auto=format&fit=crop&w=400&q=80",
-    skills: ["Google Ads", "Meta Ads", "Tag Manager", "Conversion Tracking"],
-    published: true,
-    sortOrder: 6,
   },
 ];
 
