@@ -13,7 +13,15 @@ async function startServer() {
   if (isDbConnected()) {
     try {
       await TeamMember.deleteMany({
-        name: { $nin: initialTeam.map((m) => m.name) },
+        name: {
+          $in: [
+            "Sarah Khan",
+            "David Miller",
+            "Nadia Rahman",
+            "James Carter",
+            "Siam Ahmed",
+          ],
+        },
       });
       for (const member of initialTeam) {
         await TeamMember.findOneAndUpdate(
@@ -22,7 +30,7 @@ async function startServer() {
           { upsert: true }
         );
       }
-      logger.info(`Verified team members in MongoDB (active: ${initialTeam.length}).`);
+      logger.info(`Verified team members in MongoDB.`);
     } catch (e) {
       logger.warn(`Auto-sync team members skipped: ${(e as Error).message}`);
     }

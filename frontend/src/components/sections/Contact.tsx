@@ -70,7 +70,8 @@ function ContactFormContent() {
     setErrorMsg(null);
 
     const backendUrl =
-      process.env.NEXT_PUBLIC_BACKEND_URL || "http://localhost:5000/api/v1";
+      process.env.NEXT_PUBLIC_BACKEND_URL ||
+      "https://nexusagency-backend.onrender.com/api/v1";
 
     try {
       const response = await fetch(`${backendUrl}/contact`, {

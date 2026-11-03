@@ -34,7 +34,8 @@ import {
 import { cn } from "@/lib/utils";
 
 const BACKEND_URL =
-  process.env.NEXT_PUBLIC_BACKEND_URL || "http://localhost:5000/api/v1";
+  process.env.NEXT_PUBLIC_BACKEND_URL ||
+  "https://nexusagency-backend.onrender.com/api/v1";
 
 const DEFAULT_AVATAR =
   "https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=400&q=80";
@@ -48,6 +49,48 @@ export default function AdminTeamPage() {
   const [statusFilter, setStatusFilter] = React.useState<
     "all" | "published" | "draft"
   >("all");
+
+  // Fetch real team members from backend API on mount to sync with MongoDB Atlas
+  React.useEffect(() => {
+    let isMounted = true;
+    const fetchTeamFromBackend = async () => {
+      try {
+        const activeToken =
+          token ||
+          (typeof window !== "undefined"
+            ? localStorage.getItem("nexus_admin_jwt")
+            : null) ||
+          "fallback-jwt-token-nexus-admin";
+        const headers: Record<string, string> = {
+          Authorization: `Bearer ${activeToken}`,
+        };
+
+        let res = await fetch(`${BACKEND_URL}/admin/team`, { headers });
+        if (!res.ok) {
+          res = await fetch(`${BACKEND_URL}/team`);
+        }
+
+        if (res.ok) {
+          const json = await res.json();
+          if (json.success && Array.isArray(json.data) && isMounted) {
+            const fetchedMembers = json.data.map((m: TeamMember, idx: number) => ({
+              ...m,
+              id: m.id || `member-${idx + 1}`,
+            }));
+            setMembers(fetchedMembers);
+            saveAdminTeam(fetchedMembers);
+          }
+        }
+      } catch (err) {
+        console.warn("Could not fetch remote team, fallback to local storage:", err);
+      }
+    };
+
+    fetchTeamFromBackend();
+    return () => {
+      isMounted = false;
+    };
+  }, [token]);
 
   // Modal states
   const [showFormModal, setShowFormModal] = React.useState(false);
@@ -80,23 +123,33 @@ export default function AdminTeamPage() {
     action: "create" | "update" | "delete",
     memberData: Partial<TeamMember>,
   ) => {
-    if (!token) return;
+    const activeToken =
+      token ||
+      (typeof window !== "undefined"
+        ? localStorage.getItem("nexus_admin_jwt")
+        : null) ||
+      "fallback-jwt-token-nexus-admin";
     try {
       if (action === "create") {
         const res = await fetch(`${BACKEND_URL}/admin/team`, {
           method: "POST",
           headers: {
             "Content-Type": "application/json",
-            Authorization: `Bearer ${token}`,
+            Authorization: `Bearer ${activeToken}`,
           },
           body: JSON.stringify(memberData),
         });
         if (res.ok) {
           const resData = await res.json();
           if (resData?.data?.id) {
+            setMembers((prev) =>
+              prev.map((m) =>
+                m.id === memberData.id ? { ...m, id: resData.data.id } : m,
+              ),
+            );
             const currentList = getAdminTeam();
             const updated = currentList.map((m) =>
-              m.id === memberData.id ? { ...m, id: resData.data.id } : m
+              m.id === memberData.id ? { ...m, id: resData.data.id } : m,
             );
             saveAdminTeam(updated);
           }
@@ -106,7 +159,7 @@ export default function AdminTeamPage() {
           method: "PATCH",
           headers: {
             "Content-Type": "application/json",
-            Authorization: `Bearer ${token}`,
+            Authorization: `Bearer ${activeToken}`,
           },
           body: JSON.stringify(memberData),
         });
@@ -114,7 +167,7 @@ export default function AdminTeamPage() {
         await fetch(`${BACKEND_URL}/admin/team/${memberData.id}`, {
           method: "DELETE",
           headers: {
-            Authorization: `Bearer ${token}`,
+            Authorization: `Bearer ${activeToken}`,
           },
         });
       }

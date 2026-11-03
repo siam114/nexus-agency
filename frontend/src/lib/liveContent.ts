@@ -16,7 +16,9 @@ export const STORAGE_KEYS = {
   PROJECT_DETAILS: "nexus_admin_project_details",
 } as const;
 
-const BACKEND_URL = process.env.NEXT_PUBLIC_BACKEND_URL || "http://localhost:5000/api/v1";
+const BACKEND_URL =
+  process.env.NEXT_PUBLIC_BACKEND_URL ||
+  "https://nexusagency-backend.onrender.com/api/v1";
 
 /**
  * Dispatches cross-component and cross-tab update notifications
@@ -291,9 +293,7 @@ export function getAdminTeam(): TeamMember[] {
         const combined = [...cleanedParsed, ...missingDefaultMembers];
 
         // Keep localStorage updated with only active members
-        if (cleaned.length !== parsed.length) {
-          localStorage.setItem(STORAGE_KEYS.TEAM, JSON.stringify(combined));
-        }
+        localStorage.setItem(STORAGE_KEYS.TEAM, JSON.stringify(combined));
 
         return combined
           .map((m, idx) => ({ ...m, id: m.id || `member-${idx + 1}` }))
@@ -351,42 +351,20 @@ export function useLiveTeam(): TeamMember[] {
               id: m.id || `member-${idx + 1}`,
             }));
 
-            // Local members (from admin dashboard or localStorage) have top priority
-            // For members that exist locally, use the local admin version so dashboard edits reflect immediately and are never overwritten
-            const localMembers = getAdminTeam();
-            const localLookup = new Map(
-              localMembers.map((m: TeamMember) => [m.id, m])
-            );
-            const localNameLookup = new Map(
-              localMembers.map((m: TeamMember) => [m.name?.toLowerCase().trim(), m])
-            );
+            // Sync cache with database
+            try {
+              localStorage.setItem(STORAGE_KEYS.TEAM, JSON.stringify(apiMembers));
+            } catch {}
 
-            const resolvedApi = apiMembers.map((apiMember: TeamMember) => {
-              const matchedLocal =
-                localLookup.get(apiMember.id) ||
-                localNameLookup.get(apiMember.name?.toLowerCase().trim());
-              return matchedLocal || apiMember;
-            });
+            const publishedOnly = apiMembers
+              .filter((m: TeamMember) => m.published !== false)
+              .sort((a: TeamMember, b: TeamMember) => (a.sortOrder ?? 0) - (b.sortOrder ?? 0));
 
-            const apiIdentifiers = new Set(
-              resolvedApi.flatMap((m: TeamMember) => [m.id, m.name?.toLowerCase().trim()].filter(Boolean))
-            );
-
-            const localOnly = localMembers.filter(
-              (m: TeamMember) =>
-                !apiIdentifiers.has(m.id) &&
-                !apiIdentifiers.has(m.name?.toLowerCase().trim())
-            );
-
-            const merged = [...resolvedApi, ...localOnly]
-              .filter((m) => m.published !== false)
-              .sort((a, b) => (a.sortOrder ?? 0) - (b.sortOrder ?? 0));
-
-            setMembers(merged);
+            setMembers(publishedOnly);
           }
         }
       } catch {
-        // Backend offline
+        // Backend offline; fallback to local storage
       }
     };
 

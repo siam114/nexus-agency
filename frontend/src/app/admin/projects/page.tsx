@@ -37,7 +37,8 @@ import {
 import { cn } from "@/lib/utils";
 
 const BACKEND_URL =
-  process.env.NEXT_PUBLIC_BACKEND_URL || "http://localhost:5000/api/v1";
+  process.env.NEXT_PUBLIC_BACKEND_URL ||
+  "https://nexusagency-backend.onrender.com/api/v1";
 
 const CATEGORIES = [
   "All",

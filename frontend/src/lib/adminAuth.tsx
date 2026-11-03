@@ -29,7 +29,8 @@ const AdminAuthContext = React.createContext<AdminAuthContextType | undefined>(
 const TOKEN_KEY = "nexus_admin_jwt";
 const USER_KEY = "nexus_admin_user";
 const BACKEND_URL =
-  process.env.NEXT_PUBLIC_BACKEND_URL || "http://localhost:5000/api/v1";
+  process.env.NEXT_PUBLIC_BACKEND_URL ||
+  "https://nexusagency-backend.onrender.com/api/v1";
 
 export function AdminAuthProvider({ children }: { children: React.ReactNode }) {
   const [token, setToken] = React.useState<string | null>(() => {

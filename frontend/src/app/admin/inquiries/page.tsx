@@ -129,7 +129,8 @@ export default function AdminInquiriesPage() {
   const handleManualRefresh = React.useCallback(() => {
     setLoading(true);
     const backendUrl =
-      process.env.NEXT_PUBLIC_BACKEND_URL || "http://localhost:5000/api/v1";
+      process.env.NEXT_PUBLIC_BACKEND_URL ||
+      "https://nexusagency-backend.onrender.com/api/v1";
     const token =
       typeof window !== "undefined"
         ? localStorage.getItem("nexus_admin_jwt")
@@ -189,7 +190,8 @@ export default function AdminInquiriesPage() {
   React.useEffect(() => {
     let ignore = false;
     const backendUrl =
-      process.env.NEXT_PUBLIC_BACKEND_URL || "http://localhost:5000/api/v1";
+      process.env.NEXT_PUBLIC_BACKEND_URL ||
+      "https://nexusagency-backend.onrender.com/api/v1";
     const token =
       typeof window !== "undefined"
         ? localStorage.getItem("nexus_admin_jwt")
@@ -267,7 +269,8 @@ export default function AdminInquiriesPage() {
     }
 
     const backendUrl =
-      process.env.NEXT_PUBLIC_BACKEND_URL || "http://localhost:5000/api/v1";
+      process.env.NEXT_PUBLIC_BACKEND_URL ||
+      "https://nexusagency-backend.onrender.com/api/v1";
     const token =
       typeof window !== "undefined"
         ? localStorage.getItem("nexus_admin_jwt")
@@ -293,7 +296,8 @@ export default function AdminInquiriesPage() {
       }
 
       const backendUrl =
-        process.env.NEXT_PUBLIC_BACKEND_URL || "http://localhost:5000/api/v1";
+        process.env.NEXT_PUBLIC_BACKEND_URL ||
+      "https://nexusagency-backend.onrender.com/api/v1";
       const token =
         typeof window !== "undefined"
           ? localStorage.getItem("nexus_admin_jwt")
