@@ -83,7 +83,7 @@ export default function AdminTeamPage() {
     if (!token) return;
     try {
       if (action === "create") {
-        await fetch(`${BACKEND_URL}/admin/team`, {
+        const res = await fetch(`${BACKEND_URL}/admin/team`, {
           method: "POST",
           headers: {
             "Content-Type": "application/json",
@@ -91,6 +91,16 @@ export default function AdminTeamPage() {
           },
           body: JSON.stringify(memberData),
         });
+        if (res.ok) {
+          const resData = await res.json();
+          if (resData?.data?.id) {
+            const currentList = getAdminTeam();
+            const updated = currentList.map((m) =>
+              m.id === memberData.id ? { ...m, id: resData.data.id } : m
+            );
+            saveAdminTeam(updated);
+          }
+        }
       } else if (action === "update" && memberData.id) {
         await fetch(`${BACKEND_URL}/admin/team/${memberData.id}`, {
           method: "PATCH",

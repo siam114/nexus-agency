@@ -16,7 +16,7 @@ export const createProjectSchema = z.object({
   category: z.string().min(2, "Category is required"),
   tags: z.array(z.string()).default([]),
   description: z.string().min(10, "Description must be at least 10 characters"),
-  image: z.string().url("Valid image URL is required"),
+  image: z.string().min(1, "Valid image path or URL is required"),
   client: z.string().optional(),
   year: z.string().optional(),
   liveUrl: z.string().url("Valid live URL required").optional().or(z.literal("")),

@@ -136,14 +136,33 @@ export function useLiveProjects(): Project[] {
         if (res.ok) {
           const data = await res.json();
           if (data.success && Array.isArray(data.data) && data.data.length > 0) {
-            const normalized = data.data
+            const apiProjects = data.data
               .filter((p: Project) => p.published !== false)
-              .sort((a: Project, b: Project) => (a.sortOrder ?? 0) - (b.sortOrder ?? 0))
               .map((p: Project, idx: number) => ({
                 ...p,
                 id: p.id || p.slug || `project-${idx + 1}`,
               }));
-            setProjects(normalized);
+
+            const localProjects = getAdminProjects();
+            const apiLookup = new Set(
+              apiProjects.flatMap((p: Project) => [
+                p.id,
+                p.slug,
+                p.title?.toLowerCase().trim(),
+              ]).filter(Boolean)
+            );
+            const localOnly = localProjects.filter(
+              (p) =>
+                !apiLookup.has(p.id) &&
+                !apiLookup.has(p.slug) &&
+                !apiLookup.has(p.title?.toLowerCase().trim())
+            );
+
+            const merged = [...apiProjects, ...localOnly]
+              .filter((p) => p.published !== false)
+              .sort((a: Project, b: Project) => (a.sortOrder ?? 0) - (b.sortOrder ?? 0));
+
+            setProjects(merged);
           }
         }
       } catch {
@@ -294,11 +313,32 @@ export function useLiveTeam(): TeamMember[] {
         if (res.ok) {
           const data = await res.json();
           if (data.success && Array.isArray(data.data) && data.data.length > 0) {
-            const normalized = data.data.map((m: TeamMember, idx: number) => ({
+            const apiMembers = data.data.map((m: TeamMember, idx: number) => ({
               ...m,
               id: m.id || `member-${idx + 1}`,
             }));
-            setMembers(normalized);
+
+            // Merge with local storage & defaultTeam so newly added or custom teammates NEVER vanish
+            const localMembers = getAdminTeam();
+            const apiLookup = new Set(
+              apiMembers.flatMap((m: TeamMember) => [
+                m.id,
+                m.name?.toLowerCase().trim(),
+              ]).filter(Boolean)
+            );
+
+            // Keep any local member (from admin dashboard or code) that isn't in API response
+            const localOnly = localMembers.filter(
+              (m) =>
+                !apiLookup.has(m.id) &&
+                !apiLookup.has(m.name?.toLowerCase().trim())
+            );
+
+            const merged = [...apiMembers, ...localOnly]
+              .filter((m) => m.published !== false)
+              .sort((a, b) => (a.sortOrder ?? 0) - (b.sortOrder ?? 0));
+
+            setMembers(merged);
           }
         }
       } catch {
@@ -383,11 +423,30 @@ export function useLiveTestimonials(): Testimonial[] {
         if (res.ok) {
           const data = await res.json();
           if (data.success && Array.isArray(data.data) && data.data.length > 0) {
-            const normalized = data.data.map((t: Testimonial, idx: number) => ({
+            const apiTestimonials = data.data.map((t: Testimonial, idx: number) => ({
               ...t,
               id: t.id || `testimonial-${idx + 1}`,
             }));
-            setTestimonials(normalized);
+
+            const localTestimonials = getAdminTestimonials();
+            const apiLookup = new Set(
+              apiTestimonials.flatMap((t: Testimonial) => [
+                t.id,
+                t.name?.toLowerCase().trim(),
+              ]).filter(Boolean)
+            );
+
+            const localOnly = localTestimonials.filter(
+              (t) =>
+                !apiLookup.has(t.id) &&
+                !apiLookup.has(t.name?.toLowerCase().trim())
+            );
+
+            const merged = [...apiTestimonials, ...localOnly]
+              .filter((t) => t.published !== false)
+              .sort((a, b) => (a.sortOrder ?? 0) - (b.sortOrder ?? 0));
+
+            setTestimonials(merged);
           }
         }
       } catch {

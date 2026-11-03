@@ -4,15 +4,15 @@ export const createTeamMemberSchema = z.object({
   name: z.string().min(2, "Name is required"),
   role: z.string().min(2, "Role is required"),
   bio: z.string().optional(),
-  image: z.string().url("Valid profile image URL is required"),
+  image: z.string().min(1, "Valid profile image path or URL is required"),
   skills: z.array(z.string()).default([]),
   socials: z
     .object({
-      github: z.string().url().optional().or(z.literal("")),
-      linkedin: z.string().url().optional().or(z.literal("")),
-      website: z.string().url().optional().or(z.literal("")),
-      facebook: z.string().url().optional().or(z.literal("")),
-      whatsapp: z.string().url().optional().or(z.literal("")),
+      github: z.string().optional().or(z.literal("")),
+      linkedin: z.string().optional().or(z.literal("")),
+      website: z.string().optional().or(z.literal("")),
+      facebook: z.string().optional().or(z.literal("")),
+      whatsapp: z.string().optional().or(z.literal("")),
     })
     .optional(),
   published: z.boolean().default(true),
