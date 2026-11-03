@@ -11,6 +11,16 @@ let fallbackTeam: ITeamMember[] = initialTeam.map((m, idx) => ({
 export const teamService = {
   async getPublished() {
     if (isDbConnected()) {
+      const count = await TeamMember.countDocuments();
+      if (count < initialTeam.length) {
+        for (const member of initialTeam) {
+          await TeamMember.findOneAndUpdate(
+            { name: member.name },
+            { $setOnInsert: member },
+            { upsert: true }
+          );
+        }
+      }
       return TeamMember.find({ published: true }).sort({ sortOrder: 1 });
     }
     return fallbackTeam.filter((m) => m.published);
@@ -18,6 +28,16 @@ export const teamService = {
 
   async getAll() {
     if (isDbConnected()) {
+      const count = await TeamMember.countDocuments();
+      if (count < initialTeam.length) {
+        for (const member of initialTeam) {
+          await TeamMember.findOneAndUpdate(
+            { name: member.name },
+            { $setOnInsert: member },
+            { upsert: true }
+          );
+        }
+      }
       return TeamMember.find().sort({ sortOrder: 1 });
     }
     return fallbackTeam;

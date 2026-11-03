@@ -1,11 +1,29 @@
 import app from "./app.js";
 import { env } from "./config/env.js";
-import { connectDB } from "./config/db.js";
+import { connectDB, isDbConnected } from "./config/db.js";
 import { logger } from "./utils/logger.js";
+import { TeamMember } from "./models/TeamMember.js";
+import { initialTeam } from "./data/initialData.js";
 
 async function startServer() {
   // Connect to MongoDB (or continue with in-memory fallback if unconfigured)
   await connectDB();
+
+  // Auto-sync initial team members into MongoDB if not present
+  if (isDbConnected()) {
+    try {
+      for (const member of initialTeam) {
+        await TeamMember.findOneAndUpdate(
+          { name: member.name },
+          { $setOnInsert: member },
+          { upsert: true }
+        );
+      }
+      logger.info(`Verified team members in MongoDB.`);
+    } catch (e) {
+      logger.warn(`Auto-sync team members skipped: ${(e as Error).message}`);
+    }
+  }
 
   const server = app.listen(env.PORT, () => {
     logger.info(`NexusAgency Backend running on http://localhost:${env.PORT}`);
