@@ -1,6 +1,6 @@
 export const personalLinks = {
   name: "SM Siam",
-  role: "Shopify & Web Developer",
+  role: "Shopify Specialist & Web Developer",
   portfolio: "https://siam-portfolio-theta.vercel.app/",
   github: "https://github.com/siam114",
   linkedin: "https://www.linkedin.com/in/sm-siam598",

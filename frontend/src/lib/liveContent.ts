@@ -144,21 +144,25 @@ export function useLiveProjects(): Project[] {
               }));
 
             const localProjects = getAdminProjects();
-            const apiLookup = new Set(
-              apiProjects.flatMap((p: Project) => [
-                p.id,
-                p.slug,
-                p.title?.toLowerCase().trim(),
-              ]).filter(Boolean)
+            const localLookup = new Map(localProjects.map((p: Project) => [p.id, p]));
+            const localSlugLookup = new Map(localProjects.map((p: Project) => [p.slug, p]));
+
+            const resolvedApi = apiProjects.map((apiP: Project) => {
+              const matchedLocal = localLookup.get(apiP.id) || localSlugLookup.get(apiP.slug);
+              return matchedLocal || apiP;
+            });
+
+            const apiIdentifiers = new Set(
+              resolvedApi.flatMap((p: Project) => [p.id, p.slug, p.title?.toLowerCase().trim()]).filter(Boolean)
             );
             const localOnly = localProjects.filter(
-              (p) =>
-                !apiLookup.has(p.id) &&
-                !apiLookup.has(p.slug) &&
-                !apiLookup.has(p.title?.toLowerCase().trim())
+              (p: Project) =>
+                !apiIdentifiers.has(p.id) &&
+                !apiIdentifiers.has(p.slug) &&
+                !apiIdentifiers.has(p.title?.toLowerCase().trim())
             );
 
-            const merged = [...apiProjects, ...localOnly]
+            const merged = [...resolvedApi, ...localOnly]
               .filter((p) => p.published !== false)
               .sort((a: Project, b: Project) => (a.sortOrder ?? 0) - (b.sortOrder ?? 0));
 
@@ -252,38 +256,27 @@ export function getAdminTeam(): TeamMember[] {
     if (saved) {
       const parsed: TeamMember[] = JSON.parse(saved);
       if (Array.isArray(parsed) && parsed.length > 0) {
-        // Automatically sync updated default profile info for core members (like SM Siam)
-        const syncedParsed = parsed.map((m) => {
-          const isSiam = m.id === "1" || m.name?.toLowerCase().includes("siam");
-          if (isSiam) {
-            const siamDefault = defaultTeam.find(
-              (d) => d.id === "1" || d.name.toLowerCase().includes("siam")
-            );
-            if (siamDefault) {
-              return {
-                ...m,
-                name: siamDefault.name,
-                role: siamDefault.role,
-                bio: siamDefault.bio,
-                image: siamDefault.image,
-                skills: siamDefault.skills,
-                socials: { ...m.socials, ...siamDefault.socials },
-              };
-            }
+        // Upgrade obsolete placeholder unsplash image if present while preserving all user dashboard edits
+        const cleanedParsed = parsed.map((m) => {
+          if (
+            (m.id === "1" || m.name?.toLowerCase().includes("siam")) &&
+            m.image?.includes("photo-1507003211169")
+          ) {
+            return { ...m, image: "/images/team/sm-siam.png" };
           }
           return m;
         });
 
         // Automatically merge any missing default team member from defaultTeam
         const existingIdentifiers = new Set(
-          syncedParsed.flatMap((m) => [m.id, m.name?.toLowerCase().trim()].filter(Boolean))
+          cleanedParsed.flatMap((m) => [m.id, m.name?.toLowerCase().trim()].filter(Boolean))
         );
         const missingDefaultMembers = defaultTeam.filter(
           (dm) =>
             !existingIdentifiers.has(dm.id) &&
             !existingIdentifiers.has(dm.name?.toLowerCase().trim())
         );
-        const combined = [...syncedParsed, ...missingDefaultMembers];
+        const combined = [...cleanedParsed, ...missingDefaultMembers];
         return combined
           .map((m, idx) => ({ ...m, id: m.id || `member-${idx + 1}` }))
           .sort((a, b) => (a.sortOrder ?? 0) - (b.sortOrder ?? 0));
@@ -340,42 +333,34 @@ export function useLiveTeam(): TeamMember[] {
               id: m.id || `member-${idx + 1}`,
             }));
 
-            // Merge with local storage & defaultTeam so newly added or custom teammates NEVER vanish
+            // Local members (from admin dashboard or localStorage) have top priority
+            // For members that exist locally, use the local admin version so dashboard edits reflect immediately and are never overwritten
             const localMembers = getAdminTeam();
-            const apiLookup = new Set(
-              apiMembers.flatMap((m: TeamMember) => [
-                m.id,
-                m.name?.toLowerCase().trim(),
-              ]).filter(Boolean)
+            const localLookup = new Map(
+              localMembers.map((m: TeamMember) => [m.id, m])
+            );
+            const localNameLookup = new Map(
+              localMembers.map((m: TeamMember) => [m.name?.toLowerCase().trim(), m])
             );
 
-            // Keep any local member (from admin dashboard or code) that isn't in API response
+            const resolvedApi = apiMembers.map((apiMember: TeamMember) => {
+              const matchedLocal =
+                localLookup.get(apiMember.id) ||
+                localNameLookup.get(apiMember.name?.toLowerCase().trim());
+              return matchedLocal || apiMember;
+            });
+
+            const apiIdentifiers = new Set(
+              resolvedApi.flatMap((m: TeamMember) => [m.id, m.name?.toLowerCase().trim()].filter(Boolean))
+            );
+
             const localOnly = localMembers.filter(
-              (m) =>
-                !apiLookup.has(m.id) &&
-                !apiLookup.has(m.name?.toLowerCase().trim())
+              (m: TeamMember) =>
+                !apiIdentifiers.has(m.id) &&
+                !apiIdentifiers.has(m.name?.toLowerCase().trim())
             );
 
-            const merged = [...apiMembers, ...localOnly]
-              .map((m) => {
-                if (m.name?.toLowerCase().includes("siam") || m.id === "1") {
-                  const siamDefault = defaultTeam.find(
-                    (d) => d.id === "1" || d.name.toLowerCase().includes("siam")
-                  );
-                  if (siamDefault) {
-                    return {
-                      ...m,
-                      name: siamDefault.name,
-                      role: siamDefault.role,
-                      bio: siamDefault.bio,
-                      image: siamDefault.image,
-                      skills: siamDefault.skills,
-                      socials: { ...m.socials, ...siamDefault.socials },
-                    };
-                  }
-                }
-                return m;
-              })
+            const merged = [...resolvedApi, ...localOnly]
               .filter((m) => m.published !== false)
               .sort((a, b) => (a.sortOrder ?? 0) - (b.sortOrder ?? 0));
 
@@ -470,20 +455,28 @@ export function useLiveTestimonials(): Testimonial[] {
             }));
 
             const localTestimonials = getAdminTestimonials();
-            const apiLookup = new Set(
-              apiTestimonials.flatMap((t: Testimonial) => [
-                t.id,
-                t.name?.toLowerCase().trim(),
-              ]).filter(Boolean)
+            const localLookup = new Map(localTestimonials.map((t: Testimonial) => [t.id, t]));
+            const localNameLookup = new Map(
+              localTestimonials.map((t: Testimonial) => [t.name?.toLowerCase().trim(), t])
             );
 
+            const resolvedApi = apiTestimonials.map((apiT: Testimonial) => {
+              const matchedLocal =
+                localLookup.get(apiT.id) ||
+                localNameLookup.get(apiT.name?.toLowerCase().trim());
+              return matchedLocal || apiT;
+            });
+
+            const apiIdentifiers = new Set(
+              resolvedApi.flatMap((t: Testimonial) => [t.id, t.name?.toLowerCase().trim()].filter(Boolean))
+            );
             const localOnly = localTestimonials.filter(
-              (t) =>
-                !apiLookup.has(t.id) &&
-                !apiLookup.has(t.name?.toLowerCase().trim())
+              (t: Testimonial) =>
+                !apiIdentifiers.has(t.id) &&
+                !apiIdentifiers.has(t.name?.toLowerCase().trim())
             );
 
-            const merged = [...apiTestimonials, ...localOnly]
+            const merged = [...resolvedApi, ...localOnly]
               .filter((t) => t.published !== false)
               .sort((a, b) => (a.sortOrder ?? 0) - (b.sortOrder ?? 0));
 
