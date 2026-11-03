@@ -252,16 +252,38 @@ export function getAdminTeam(): TeamMember[] {
     if (saved) {
       const parsed: TeamMember[] = JSON.parse(saved);
       if (Array.isArray(parsed) && parsed.length > 0) {
+        // Automatically sync updated default profile info for core members (like SM Siam)
+        const syncedParsed = parsed.map((m) => {
+          const isSiam = m.id === "1" || m.name?.toLowerCase().includes("siam");
+          if (isSiam) {
+            const siamDefault = defaultTeam.find(
+              (d) => d.id === "1" || d.name.toLowerCase().includes("siam")
+            );
+            if (siamDefault) {
+              return {
+                ...m,
+                name: siamDefault.name,
+                role: siamDefault.role,
+                bio: siamDefault.bio,
+                image: siamDefault.image,
+                skills: siamDefault.skills,
+                socials: { ...m.socials, ...siamDefault.socials },
+              };
+            }
+          }
+          return m;
+        });
+
         // Automatically merge any missing default team member from defaultTeam
         const existingIdentifiers = new Set(
-          parsed.flatMap((m) => [m.id, m.name?.toLowerCase().trim()].filter(Boolean))
+          syncedParsed.flatMap((m) => [m.id, m.name?.toLowerCase().trim()].filter(Boolean))
         );
         const missingDefaultMembers = defaultTeam.filter(
           (dm) =>
             !existingIdentifiers.has(dm.id) &&
             !existingIdentifiers.has(dm.name?.toLowerCase().trim())
         );
-        const combined = [...parsed, ...missingDefaultMembers];
+        const combined = [...syncedParsed, ...missingDefaultMembers];
         return combined
           .map((m, idx) => ({ ...m, id: m.id || `member-${idx + 1}` }))
           .sort((a, b) => (a.sortOrder ?? 0) - (b.sortOrder ?? 0));
@@ -335,6 +357,25 @@ export function useLiveTeam(): TeamMember[] {
             );
 
             const merged = [...apiMembers, ...localOnly]
+              .map((m) => {
+                if (m.name?.toLowerCase().includes("siam") || m.id === "1") {
+                  const siamDefault = defaultTeam.find(
+                    (d) => d.id === "1" || d.name.toLowerCase().includes("siam")
+                  );
+                  if (siamDefault) {
+                    return {
+                      ...m,
+                      name: siamDefault.name,
+                      role: siamDefault.role,
+                      bio: siamDefault.bio,
+                      image: siamDefault.image,
+                      skills: siamDefault.skills,
+                      socials: { ...m.socials, ...siamDefault.socials },
+                    };
+                  }
+                }
+                return m;
+              })
               .filter((m) => m.published !== false)
               .sort((a, b) => (a.sortOrder ?? 0) - (b.sortOrder ?? 0));
 
