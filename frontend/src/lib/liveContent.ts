@@ -106,18 +106,8 @@ export function saveAdminProjectDetails(details: Record<string, ProjectDetail>) 
  * Hook for public website to get only published projects, sorted by display order
  */
 export function useLiveProjects(): Project[] {
-  const [projects, setProjects] = React.useState<Project[]>(() => {
-    if (typeof window === "undefined") return defaultProjects;
-    try {
-      const all = getAdminProjects();
-      const publishedOnly = all
-        .filter((p) => p.published !== false)
-        .sort((a, b) => (a.sortOrder ?? 0) - (b.sortOrder ?? 0));
-      return publishedOnly.length > 0 ? publishedOnly : defaultProjects;
-    } catch {
-      return defaultProjects;
-    }
-  });
+  // Always initialize with defaultProjects to match server-rendered markup
+  const [projects, setProjects] = React.useState<Project[]>(defaultProjects);
 
   const loadProjects = React.useCallback(() => {
     try {
@@ -125,7 +115,7 @@ export function useLiveProjects(): Project[] {
       const publishedOnly = all
         .filter((p) => p.published !== false)
         .sort((a, b) => (a.sortOrder ?? 0) - (b.sortOrder ?? 0));
-      setProjects(publishedOnly);
+      setProjects(publishedOnly.length > 0 ? publishedOnly : defaultProjects);
     } catch {
       setProjects(defaultProjects);
     }
@@ -169,10 +159,12 @@ export function useLiveProjects(): Project[] {
               .sort((a: Project, b: Project) => (a.sortOrder ?? 0) - (b.sortOrder ?? 0));
 
             setProjects(merged);
+            return;
           }
         }
+        loadProjects();
       } catch {
-        // Backend offline; local storage persists
+        loadProjects();
       }
     };
 
@@ -195,13 +187,9 @@ export function useLiveProjects(): Project[] {
  * Hook for individual project detail page (/projects/[slug]) to get updated case study
  */
 export function useLiveProjectDetail(slug: string): ProjectDetail | null {
-  const [detail, setDetail] = React.useState<ProjectDetail | null>(() => {
-    const details = getAdminProjectDetails();
-    if (details[slug]) return details[slug];
-    // Attempt match by ID or previous slug
-    const found = Object.values(details).find((p) => p.slug === slug || p.id === slug);
-    return found || defaultProjectDetails[slug] || null;
-  });
+  const [detail, setDetail] = React.useState<ProjectDetail | null>(
+    () => defaultProjectDetails[slug] || null
+  );
 
   const loadDetail = React.useCallback(() => {
     try {
@@ -225,10 +213,12 @@ export function useLiveProjectDetail(slug: string): ProjectDetail | null {
           const data = await res.json();
           if (data.success && data.data) {
             setDetail(data.data);
+            return;
           }
         }
+        loadDetail();
       } catch {
-        // Backend offline
+        loadDetail();
       }
     };
 
@@ -314,18 +304,8 @@ export function saveAdminTeam(members: TeamMember[]) {
 }
 
 export function useLiveTeam(): TeamMember[] {
-  const [members, setMembers] = React.useState<TeamMember[]>(() => {
-    if (typeof window === "undefined") return defaultTeam;
-    try {
-      const all = getAdminTeam();
-      const publishedOnly = all
-        .filter((m) => m.published !== false)
-        .sort((a, b) => (a.sortOrder ?? 0) - (b.sortOrder ?? 0));
-      return publishedOnly.length > 0 ? publishedOnly : defaultTeam;
-    } catch {
-      return defaultTeam;
-    }
-  });
+  // Always initialize with defaultTeam to match server markup during hydration
+  const [members, setMembers] = React.useState<TeamMember[]>(defaultTeam);
 
   const loadMembers = React.useCallback(() => {
     try {
@@ -333,7 +313,7 @@ export function useLiveTeam(): TeamMember[] {
       const publishedOnly = all
         .filter((m) => m.published !== false)
         .sort((a, b) => (a.sortOrder ?? 0) - (b.sortOrder ?? 0));
-      setMembers(publishedOnly);
+      setMembers(publishedOnly.length > 0 ? publishedOnly : defaultTeam);
     } catch {
       setMembers(defaultTeam);
     }
@@ -361,10 +341,13 @@ export function useLiveTeam(): TeamMember[] {
               .sort((a: TeamMember, b: TeamMember) => (a.sortOrder ?? 0) - (b.sortOrder ?? 0));
 
             setMembers(publishedOnly);
+            return;
           }
         }
+        loadMembers();
       } catch {
         // Backend offline; fallback to local storage
+        loadMembers();
       }
     };
 
@@ -413,18 +396,8 @@ export function saveAdminTestimonials(testimonials: Testimonial[]) {
 }
 
 export function useLiveTestimonials(): Testimonial[] {
-  const [testimonials, setTestimonials] = React.useState<Testimonial[]>(() => {
-    if (typeof window === "undefined") return defaultTestimonials;
-    try {
-      const all = getAdminTestimonials();
-      const publishedOnly = all
-        .filter((t) => t.published !== false)
-        .sort((a, b) => (a.sortOrder ?? 0) - (b.sortOrder ?? 0));
-      return publishedOnly.length > 0 ? publishedOnly : defaultTestimonials;
-    } catch {
-      return defaultTestimonials;
-    }
-  });
+  // Always initialize with defaultTestimonials to match server markup during hydration
+  const [testimonials, setTestimonials] = React.useState<Testimonial[]>(defaultTestimonials);
 
   const loadTestimonials = React.useCallback(() => {
     try {
@@ -432,7 +405,7 @@ export function useLiveTestimonials(): Testimonial[] {
       const publishedOnly = all
         .filter((t) => t.published !== false)
         .sort((a, b) => (a.sortOrder ?? 0) - (b.sortOrder ?? 0));
-      setTestimonials(publishedOnly);
+      setTestimonials(publishedOnly.length > 0 ? publishedOnly : defaultTestimonials);
     } catch {
       setTestimonials(defaultTestimonials);
     }
@@ -477,10 +450,12 @@ export function useLiveTestimonials(): Testimonial[] {
               .sort((a, b) => (a.sortOrder ?? 0) - (b.sortOrder ?? 0));
 
             setTestimonials(merged);
+            return;
           }
         }
+        loadTestimonials();
       } catch {
-        // Backend offline
+        loadTestimonials();
       }
     };
 

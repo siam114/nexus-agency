@@ -33,9 +33,9 @@ app.use(
   })
 );
 
-// Body parsers
-app.use(express.json({ limit: "5mb" }));
-app.use(express.urlencoded({ extended: true, limit: "5mb" }));
+// Body parsers (allow larger images from admin uploads)
+app.use(express.json({ limit: "15mb" }));
+app.use(express.urlencoded({ extended: true, limit: "15mb" }));
 
 // Mount API v1 router
 app.use("/api/v1", apiRouter);

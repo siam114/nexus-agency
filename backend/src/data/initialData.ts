@@ -898,6 +898,16 @@ export const initialTeam: ITeamMember[] = [
     published: true,
     sortOrder: 2,
   },
+  {
+    name: "MD Samiul",
+    role: "Sales Executive & WordPress Developer",
+    bio: "Focuses on client communication, technical sales solutions, WordPress theme customization, and PHP development.",
+    image: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&w=800&q=80",
+    skills: ["WordPress", "Theme Developer", "PHP Developer"],
+    socials: {},
+    published: true,
+    sortOrder: 3,
+  },
 ];
 
 export const initialTestimonials: ITestimonial[] = [

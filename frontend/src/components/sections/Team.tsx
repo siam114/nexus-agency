@@ -162,12 +162,21 @@ export function Team() {
           onTouchEnd={handleTouchEnd}
         >
           {members.map((member, idx) => {
-            // Compute circular normalized diff relative to activeIndex [-2, 2]
+            // Compute circular normalized diff relative to activeIndex
             let diff = idx - activeIndex;
-            while (diff > 2) diff -= count;
-            while (diff < -2) diff += count;
+            if (count === 3) {
+              if (diff > 1) diff -= 3;
+              if (diff < -1) diff += 3;
+            } else if (count === 2) {
+              if (diff < 0) diff += 2;
+            } else {
+              while (diff > Math.floor((count - 1) / 2)) diff -= count;
+              while (diff < -Math.floor(count / 2)) diff += count;
+            }
 
             const isCenter = diff === 0;
+            const isAdjacent = Math.abs(diff) === 1;
+            const isOuter = Math.abs(diff) === 2;
             const isFounder =
               member.role.toLowerCase().includes("founder") ||
               member.name.toLowerCase().includes("siam");
@@ -178,11 +187,19 @@ export function Team() {
             else if (diff === 1) xOffset = step1;
             else if (diff === -2) xOffset = -step2;
             else if (diff === 2) xOffset = step2;
+            else if (diff < -2) xOffset = -step2 * 1.25;
+            else if (diff > 2) xOffset = step2 * 1.25;
 
             // Z-Index, Scale & Opacity
-            const zIndex = isCenter ? 30 : Math.abs(diff) === 1 ? 20 : 10;
-            const scale = isCenter ? 1 : Math.abs(diff) === 1 ? 0.88 : 0.76;
-            const opacity = isCenter ? 1 : Math.abs(diff) === 1 ? 0.78 : (isMobile ? 0 : 0.45);
+            const zIndex = isCenter ? 30 : isAdjacent ? 20 : isOuter ? 10 : 0;
+            const scale = isCenter ? 1 : isAdjacent ? 0.88 : isOuter ? 0.76 : 0.6;
+            const opacity = isCenter
+              ? 1
+              : isAdjacent
+              ? 0.85
+              : isOuter
+              ? (isMobile ? 0 : 0.45)
+              : 0;
 
             return (
               <div
