@@ -155,7 +155,7 @@ export default function AdminTeamPage() {
           }
         }
       } else if (action === "update" && memberData.id) {
-        await fetch(`${BACKEND_URL}/admin/team/${memberData.id}`, {
+        const res = await fetch(`${BACKEND_URL}/admin/team/${memberData.id}`, {
           method: "PATCH",
           headers: {
             "Content-Type": "application/json",
@@ -163,13 +163,39 @@ export default function AdminTeamPage() {
           },
           body: JSON.stringify(memberData),
         });
+        if (res.ok) {
+          const resData = await res.json();
+          if (resData?.data?.id) {
+            setMembers((prev) =>
+              prev.map((m) =>
+                m.id === memberData.id ||
+                m.name.toLowerCase().trim() === memberData.name?.toLowerCase().trim()
+                  ? { ...m, ...resData.data, id: resData.data.id }
+                  : m,
+              ),
+            );
+            const currentList = getAdminTeam();
+            const updated = currentList.map((m) =>
+              m.id === memberData.id ||
+              m.name.toLowerCase().trim() === memberData.name?.toLowerCase().trim()
+                ? { ...m, ...resData.data, id: resData.data.id }
+                : m,
+            );
+            saveAdminTeam(updated);
+          }
+        }
       } else if (action === "delete" && memberData.id) {
-        await fetch(`${BACKEND_URL}/admin/team/${memberData.id}`, {
-          method: "DELETE",
-          headers: {
-            Authorization: `Bearer ${activeToken}`,
+        await fetch(
+          `${BACKEND_URL}/admin/team/${memberData.id}?name=${encodeURIComponent(
+            memberData.name || "",
+          )}`,
+          {
+            method: "DELETE",
+            headers: {
+              Authorization: `Bearer ${activeToken}`,
+            },
           },
-        });
+        );
       }
     } catch {
       // Backend offline; local storage persists the changes
@@ -284,7 +310,10 @@ export default function AdminTeamPage() {
     let updatedList: TeamMember[];
     if (editingMember) {
       updatedList = members.map((m) =>
-        m.id === memberPayload.id ? memberPayload : m,
+        m.id === memberPayload.id ||
+        m.name.toLowerCase().trim() === memberPayload.name.toLowerCase().trim()
+          ? memberPayload
+          : m,
       );
       syncBackend("update", memberPayload);
     } else {
@@ -737,10 +766,10 @@ export default function AdminTeamPage() {
                         Or enter direct image URL:
                       </span>
                       <input
-                        type="url"
+                        type="text"
                         value={formImage}
                         onChange={(e) => setFormImage(e.target.value)}
-                        placeholder="https://images.unsplash.com/..."
+                        placeholder="https://images.unsplash.com/... or data:image/..."
                         className="w-full px-3 py-1.5 rounded-lg bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-700 text-xs font-mono"
                       />
                     </div>

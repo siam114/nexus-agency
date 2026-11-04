@@ -263,7 +263,9 @@ export function getAdminTeam(): TeamMember[] {
         // Upgrade obsolete placeholder unsplash image if present while preserving all user dashboard edits
         const cleanedParsed = cleaned.map((m) => {
           if (
-            (m.id === "1" || m.name?.toLowerCase().includes("siam")) &&
+            (m.id === "1" ||
+              m.name?.toLowerCase().trim() === "sm siam" ||
+              m.name?.toLowerCase().trim() === "siam ahmed") &&
             m.image?.includes("photo-1507003211169")
           ) {
             return { ...m, image: "/images/team/sm-siam.png" };

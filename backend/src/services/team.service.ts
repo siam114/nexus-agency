@@ -1,3 +1,4 @@
+import mongoose from "mongoose";
 import { TeamMember } from "../models/TeamMember.js";
 import { ITeamMember } from "../types/index.js";
 import { initialTeam } from "../data/initialData.js";
@@ -45,7 +46,10 @@ export const teamService = {
 
   async getById(id: string) {
     if (isDbConnected()) {
-      return TeamMember.findById(id);
+      if (mongoose.Types.ObjectId.isValid(id)) {
+        return TeamMember.findById(id);
+      }
+      return TeamMember.findOne({ name: id });
     }
     return fallbackTeam.find((m) => m.id === id) || null;
   },
@@ -68,24 +72,49 @@ export const teamService = {
 
   async update(id: string, data: Partial<ITeamMember>) {
     if (isDbConnected()) {
-      return TeamMember.findByIdAndUpdate(id, { $set: data }, { new: true, runValidators: true });
+      let doc = null;
+      if (mongoose.Types.ObjectId.isValid(id)) {
+        doc = await TeamMember.findByIdAndUpdate(id, { $set: data }, { new: true, runValidators: true });
+      }
+      // If id is not an ObjectId or findByIdAndUpdate didn't match, match by name
+      if (!doc && data.name) {
+        doc = await TeamMember.findOneAndUpdate(
+          { name: { $regex: new RegExp(`^${data.name.trim()}$`, "i") } },
+          { $set: data },
+          { new: true, runValidators: true }
+        );
+      }
+      return doc;
     }
 
-    const index = fallbackTeam.findIndex((m) => m.id === id);
+    const index = fallbackTeam.findIndex(
+      (m) => m.id === id || (data.name && m.name.toLowerCase() === data.name.toLowerCase())
+    );
     if (index === -1) return null;
     fallbackTeam[index] = { ...fallbackTeam[index], ...data };
     return fallbackTeam[index];
   },
 
-  async delete(id: string) {
+  async delete(id: string, name?: string) {
     if (isDbConnected()) {
-      return TeamMember.findByIdAndDelete(id);
+      let doc = null;
+      if (mongoose.Types.ObjectId.isValid(id)) {
+        doc = await TeamMember.findByIdAndDelete(id);
+      }
+      if (!doc && name) {
+        doc = await TeamMember.findOneAndDelete({
+          name: { $regex: new RegExp(`^${name.trim()}$`, "i") },
+        });
+      }
+      return doc;
     }
 
-    const index = fallbackTeam.findIndex((m) => m.id === id);
+    const index = fallbackTeam.findIndex(
+      (m) => m.id === id || (name && m.name.toLowerCase() === name.toLowerCase())
+    );
     if (index === -1) return null;
     const deleted = fallbackTeam[index];
-    fallbackTeam = fallbackTeam.filter((m) => m.id !== id);
+    fallbackTeam = fallbackTeam.filter((_, idx) => idx !== index);
     return deleted;
   },
 };

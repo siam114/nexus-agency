@@ -47,7 +47,8 @@ export const teamController = {
   async deleteTeamMember(req: Request, res: Response, next: NextFunction) {
     try {
       const id = getParam(req.params.id);
-      const deleted = await teamService.delete(id);
+      const name = req.query.name ? String(req.query.name) : undefined;
+      const deleted = await teamService.delete(id, name);
       if (!deleted) {
         return apiResponse.notFound(res, "Team member not found");
       }
