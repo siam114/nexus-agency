@@ -83,10 +83,17 @@ export const initialProjects: IProject[] = [
       title: "Storefront Layout & Multi-Viewport Experience",
       description:
         "Every screen was crafted to balance rich photography with swift loading, ensuring outdoor shoppers have an effortless experience whether browsing at home or on mobile.",
-      desktopAspect: "Clean navigation headers, multi-column gear grids, and prominent lifestyle banners.",
-      mobileAspect: "Touch-optimized filters, sticky checkout controls, and fast-rendering product previews.",
+      desktopAspect:
+        "Clean navigation headers, multi-column gear grids, and prominent lifestyle banners.",
+      mobileAspect:
+        "Touch-optimized filters, sticky checkout controls, and fast-rendering product previews.",
     },
-    technologies: ["Shopify Liquid", "HTML5 & Modern CSS", "Vanilla JavaScript", "Shopify Storefront API"],
+    technologies: [
+      "Shopify Liquid",
+      "HTML5 & Modern CSS",
+      "Vanilla JavaScript",
+      "Shopify Storefront API",
+    ],
     servicesProvided: [
       "Custom Shopify Theme Development",
       "Liquid Template Customization",
@@ -103,7 +110,8 @@ export const initialProjects: IProject[] = [
       ],
     },
     seo: {
-      metaTitle: "Outdoor Essentials Store | Shopify Development Case Study | NexusAgency",
+      metaTitle:
+        "Outdoor Essentials Store | Shopify Development Case Study | NexusAgency",
       metaDescription:
         "Explore how NexusAgency designed and developed a high-performing Shopify storefront for Outdoor Essentials Co. with custom Liquid code, collection filters, and 100% mobile usability.",
     },
@@ -185,10 +193,18 @@ export const initialProjects: IProject[] = [
       title: "Design System & Code Translation",
       description:
         "Side-by-side verification between Figma frames and rendered DOM components ensured strict adherence to typography scales, border radii, and elevation shadows.",
-      desktopAspect: "Spacious dashboard grids, clear data hierarchies, and organized control panels.",
-      mobileAspect: "Collapsible drawer navigation, vertical data cards, and touch-friendly interactive targets.",
+      desktopAspect:
+        "Spacious dashboard grids, clear data hierarchies, and organized control panels.",
+      mobileAspect:
+        "Collapsible drawer navigation, vertical data cards, and touch-friendly interactive targets.",
     },
-    technologies: ["Next.js (App Router)", "TypeScript", "Tailwind CSS", "Lucide Icons", "Figma Design System"],
+    technologies: [
+      "Next.js (App Router)",
+      "TypeScript",
+      "Tailwind CSS",
+      "Lucide Icons",
+      "Figma Design System",
+    ],
     servicesProvided: [
       "Figma to Code Implementation",
       "Responsive Frontend Development",
@@ -205,7 +221,8 @@ export const initialProjects: IProject[] = [
       ],
     },
     seo: {
-      metaTitle: "Apex Cloud SaaS Interface | Figma to Code Case Study | NexusAgency",
+      metaTitle:
+        "Apex Cloud SaaS Interface | Figma to Code Case Study | NexusAgency",
       metaDescription:
         "Discover how NexusAgency translated Apex Systems' intricate Figma design files into a pixel-accurate, responsive Next.js frontend with Tailwind CSS and clean UI architecture.",
     },
@@ -287,10 +304,18 @@ export const initialProjects: IProject[] = [
       title: "Corporate Visual Presentation & Editorial Flow",
       description:
         "Designed to communicate prestige and dependability through refined typography, clean margins, and quick navigation.",
-      desktopAspect: "Sophisticated corporate layout with balanced white space and structured leadership profiles.",
-      mobileAspect: "Streamlined single-column readability and accessible mobile contact pathways.",
+      desktopAspect:
+        "Sophisticated corporate layout with balanced white space and structured leadership profiles.",
+      mobileAspect:
+        "Streamlined single-column readability and accessible mobile contact pathways.",
     },
-    technologies: ["WordPress CMS", "PHP", "Modern CSS", "WordPress Block Editor", "MySQL"],
+    technologies: [
+      "WordPress CMS",
+      "PHP",
+      "Modern CSS",
+      "WordPress Block Editor",
+      "MySQL",
+    ],
     servicesProvided: [
       "Custom WordPress Development",
       "Responsive Theme Design",
@@ -307,7 +332,8 @@ export const initialProjects: IProject[] = [
       ],
     },
     seo: {
-      metaTitle: "Veritas Advisory Corporate Site | WordPress Case Study | NexusAgency",
+      metaTitle:
+        "Veritas Advisory Corporate Site | WordPress Case Study | NexusAgency",
       metaDescription:
         "Read how NexusAgency engineered a fast, secure, and easily manageable WordPress website for Veritas Partners featuring custom service page templates and full admin control.",
     },
@@ -389,10 +415,17 @@ export const initialProjects: IProject[] = [
       title: "Technical Architecture & Audit Findings",
       description:
         "Remediated URL structures and structured data validations were audited directly through Google Search Console and Schema.org validation tools.",
-      desktopAspect: "Clean URL hierarchies, semantic HTML markup, and verified schema integration.",
-      mobileAspect: "Mobile-friendly page structure ensuring search engines index mobile viewports accurately.",
+      desktopAspect:
+        "Clean URL hierarchies, semantic HTML markup, and verified schema integration.",
+      mobileAspect:
+        "Mobile-friendly page structure ensuring search engines index mobile viewports accurately.",
     },
-    technologies: ["Google Search Console", "JSON-LD Schema", "Screaming Frog SEO", "Technical SEO Auditing"],
+    technologies: [
+      "Google Search Console",
+      "JSON-LD Schema",
+      "Screaming Frog SEO",
+      "Technical SEO Auditing",
+    ],
     servicesProvided: [
       "Technical SEO Audit",
       "On-Page Metadata Alignment",
@@ -409,7 +442,8 @@ export const initialProjects: IProject[] = [
       ],
     },
     seo: {
-      metaTitle: "EcoLiving Home Technical Audit | SEO Case Study | NexusAgency",
+      metaTitle:
+        "EcoLiving Home Technical Audit | SEO Case Study | NexusAgency",
       metaDescription:
         "Discover how NexusAgency resolved crawl errors, aligned metadata architecture, and implemented structured schema markup for EcoLiving Products.",
     },
@@ -491,10 +525,17 @@ export const initialProjects: IProject[] = [
       title: "Campaign Structure & Conversion Architecture",
       description:
         "Account configurations were built for longevity, ensuring every dollar spent is connected to verified tracking data and structured audience buckets.",
-      desktopAspect: "Clean campaign segmentation, transparent reporting data, and keyword match type discipline.",
-      mobileAspect: "Mobile-optimized ad copy and social creative formatting for Instagram and Facebook feeds.",
+      desktopAspect:
+        "Clean campaign segmentation, transparent reporting data, and keyword match type discipline.",
+      mobileAspect:
+        "Mobile-optimized ad copy and social creative formatting for Instagram and Facebook feeds.",
     },
-    technologies: ["Google Ads", "Meta Ads Manager", "Google Tag Manager", "Meta Pixel"],
+    technologies: [
+      "Google Ads",
+      "Meta Ads Manager",
+      "Google Tag Manager",
+      "Meta Pixel",
+    ],
     servicesProvided: [
       "Paid Campaign Architecture",
       "Conversion Tracking Setup",
@@ -511,7 +552,8 @@ export const initialProjects: IProject[] = [
       ],
     },
     seo: {
-      metaTitle: "Nordic Living Multi-Channel Ads | Ads Management Case Study | NexusAgency",
+      metaTitle:
+        "Nordic Living Multi-Channel Ads | Ads Management Case Study | NexusAgency",
       metaDescription:
         "See how NexusAgency established structured advertising campaigns, precise conversion tracking, and audience targeting across Google Ads and Meta Ads for Nordic Living.",
     },
@@ -593,10 +635,17 @@ export const initialProjects: IProject[] = [
       title: "Storefront Design & Mobile Product Experience",
       description:
         "Every element was tailored to reflect beauty industry elegance, combining serene pastel palettes with razor-sharp responsive functionality.",
-      desktopAspect: "Spacious product imagery layouts with sticky buy boxes and comprehensive ingredient detail.",
-      mobileAspect: "Smooth touch-swipe galleries, thumb-accessible swatches, and clear checkout buttons.",
+      desktopAspect:
+        "Spacious product imagery layouts with sticky buy boxes and comprehensive ingredient detail.",
+      mobileAspect:
+        "Smooth touch-swipe galleries, thumb-accessible swatches, and clear checkout buttons.",
     },
-    technologies: ["Shopify Liquid", "CSS3 / Sass", "JavaScript", "Shopify Theme Architecture"],
+    technologies: [
+      "Shopify Liquid",
+      "CSS3 / Sass",
+      "JavaScript",
+      "Shopify Theme Architecture",
+    ],
     servicesProvided: [
       "Shopify Theme Customization",
       "Product Variant Swatch Integration",
@@ -613,7 +662,8 @@ export const initialProjects: IProject[] = [
       ],
     },
     seo: {
-      metaTitle: "Lumière Beauty Storefront | Shopify Development Case Study | NexusAgency",
+      metaTitle:
+        "Lumière Beauty Storefront | Shopify Development Case Study | NexusAgency",
       metaDescription:
         "Discover how NexusAgency customized a Shopify storefront for Lumière Labs featuring bespoke product option swatches, clean mobile navigation, and streamlined checkout.",
     },
@@ -695,10 +745,18 @@ export const initialProjects: IProject[] = [
       title: "Interactive Architecture & Layout Presentation",
       description:
         "Designed to position VentureCraft as a forward-thinking venture studio through crisp typography, purposeful motion, and clean code execution.",
-      desktopAspect: "Wide-format interactive venture portfolios with high-contrast typography and subtle interactions.",
-      mobileAspect: "Adaptive touch navigation, stacked interactive modules, and instantaneous mobile tap response.",
+      desktopAspect:
+        "Wide-format interactive venture portfolios with high-contrast typography and subtle interactions.",
+      mobileAspect:
+        "Adaptive touch navigation, stacked interactive modules, and instantaneous mobile tap response.",
     },
-    technologies: ["Next.js (App Router)", "TypeScript", "Tailwind CSS", "React Primitives", "Vercel Edge Platform"],
+    technologies: [
+      "Next.js (App Router)",
+      "TypeScript",
+      "Tailwind CSS",
+      "React Primitives",
+      "Vercel Edge Platform",
+    ],
     servicesProvided: [
       "Custom Frontend Architecture",
       "Interactive Component Engineering",
@@ -715,7 +773,8 @@ export const initialProjects: IProject[] = [
       ],
     },
     seo: {
-      metaTitle: "VentureCraft Digital Platform | Custom Web Development Case Study | NexusAgency",
+      metaTitle:
+        "VentureCraft Digital Platform | Custom Web Development Case Study | NexusAgency",
       metaDescription:
         "Read how NexusAgency engineered a custom Next.js web platform for VentureCraft Studio with tailored interactive modules, modern frontend architecture, and sub-second load times.",
     },
@@ -951,10 +1010,10 @@ export const initialSettings = {
   tagline: "Digital Growth & Web Development Agency",
   contactEmail: "smsiam987@gmail.com",
   phone: "+8801567989506",
-  whatsappUrl: "https://api.whatsapp.com/send/?phone=8801567989506&text&type=phone_number&app_absent=0",
+  whatsappUrl:
+    "https://api.whatsapp.com/send/?phone=8801567989506&text&type=phone_number&app_absent=0",
   portfolioUrl: "https://siam-portfolio-theta.vercel.app/",
   githubUrl: "https://github.com/siam114",
   linkedinUrl: "https://www.linkedin.com/in/sm-siam598",
   facebookUrl: "https://www.facebook.com/sumsuzzaman.siam",
 };
-
