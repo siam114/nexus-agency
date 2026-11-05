@@ -82,7 +82,11 @@ export function getAdminProjectDetails(): Record<string, ProjectDetail> {
     const saved = localStorage.getItem(STORAGE_KEYS.PROJECT_DETAILS);
     if (saved) {
       const parsed: Record<string, ProjectDetail> = JSON.parse(saved);
-      if (parsed && typeof parsed === "object" && Object.keys(parsed).length > 0) {
+      if (
+        parsed &&
+        typeof parsed === "object" &&
+        Object.keys(parsed).length > 0
+      ) {
         return { ...defaultProjectDetails, ...parsed };
       }
     }
@@ -95,7 +99,9 @@ export function getAdminProjectDetails(): Record<string, ProjectDetail> {
 /**
  * Save all project details dictionary
  */
-export function saveAdminProjectDetails(details: Record<string, ProjectDetail>) {
+export function saveAdminProjectDetails(
+  details: Record<string, ProjectDetail>,
+) {
   if (typeof window !== "undefined") {
     localStorage.setItem(STORAGE_KEYS.PROJECT_DETAILS, JSON.stringify(details));
     dispatchContentUpdate();
@@ -127,7 +133,11 @@ export function useLiveProjects(): Project[] {
         const res = await fetch(`${BACKEND_URL}/projects`);
         if (res.ok) {
           const data = await res.json();
-          if (data.success && Array.isArray(data.data) && data.data.length > 0) {
+          if (
+            data.success &&
+            Array.isArray(data.data) &&
+            data.data.length > 0
+          ) {
             const apiProjects = data.data
               .filter((p: Project) => p.published !== false)
               .map((p: Project, idx: number) => ({
@@ -136,27 +146,41 @@ export function useLiveProjects(): Project[] {
               }));
 
             const localProjects = getAdminProjects();
-            const localLookup = new Map(localProjects.map((p: Project) => [p.id, p]));
-            const localSlugLookup = new Map(localProjects.map((p: Project) => [p.slug, p]));
+            const localLookup = new Map(
+              localProjects.map((p: Project) => [p.id, p]),
+            );
+            const localSlugLookup = new Map(
+              localProjects.map((p: Project) => [p.slug, p]),
+            );
 
             const resolvedApi = apiProjects.map((apiP: Project) => {
-              const matchedLocal = localLookup.get(apiP.id) || localSlugLookup.get(apiP.slug);
+              const matchedLocal =
+                localLookup.get(apiP.id) || localSlugLookup.get(apiP.slug);
               return matchedLocal || apiP;
             });
 
             const apiIdentifiers = new Set(
-              resolvedApi.flatMap((p: Project) => [p.id, p.slug, p.title?.toLowerCase().trim()]).filter(Boolean)
+              resolvedApi
+                .flatMap((p: Project) => [
+                  p.id,
+                  p.slug,
+                  p.title?.toLowerCase().trim(),
+                ])
+                .filter(Boolean),
             );
             const localOnly = localProjects.filter(
               (p: Project) =>
                 !apiIdentifiers.has(p.id) &&
                 !apiIdentifiers.has(p.slug) &&
-                !apiIdentifiers.has(p.title?.toLowerCase().trim())
+                !apiIdentifiers.has(p.title?.toLowerCase().trim()),
             );
 
             const merged = [...resolvedApi, ...localOnly]
               .filter((p) => p.published !== false)
-              .sort((a: Project, b: Project) => (a.sortOrder ?? 0) - (b.sortOrder ?? 0));
+              .sort(
+                (a: Project, b: Project) =>
+                  (a.sortOrder ?? 0) - (b.sortOrder ?? 0),
+              );
 
             setProjects(merged);
             return;
@@ -188,7 +212,7 @@ export function useLiveProjects(): Project[] {
  */
 export function useLiveProjectDetail(slug: string): ProjectDetail | null {
   const [detail, setDetail] = React.useState<ProjectDetail | null>(
-    () => defaultProjectDetails[slug] || null
+    () => defaultProjectDetails[slug] || null,
   );
 
   const loadDetail = React.useCallback(() => {
@@ -197,7 +221,9 @@ export function useLiveProjectDetail(slug: string): ProjectDetail | null {
       if (details[slug]) {
         setDetail(details[slug]);
       } else {
-        const found = Object.values(details).find((p) => p.slug === slug || p.id === slug);
+        const found = Object.values(details).find(
+          (p) => p.slug === slug || p.id === slug,
+        );
         setDetail(found || defaultProjectDetails[slug] || null);
       }
     } catch {
@@ -257,7 +283,7 @@ export function getAdminTeam(): TeamMember[] {
           "siam ahmed",
         ]);
         const cleaned = parsed.filter(
-          (m) => !deprecatedNames.has(m.name?.toLowerCase().trim())
+          (m) => !deprecatedNames.has(m.name?.toLowerCase().trim()),
         );
 
         // Upgrade obsolete placeholder unsplash image if present while preserving all user dashboard edits
@@ -281,12 +307,14 @@ export function getAdminTeam(): TeamMember[] {
 
         // Automatically merge any missing default team member from defaultTeam (SM Siam, MD Sumon)
         const existingIdentifiers = new Set(
-          cleanedParsed.flatMap((m) => [m.id, m.name?.toLowerCase().trim()].filter(Boolean))
+          cleanedParsed.flatMap((m) =>
+            [m.id, m.name?.toLowerCase().trim()].filter(Boolean),
+          ),
         );
         const missingDefaultMembers = defaultTeam.filter(
           (dm) =>
             !existingIdentifiers.has(dm.id) &&
-            !existingIdentifiers.has(dm.name?.toLowerCase().trim())
+            !existingIdentifiers.has(dm.name?.toLowerCase().trim()),
         );
         const combined = [...cleanedParsed, ...missingDefaultMembers];
 
@@ -333,7 +361,11 @@ export function useLiveTeam(): TeamMember[] {
         const res = await fetch(`${BACKEND_URL}/team`);
         if (res.ok) {
           const data = await res.json();
-          if (data.success && Array.isArray(data.data) && data.data.length > 0) {
+          if (
+            data.success &&
+            Array.isArray(data.data) &&
+            data.data.length > 0
+          ) {
             const apiMembers = data.data.map((m: TeamMember, idx: number) => ({
               ...m,
               id: m.id || `member-${idx + 1}`,
@@ -341,12 +373,18 @@ export function useLiveTeam(): TeamMember[] {
 
             // Sync cache with database
             try {
-              localStorage.setItem(STORAGE_KEYS.TEAM, JSON.stringify(apiMembers));
+              localStorage.setItem(
+                STORAGE_KEYS.TEAM,
+                JSON.stringify(apiMembers),
+              );
             } catch {}
 
             const publishedOnly = apiMembers
               .filter((m: TeamMember) => m.published !== false)
-              .sort((a: TeamMember, b: TeamMember) => (a.sortOrder ?? 0) - (b.sortOrder ?? 0));
+              .sort(
+                (a: TeamMember, b: TeamMember) =>
+                  (a.sortOrder ?? 0) - (b.sortOrder ?? 0),
+              );
 
             setMembers(publishedOnly);
             return;
@@ -398,14 +436,18 @@ export function getAdminTestimonials(): Testimonial[] {
 
 export function saveAdminTestimonials(testimonials: Testimonial[]) {
   if (typeof window !== "undefined") {
-    localStorage.setItem(STORAGE_KEYS.TESTIMONIALS, JSON.stringify(testimonials));
+    localStorage.setItem(
+      STORAGE_KEYS.TESTIMONIALS,
+      JSON.stringify(testimonials),
+    );
     dispatchContentUpdate();
   }
 }
 
 export function useLiveTestimonials(): Testimonial[] {
   // Always initialize with defaultTestimonials to match server markup during hydration
-  const [testimonials, setTestimonials] = React.useState<Testimonial[]>(defaultTestimonials);
+  const [testimonials, setTestimonials] =
+    React.useState<Testimonial[]>(defaultTestimonials);
 
   const loadTestimonials = React.useCallback(() => {
     try {
@@ -413,7 +455,9 @@ export function useLiveTestimonials(): Testimonial[] {
       const publishedOnly = all
         .filter((t) => t.published !== false)
         .sort((a, b) => (a.sortOrder ?? 0) - (b.sortOrder ?? 0));
-      setTestimonials(publishedOnly.length > 0 ? publishedOnly : defaultTestimonials);
+      setTestimonials(
+        publishedOnly.length > 0 ? publishedOnly : defaultTestimonials,
+      );
     } catch {
       setTestimonials(defaultTestimonials);
     }
@@ -425,16 +469,27 @@ export function useLiveTestimonials(): Testimonial[] {
         const res = await fetch(`${BACKEND_URL}/testimonials`);
         if (res.ok) {
           const data = await res.json();
-          if (data.success && Array.isArray(data.data) && data.data.length > 0) {
-            const apiTestimonials = data.data.map((t: Testimonial, idx: number) => ({
-              ...t,
-              id: t.id || `testimonial-${idx + 1}`,
-            }));
+          if (
+            data.success &&
+            Array.isArray(data.data) &&
+            data.data.length > 0
+          ) {
+            const apiTestimonials = data.data.map(
+              (t: Testimonial, idx: number) => ({
+                ...t,
+                id: t.id || `testimonial-${idx + 1}`,
+              }),
+            );
 
             const localTestimonials = getAdminTestimonials();
-            const localLookup = new Map(localTestimonials.map((t: Testimonial) => [t.id, t]));
+            const localLookup = new Map(
+              localTestimonials.map((t: Testimonial) => [t.id, t]),
+            );
             const localNameLookup = new Map(
-              localTestimonials.map((t: Testimonial) => [t.name?.toLowerCase().trim(), t])
+              localTestimonials.map((t: Testimonial) => [
+                t.name?.toLowerCase().trim(),
+                t,
+              ]),
             );
 
             const resolvedApi = apiTestimonials.map((apiT: Testimonial) => {
@@ -445,12 +500,14 @@ export function useLiveTestimonials(): Testimonial[] {
             });
 
             const apiIdentifiers = new Set(
-              resolvedApi.flatMap((t: Testimonial) => [t.id, t.name?.toLowerCase().trim()].filter(Boolean))
+              resolvedApi.flatMap((t: Testimonial) =>
+                [t.id, t.name?.toLowerCase().trim()].filter(Boolean),
+              ),
             );
             const localOnly = localTestimonials.filter(
               (t: Testimonial) =>
                 !apiIdentifiers.has(t.id) &&
-                !apiIdentifiers.has(t.name?.toLowerCase().trim())
+                !apiIdentifiers.has(t.name?.toLowerCase().trim()),
             );
 
             const merged = [...resolvedApi, ...localOnly]
