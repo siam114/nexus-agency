@@ -116,6 +116,7 @@ export default function AdminTeamPage() {
   const [formFeatured, setFormFeatured] = React.useState(false);
   const [formSortOrder, setFormSortOrder] = React.useState(1);
   const [formError, setFormError] = React.useState("");
+  const [isSubmitting, setIsSubmitting] = React.useState(false);
 
   const fileInputRef = React.useRef<HTMLInputElement | null>(null);
 
@@ -123,7 +124,7 @@ export default function AdminTeamPage() {
     action: "create" | "update" | "delete",
     memberData: Partial<TeamMember>,
     originalName?: string,
-  ) => {
+  ): Promise<boolean> => {
     const activeToken =
       token ||
       (typeof window !== "undefined"
@@ -140,23 +141,30 @@ export default function AdminTeamPage() {
           },
           body: JSON.stringify(memberData),
         });
-        if (res.ok) {
-          const resData = await res.json();
-          const serverId =
-            resData?.data?.id || (resData?.data as { _id?: string })?._id;
-          if (serverId) {
-            setMembers((prev) =>
-              prev.map((m) =>
-                m.id === memberData.id ? { ...m, id: serverId } : m,
-              ),
-            );
-            const currentList = getAdminTeam();
-            const updated = currentList.map((m) =>
-              m.id === memberData.id ? { ...m, id: serverId } : m,
-            );
-            saveAdminTeam(updated);
-          }
+        if (!res.ok) {
+          const errData = await res.json().catch(() => null);
+          const msg =
+            errData?.message ||
+            errData?.errors?.[0]?.message ||
+            `Server error (Status ${res.status})`;
+          throw new Error(msg);
         }
+        const resData = await res.json();
+        const serverId =
+          resData?.data?.id || (resData?.data as { _id?: string })?._id;
+        if (serverId) {
+          setMembers((prev) =>
+            prev.map((m) =>
+              m.id === memberData.id ? { ...m, id: serverId } : m,
+            ),
+          );
+          const currentList = getAdminTeam();
+          const updated = currentList.map((m) =>
+            m.id === memberData.id ? { ...m, id: serverId } : m,
+          );
+          saveAdminTeam(updated);
+        }
+        return true;
       } else if (action === "update" && memberData.id) {
         const queryParam = originalName
           ? `?originalName=${encodeURIComponent(originalName)}`
@@ -172,26 +180,21 @@ export default function AdminTeamPage() {
             body: JSON.stringify({ ...memberData, originalName }),
           },
         );
-        if (res.ok) {
-          const resData = await res.json();
-          const serverId =
-            resData?.data?.id ||
-            (resData?.data as { _id?: string })?._id ||
-            memberData.id;
-          setMembers((prev) =>
-            prev.map((m) =>
-              m.id === memberData.id ||
-              (originalName &&
-                m.name.toLowerCase().trim() ===
-                  originalName.toLowerCase().trim()) ||
-              m.name.toLowerCase().trim() ===
-                memberData.name?.toLowerCase().trim()
-                ? { ...m, ...resData.data, id: serverId }
-                : m,
-            ),
-          );
-          const currentList = getAdminTeam();
-          const updated = currentList.map((m) =>
+        if (!res.ok) {
+          const errData = await res.json().catch(() => null);
+          const msg =
+            errData?.message ||
+            errData?.errors?.[0]?.message ||
+            `Server error (Status ${res.status})`;
+          throw new Error(msg);
+        }
+        const resData = await res.json();
+        const serverId =
+          resData?.data?.id ||
+          (resData?.data as { _id?: string })?._id ||
+          memberData.id;
+        setMembers((prev) =>
+          prev.map((m) =>
             m.id === memberData.id ||
             (originalName &&
               m.name.toLowerCase().trim() ===
@@ -200,11 +203,23 @@ export default function AdminTeamPage() {
               memberData.name?.toLowerCase().trim()
               ? { ...m, ...resData.data, id: serverId }
               : m,
-          );
-          saveAdminTeam(updated);
-        }
+          ),
+        );
+        const currentList = getAdminTeam();
+        const updated = currentList.map((m) =>
+          m.id === memberData.id ||
+          (originalName &&
+            m.name.toLowerCase().trim() ===
+              originalName.toLowerCase().trim()) ||
+          m.name.toLowerCase().trim() ===
+            memberData.name?.toLowerCase().trim()
+            ? { ...m, ...resData.data, id: serverId }
+            : m,
+        );
+        saveAdminTeam(updated);
+        return true;
       } else if (action === "delete" && memberData.id) {
-        await fetch(
+        const res = await fetch(
           `${BACKEND_URL}/admin/team/${memberData.id}?name=${encodeURIComponent(
             memberData.name || "",
           )}`,
@@ -215,9 +230,12 @@ export default function AdminTeamPage() {
             },
           },
         );
+        return res.ok;
       }
-    } catch {
-      // Backend offline; local storage persists the changes
+      return true;
+    } catch (err) {
+      console.error("syncBackend error:", err);
+      throw err;
     }
   };
 
@@ -268,22 +286,59 @@ export default function AdminTeamPage() {
       return;
     }
 
-    if (file.size > 5 * 1024 * 1024) {
-      setFormError("Image file size should be less than 5MB.");
+    if (file.size > 12 * 1024 * 1024) {
+      setFormError("Image file size should be less than 12MB.");
       return;
     }
 
     const reader = new FileReader();
     reader.onload = (event) => {
-      if (typeof event.target?.result === "string") {
-        setFormImage(event.target.result);
-        setFormError("");
-      }
+      const src = event.target?.result;
+      if (typeof src !== "string") return;
+
+      const img = new window.Image();
+      img.onload = () => {
+        try {
+          const canvas = document.createElement("canvas");
+          const MAX_DIM = 800;
+          let width = img.width;
+          let height = img.height;
+
+          if (width > height) {
+            if (width > MAX_DIM) {
+              height = Math.round((height * MAX_DIM) / width);
+              width = MAX_DIM;
+            }
+          } else {
+            if (height > MAX_DIM) {
+              width = Math.round((width * MAX_DIM) / height);
+              height = MAX_DIM;
+            }
+          }
+
+          canvas.width = width;
+          canvas.height = height;
+          const ctx = canvas.getContext("2d");
+          if (ctx) {
+            ctx.drawImage(img, 0, 0, width, height);
+            const compressed = canvas.toDataURL("image/jpeg", 0.85);
+            setFormImage(compressed);
+            setFormError("");
+          } else {
+            setFormImage(src);
+            setFormError("");
+          }
+        } catch {
+          setFormImage(src);
+          setFormError("");
+        }
+      };
+      img.src = src;
     };
     reader.readAsDataURL(file);
   };
 
-  const handleSaveMember = (e: React.FormEvent) => {
+  const handleSaveMember = async (e: React.FormEvent) => {
     e.preventDefault();
 
     if (!formName.trim()) {
@@ -300,6 +355,9 @@ export default function AdminTeamPage() {
       setFormError("Profile photo is required.");
       return;
     }
+
+    setIsSubmitting(true);
+    setFormError("");
 
     const skillsArray = formSkills
       .split(",")
@@ -326,36 +384,50 @@ export default function AdminTeamPage() {
       },
     };
 
-    let updatedList: TeamMember[];
-    if (editingMember) {
-      updatedList = members.map((m) =>
-        m.id === memberPayload.id ||
-        m.name.toLowerCase().trim() === memberPayload.name.toLowerCase().trim() ||
-        m.name.toLowerCase().trim() === editingMember.name.toLowerCase().trim()
-          ? memberPayload
-          : m,
+    try {
+      if (editingMember) {
+        await syncBackend("update", memberPayload, editingMember.name);
+        const updatedList = members.map((m) =>
+          m.id === memberPayload.id ||
+          m.name.toLowerCase().trim() === memberPayload.name.toLowerCase().trim() ||
+          m.name.toLowerCase().trim() === editingMember.name.toLowerCase().trim()
+            ? memberPayload
+            : m,
+        );
+        updatedList.sort((a, b) => (a.sortOrder ?? 0) - (b.sortOrder ?? 0));
+        setMembers(updatedList);
+        saveAdminTeam(updatedList);
+      } else {
+        await syncBackend("create", memberPayload);
+        const updatedList = [...members, memberPayload];
+        updatedList.sort((a, b) => (a.sortOrder ?? 0) - (b.sortOrder ?? 0));
+        setMembers(updatedList);
+        saveAdminTeam(updatedList);
+      }
+      setShowFormModal(false);
+    } catch (err) {
+      setFormError(
+        (err as Error).message ||
+          "Failed to save changes to the database. Please try again.",
       );
-      syncBackend("update", memberPayload, editingMember.name);
-    } else {
-      updatedList = [...members, memberPayload];
-      syncBackend("create", memberPayload);
+    } finally {
+      setIsSubmitting(false);
     }
-
-    updatedList.sort((a, b) => (a.sortOrder ?? 0) - (b.sortOrder ?? 0));
-    setMembers(updatedList);
-    saveAdminTeam(updatedList);
-    setShowFormModal(false);
   };
 
-  const handleTogglePublish = (member: TeamMember) => {
+  const handleTogglePublish = async (member: TeamMember) => {
     const updated = { ...member, published: !(member.published !== false) };
     const updatedList = members.map((m) => (m.id === member.id ? updated : m));
     setMembers(updatedList);
     saveAdminTeam(updatedList);
-    syncBackend("update", updated, member.name);
+    try {
+      await syncBackend("update", updated, member.name);
+    } catch (err) {
+      console.error("Toggle publish failed:", err);
+    }
   };
 
-  const handleDeleteMember = (member: TeamMember) => {
+  const handleDeleteMember = async (member: TeamMember) => {
     if (
       confirm(
         `Are you sure you want to delete team member "${member.name}"? This action cannot be undone.`,
@@ -368,7 +440,11 @@ export default function AdminTeamPage() {
       );
       setMembers(updatedList);
       saveAdminTeam(updatedList);
-      syncBackend("delete", { id: member.id, name: member.name });
+      try {
+        await syncBackend("delete", { id: member.id, name: member.name });
+      } catch (err) {
+        console.error("Delete member failed:", err);
+      }
       if (previewMember?.id === member.id) {
         setPreviewMember(null);
       }
@@ -1040,9 +1116,17 @@ export default function AdminTeamPage() {
                 <Button
                   type="submit"
                   size="sm"
-                  className="bg-blue-600 hover:bg-blue-700 text-white rounded-xl font-semibold shadow-xs"
+                  disabled={isSubmitting}
+                  className="bg-blue-600 hover:bg-blue-700 text-white rounded-xl font-semibold shadow-xs flex items-center gap-2 cursor-pointer disabled:opacity-70"
                 >
-                  {editingMember ? "Save Changes" : "Create Team Member"}
+                  {isSubmitting && (
+                    <div className="h-3.5 w-3.5 border-2 border-white/30 border-t-white rounded-full animate-spin" />
+                  )}
+                  {isSubmitting
+                    ? "Saving to Database..."
+                    : editingMember
+                      ? "Save Changes"
+                      : "Create Team Member"}
                 </Button>
               </div>
             </form>

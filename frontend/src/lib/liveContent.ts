@@ -68,7 +68,11 @@ export function getAdminProjects(): Project[] {
  */
 export function saveAdminProjects(projects: Project[]) {
   if (typeof window !== "undefined") {
-    localStorage.setItem(STORAGE_KEYS.PROJECTS, JSON.stringify(projects));
+    try {
+      localStorage.setItem(STORAGE_KEYS.PROJECTS, JSON.stringify(projects));
+    } catch (err) {
+      console.warn("Could not write projects to localStorage:", err);
+    }
     dispatchContentUpdate();
   }
 }
@@ -103,7 +107,11 @@ export function saveAdminProjectDetails(
   details: Record<string, ProjectDetail>,
 ) {
   if (typeof window !== "undefined") {
-    localStorage.setItem(STORAGE_KEYS.PROJECT_DETAILS, JSON.stringify(details));
+    try {
+      localStorage.setItem(STORAGE_KEYS.PROJECT_DETAILS, JSON.stringify(details));
+    } catch (err) {
+      console.warn("Could not write project details to localStorage:", err);
+    }
     dispatchContentUpdate();
   }
 }
@@ -334,7 +342,11 @@ export function getAdminTeam(): TeamMember[] {
 
 export function saveAdminTeam(members: TeamMember[]) {
   if (typeof window !== "undefined") {
-    localStorage.setItem(STORAGE_KEYS.TEAM, JSON.stringify(members));
+    try {
+      localStorage.setItem(STORAGE_KEYS.TEAM, JSON.stringify(members));
+    } catch (err) {
+      console.warn("Could not write team members to localStorage:", err);
+    }
     dispatchContentUpdate();
   }
 }
@@ -436,10 +448,14 @@ export function getAdminTestimonials(): Testimonial[] {
 
 export function saveAdminTestimonials(testimonials: Testimonial[]) {
   if (typeof window !== "undefined") {
-    localStorage.setItem(
-      STORAGE_KEYS.TESTIMONIALS,
-      JSON.stringify(testimonials),
-    );
+    try {
+      localStorage.setItem(
+        STORAGE_KEYS.TESTIMONIALS,
+        JSON.stringify(testimonials),
+      );
+    } catch (err) {
+      console.warn("Could not write testimonials to localStorage:", err);
+    }
     dispatchContentUpdate();
   }
 }
