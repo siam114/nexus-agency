@@ -368,7 +368,7 @@ export function useLiveTeam(): TeamMember[] {
           ) {
             const apiMembers = data.data.map((m: TeamMember, idx: number) => ({
               ...m,
-              id: m.id || `member-${idx + 1}`,
+              id: m.id || (m as unknown as { _id?: string })._id || `member-${idx + 1}`,
             }));
 
             // Sync cache with database

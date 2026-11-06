@@ -70,16 +70,30 @@ export const teamService = {
     return newMember;
   },
 
-  async update(id: string, data: Partial<ITeamMember>) {
+  async update(id: string, data: Partial<ITeamMember>, originalName?: string) {
     if (isDbConnected()) {
       let doc = null;
       if (mongoose.Types.ObjectId.isValid(id)) {
         doc = await TeamMember.findByIdAndUpdate(id, { $set: data }, { new: true, runValidators: true });
       }
-      // If id is not an ObjectId or findByIdAndUpdate didn't match, match by name
+      // If id is not an ObjectId or findByIdAndUpdate didn't match, match by originalName, data.name or sortOrder
+      if (!doc && originalName) {
+        doc = await TeamMember.findOneAndUpdate(
+          { name: { $regex: new RegExp(`^${originalName.trim()}$`, "i") } },
+          { $set: data },
+          { new: true, runValidators: true }
+        );
+      }
       if (!doc && data.name) {
         doc = await TeamMember.findOneAndUpdate(
           { name: { $regex: new RegExp(`^${data.name.trim()}$`, "i") } },
+          { $set: data },
+          { new: true, runValidators: true }
+        );
+      }
+      if (!doc && data.sortOrder !== undefined) {
+        doc = await TeamMember.findOneAndUpdate(
+          { sortOrder: data.sortOrder },
           { $set: data },
           { new: true, runValidators: true }
         );
@@ -88,7 +102,11 @@ export const teamService = {
     }
 
     const index = fallbackTeam.findIndex(
-      (m) => m.id === id || (data.name && m.name.toLowerCase() === data.name.toLowerCase())
+      (m) =>
+        m.id === id ||
+        (originalName && m.name.toLowerCase() === originalName.toLowerCase()) ||
+        (data.name && m.name.toLowerCase() === data.name.toLowerCase()) ||
+        (data.sortOrder !== undefined && m.sortOrder === data.sortOrder)
     );
     if (index === -1) return null;
     fallbackTeam[index] = { ...fallbackTeam[index], ...data };

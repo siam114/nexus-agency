@@ -34,7 +34,10 @@ export const teamController = {
   async updateTeamMember(req: Request, res: Response, next: NextFunction) {
     try {
       const id = getParam(req.params.id);
-      const updated = await teamService.update(id, req.body);
+      const originalName = req.query.originalName
+        ? String(req.query.originalName)
+        : (req.body.originalName as string | undefined);
+      const updated = await teamService.update(id, req.body, originalName);
       if (!updated) {
         return apiResponse.notFound(res, "Team member not found");
       }

@@ -381,7 +381,7 @@ export const teamData: TeamMember[] = [
   },
   {
     id: "7",
-    name: "MD Samiul",
+    name: "MD Samiul Islam",
     role: "Sales Executive & WordPress Developer",
     bio: "Focuses on client communication, technical sales solutions, WordPress theme customization, and PHP development.",
     image: "/images/team/md-samiul.jpg",

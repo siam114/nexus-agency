@@ -75,7 +75,7 @@ export default function AdminTeamPage() {
           if (json.success && Array.isArray(json.data) && isMounted) {
             const fetchedMembers = json.data.map((m: TeamMember, idx: number) => ({
               ...m,
-              id: m.id || `member-${idx + 1}`,
+              id: m.id || (m as unknown as { _id?: string })._id || `member-${idx + 1}`,
             }));
             setMembers(fetchedMembers);
             saveAdminTeam(fetchedMembers);
@@ -122,6 +122,7 @@ export default function AdminTeamPage() {
   const syncBackend = async (
     action: "create" | "update" | "delete",
     memberData: Partial<TeamMember>,
+    originalName?: string,
   ) => {
     const activeToken =
       token ||
@@ -141,48 +142,66 @@ export default function AdminTeamPage() {
         });
         if (res.ok) {
           const resData = await res.json();
-          if (resData?.data?.id) {
+          const serverId =
+            resData?.data?.id || (resData?.data as { _id?: string })?._id;
+          if (serverId) {
             setMembers((prev) =>
               prev.map((m) =>
-                m.id === memberData.id ? { ...m, id: resData.data.id } : m,
+                m.id === memberData.id ? { ...m, id: serverId } : m,
               ),
             );
             const currentList = getAdminTeam();
             const updated = currentList.map((m) =>
-              m.id === memberData.id ? { ...m, id: resData.data.id } : m,
+              m.id === memberData.id ? { ...m, id: serverId } : m,
             );
             saveAdminTeam(updated);
           }
         }
       } else if (action === "update" && memberData.id) {
-        const res = await fetch(`${BACKEND_URL}/admin/team/${memberData.id}`, {
-          method: "PATCH",
-          headers: {
-            "Content-Type": "application/json",
-            Authorization: `Bearer ${activeToken}`,
+        const queryParam = originalName
+          ? `?originalName=${encodeURIComponent(originalName)}`
+          : "";
+        const res = await fetch(
+          `${BACKEND_URL}/admin/team/${memberData.id}${queryParam}`,
+          {
+            method: "PATCH",
+            headers: {
+              "Content-Type": "application/json",
+              Authorization: `Bearer ${activeToken}`,
+            },
+            body: JSON.stringify({ ...memberData, originalName }),
           },
-          body: JSON.stringify(memberData),
-        });
+        );
         if (res.ok) {
           const resData = await res.json();
-          if (resData?.data?.id) {
-            setMembers((prev) =>
-              prev.map((m) =>
-                m.id === memberData.id ||
-                m.name.toLowerCase().trim() === memberData.name?.toLowerCase().trim()
-                  ? { ...m, ...resData.data, id: resData.data.id }
-                  : m,
-              ),
-            );
-            const currentList = getAdminTeam();
-            const updated = currentList.map((m) =>
+          const serverId =
+            resData?.data?.id ||
+            (resData?.data as { _id?: string })?._id ||
+            memberData.id;
+          setMembers((prev) =>
+            prev.map((m) =>
               m.id === memberData.id ||
-              m.name.toLowerCase().trim() === memberData.name?.toLowerCase().trim()
-                ? { ...m, ...resData.data, id: resData.data.id }
+              (originalName &&
+                m.name.toLowerCase().trim() ===
+                  originalName.toLowerCase().trim()) ||
+              m.name.toLowerCase().trim() ===
+                memberData.name?.toLowerCase().trim()
+                ? { ...m, ...resData.data, id: serverId }
                 : m,
-            );
-            saveAdminTeam(updated);
-          }
+            ),
+          );
+          const currentList = getAdminTeam();
+          const updated = currentList.map((m) =>
+            m.id === memberData.id ||
+            (originalName &&
+              m.name.toLowerCase().trim() ===
+                originalName.toLowerCase().trim()) ||
+            m.name.toLowerCase().trim() ===
+              memberData.name?.toLowerCase().trim()
+              ? { ...m, ...resData.data, id: serverId }
+              : m,
+          );
+          saveAdminTeam(updated);
         }
       } else if (action === "delete" && memberData.id) {
         await fetch(
@@ -311,11 +330,12 @@ export default function AdminTeamPage() {
     if (editingMember) {
       updatedList = members.map((m) =>
         m.id === memberPayload.id ||
-        m.name.toLowerCase().trim() === memberPayload.name.toLowerCase().trim()
+        m.name.toLowerCase().trim() === memberPayload.name.toLowerCase().trim() ||
+        m.name.toLowerCase().trim() === editingMember.name.toLowerCase().trim()
           ? memberPayload
           : m,
       );
-      syncBackend("update", memberPayload);
+      syncBackend("update", memberPayload, editingMember.name);
     } else {
       updatedList = [...members, memberPayload];
       syncBackend("create", memberPayload);
@@ -332,7 +352,7 @@ export default function AdminTeamPage() {
     const updatedList = members.map((m) => (m.id === member.id ? updated : m));
     setMembers(updatedList);
     saveAdminTeam(updatedList);
-    syncBackend("update", updated);
+    syncBackend("update", updated, member.name);
   };
 
   const handleDeleteMember = (member: TeamMember) => {
@@ -341,10 +361,14 @@ export default function AdminTeamPage() {
         `Are you sure you want to delete team member "${member.name}"? This action cannot be undone.`,
       )
     ) {
-      const updatedList = members.filter((m) => m.id !== member.id);
+      const updatedList = members.filter(
+        (m) =>
+          m.id !== member.id &&
+          m.name.toLowerCase().trim() !== member.name.toLowerCase().trim(),
+      );
       setMembers(updatedList);
       saveAdminTeam(updatedList);
-      syncBackend("delete", { id: member.id });
+      syncBackend("delete", { id: member.id, name: member.name });
       if (previewMember?.id === member.id) {
         setPreviewMember(null);
       }

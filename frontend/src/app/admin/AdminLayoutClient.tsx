@@ -179,6 +179,14 @@ function AdminShell({ children }: { children: React.ReactNode }) {
 
           <div className="flex items-center gap-3">
             <ThemeToggle />
+            <button
+              onClick={logout}
+              title="Sign Out of Admin"
+              className="flex items-center gap-1.5 px-3 py-1.5 rounded-xl text-xs font-medium text-rose-600 dark:text-rose-400 bg-rose-50 hover:bg-rose-100 dark:bg-rose-950/40 dark:hover:bg-rose-950/70 border border-rose-200/60 dark:border-rose-900/60 transition-colors cursor-pointer"
+            >
+              <LogOut className="h-3.5 w-3.5" />
+              <span className="hidden sm:inline">Sign Out</span>
+            </button>
           </div>
         </header>
 

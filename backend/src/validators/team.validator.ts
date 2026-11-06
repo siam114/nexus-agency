@@ -2,6 +2,7 @@ import { z } from "zod";
 
 export const createTeamMemberSchema = z.object({
   name: z.string().min(2, "Name is required"),
+  originalName: z.string().optional(),
   role: z.string().min(2, "Role is required"),
   bio: z.string().optional(),
   image: z.string().min(1, "Valid profile image path or URL is required"),
