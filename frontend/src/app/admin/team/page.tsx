@@ -516,7 +516,7 @@ export default function AdminTeamPage() {
           </Button>
         </Card>
       ) : (
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8">
           {filteredMembers.map((member) => {
             const isPublished = member.published !== false;
 
@@ -524,155 +524,210 @@ export default function AdminTeamPage() {
               <Card
                 key={member.id}
                 className={cn(
-                  "overflow-hidden rounded-2xl border bg-white dark:bg-slate-900 flex flex-col justify-between transition-all hover:shadow-lg group",
+                  "overflow-hidden rounded-3xl border bg-white dark:bg-slate-900 flex flex-col justify-between transition-all duration-300 hover:shadow-2xl hover:shadow-blue-500/10 hover:-translate-y-1.5 group relative",
                   isPublished
                     ? "border-slate-200/80 dark:border-slate-800"
-                    : "border-amber-300/80 dark:border-amber-900/60 opacity-80",
+                    : "border-amber-300/80 dark:border-amber-900/60 opacity-85",
                 )}
               >
                 <div>
                   {/* Photo & Badges */}
-                  <div className="relative h-56 w-full overflow-hidden bg-slate-100 dark:bg-slate-800">
+                  <div className="relative h-64 sm:h-72 w-full overflow-hidden bg-slate-100 dark:bg-slate-800">
                     <Image
                       src={member.image || DEFAULT_AVATAR}
                       alt={member.name}
                       fill
                       unoptimized
-                      className="object-cover group-hover:scale-105 transition-transform duration-500"
-                      sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 25vw"
+                      className="object-cover group-hover:scale-105 transition-transform duration-700 ease-[cubic-bezier(0.25,1,0.5,1)]"
+                      sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
                     />
 
-                    {/* Status Badge */}
-                    <div className="absolute top-3 left-3 flex items-center gap-1.5">
-                      <button
-                        onClick={() => handleTogglePublish(member)}
-                        className={cn(
-                          "px-2.5 py-1 rounded-full text-[10px] font-bold shadow-md transition-all flex items-center gap-1",
-                          isPublished
-                            ? "bg-emerald-600 text-white hover:bg-emerald-700"
-                            : "bg-amber-600 text-white hover:bg-amber-700",
-                        )}
-                        title="Click to toggle publication status"
-                      >
-                        {isPublished ? (
-                          <>
-                            <CheckCircle2 className="h-3 w-3" />
-                            <span>Published</span>
-                          </>
-                        ) : (
-                          <>
-                            <XCircle className="h-3 w-3" />
-                            <span>Draft</span>
-                          </>
-                        )}
-                      </button>
+                    {/* Gradient Overlay for photo depth */}
+                    <div className="absolute inset-0 bg-gradient-to-t from-slate-950/80 via-slate-950/20 to-transparent pointer-events-none" />
 
-                      {member.featured && (
-                        <span className="px-2 py-0.5 rounded-full text-[10px] font-bold bg-purple-600 text-white shadow-md flex items-center gap-0.5">
-                          <Star className="h-2.5 w-2.5 fill-current" />
-                          <span>Featured</span>
-                        </span>
-                      )}
+                    {/* Top Badges Bar */}
+                    <div className="absolute top-3.5 inset-x-3.5 flex items-center justify-between pointer-events-auto z-10">
+                      {/* Left: Publication & Featured Pills */}
+                      <div className="flex items-center gap-1.5 flex-wrap">
+                        <button
+                          type="button"
+                          onClick={() => handleTogglePublish(member)}
+                          className={cn(
+                            "px-3 py-1 rounded-full text-[11px] font-bold shadow-md transition-all flex items-center gap-1.5 backdrop-blur-md cursor-pointer",
+                            isPublished
+                              ? "bg-emerald-500/90 text-white hover:bg-emerald-600 ring-1 ring-emerald-400/40"
+                              : "bg-amber-500/90 text-white hover:bg-amber-600 ring-1 ring-amber-400/40",
+                          )}
+                          title="Click to toggle publication status"
+                        >
+                          {isPublished ? (
+                            <>
+                              <CheckCircle2 className="h-3.5 w-3.5" />
+                              <span>Published</span>
+                            </>
+                          ) : (
+                            <>
+                              <XCircle className="h-3.5 w-3.5" />
+                              <span>Draft</span>
+                            </>
+                          )}
+                        </button>
+
+                        {member.featured && (
+                          <span className="px-2.5 py-1 rounded-full text-[11px] font-bold bg-purple-600/90 backdrop-blur-md text-white shadow-md flex items-center gap-1 ring-1 ring-purple-400/30">
+                            <Star className="h-3 w-3 fill-current" />
+                            <span>Featured</span>
+                          </span>
+                        )}
+                      </div>
+
+                      {/* Right: Order Pill */}
+                      <div className="px-2.5 py-1 rounded-full bg-slate-900/80 backdrop-blur-md text-white text-[11px] font-mono font-semibold flex items-center gap-1.5 shadow-md border border-white/10">
+                        <ArrowUpDown className="h-3 w-3 text-blue-400" />
+                        <span>Order: {member.sortOrder ?? 0}</span>
+                      </div>
                     </div>
 
-                    {/* Order Badge */}
-                    <div className="absolute top-3 right-3 px-2 py-0.5 rounded-md bg-black/60 backdrop-blur-xs text-white text-[10px] font-mono font-semibold flex items-center gap-1">
-                      <ArrowUpDown className="h-2.5 w-2.5" />
-                      <span>Order: {member.sortOrder ?? 0}</span>
+                    {/* Bottom overlay inside image: Name & Role preview */}
+                    <div className="absolute bottom-3.5 inset-x-4 pointer-events-none">
+                      <h3 className="text-xl font-extrabold text-white drop-shadow-md truncate tracking-tight">
+                        {member.name}
+                      </h3>
+                      <div className="inline-flex items-center gap-1.5 text-xs font-semibold text-blue-300 drop-shadow-sm mt-0.5 truncate">
+                        <Sparkles className="h-3.5 w-3.5 flex-shrink-0" />
+                        <span>{member.role}</span>
+                      </div>
                     </div>
                   </div>
 
                   {/* Body Info */}
-                  <div className="p-5 space-y-3">
-                    <div>
-                      <h3 className="text-base font-bold text-slate-900 dark:text-white truncate">
-                        {member.name}
-                      </h3>
-                      <div className="text-xs font-semibold text-blue-600 dark:text-blue-400 truncate mt-0.5">
-                        {member.role}
-                      </div>
-                    </div>
-
-                    {member.bio && (
-                      <p className="text-xs text-slate-500 dark:text-slate-400 line-clamp-2 leading-relaxed">
+                  <div className="p-5 space-y-4">
+                    {/* Bio */}
+                    {member.bio ? (
+                      <p className="text-xs text-slate-600 dark:text-slate-400 line-clamp-2 leading-relaxed">
                         {member.bio}
+                      </p>
+                    ) : (
+                      <p className="text-xs text-slate-400 dark:text-slate-500 italic">
+                        No short bio provided.
                       </p>
                     )}
 
                     {/* Skills Chips */}
                     {member.skills && member.skills.length > 0 && (
-                      <div className="flex flex-wrap gap-1 pt-1">
-                        {member.skills.slice(0, 3).map((skill, idx) => (
+                      <div className="flex flex-wrap gap-1.5 pt-1">
+                        {member.skills.slice(0, 4).map((skill, idx) => (
                           <span
                             key={idx}
-                            className="px-2 py-0.5 rounded-md bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-300 text-[10px] font-medium"
+                            className="px-2.5 py-1 rounded-lg bg-slate-100 dark:bg-slate-800/80 border border-slate-200/60 dark:border-slate-700/60 text-slate-700 dark:text-slate-300 text-[11px] font-medium"
                           >
                             {skill}
                           </span>
                         ))}
-                        {member.skills.length > 3 && (
-                          <span className="text-[10px] text-slate-400 self-center">
-                            +{member.skills.length - 3}
+                        {member.skills.length > 4 && (
+                          <span className="px-2 py-1 rounded-lg text-[10px] font-medium bg-slate-200/50 dark:bg-slate-800/50 text-slate-500 dark:text-slate-400 self-center">
+                            +{member.skills.length - 4}
                           </span>
                         )}
                       </div>
                     )}
 
                     {/* Social Indicators */}
-                    <div className="flex items-center gap-1.5 text-slate-400 pt-2 border-t border-slate-100 dark:border-slate-800">
+                    <div className="flex items-center gap-2 pt-3 border-t border-slate-100 dark:border-slate-800">
                       {member.socials?.website && (
-                        <PortfolioIcon className="h-3.5 w-3.5 text-blue-500" />
+                        <a
+                          href={member.socials.website}
+                          target="_blank"
+                          rel="noreferrer"
+                          className="h-7 w-7 rounded-full bg-slate-100 dark:bg-slate-800 flex items-center justify-center text-blue-500 hover:scale-110 hover:bg-blue-50 dark:hover:bg-blue-950/60 transition-all"
+                          title="Portfolio Website"
+                        >
+                          <PortfolioIcon className="h-3.5 w-3.5" />
+                        </a>
                       )}
                       {member.socials?.github && (
-                        <GithubIcon className="h-3.5 w-3.5 text-slate-700 dark:text-slate-300" />
+                        <a
+                          href={member.socials.github}
+                          target="_blank"
+                          rel="noreferrer"
+                          className="h-7 w-7 rounded-full bg-slate-100 dark:bg-slate-800 flex items-center justify-center text-slate-700 dark:text-slate-300 hover:scale-110 hover:bg-slate-200 dark:hover:bg-slate-700 transition-all"
+                          title="GitHub"
+                        >
+                          <GithubIcon className="h-3.5 w-3.5" />
+                        </a>
                       )}
                       {member.socials?.linkedin && (
-                        <LinkedinIcon className="h-3.5 w-3.5 text-blue-600" />
+                        <a
+                          href={member.socials.linkedin}
+                          target="_blank"
+                          rel="noreferrer"
+                          className="h-7 w-7 rounded-full bg-slate-100 dark:bg-slate-800 flex items-center justify-center text-blue-600 hover:scale-110 hover:bg-blue-50 dark:hover:bg-blue-950/60 transition-all"
+                          title="LinkedIn"
+                        >
+                          <LinkedinIcon className="h-3.5 w-3.5" />
+                        </a>
                       )}
                       {member.socials?.facebook && (
-                        <FacebookIcon className="h-3.5 w-3.5 text-blue-500" />
+                        <a
+                          href={member.socials.facebook}
+                          target="_blank"
+                          rel="noreferrer"
+                          className="h-7 w-7 rounded-full bg-slate-100 dark:bg-slate-800 flex items-center justify-center text-blue-500 hover:scale-110 hover:bg-blue-50 dark:hover:bg-blue-950/60 transition-all"
+                          title="Facebook"
+                        >
+                          <FacebookIcon className="h-3.5 w-3.5" />
+                        </a>
                       )}
                       {member.socials?.whatsapp && (
-                        <WhatsappIcon className="h-3.5 w-3.5 text-emerald-500" />
+                        <a
+                          href={member.socials.whatsapp}
+                          target="_blank"
+                          rel="noreferrer"
+                          className="h-7 w-7 rounded-full bg-slate-100 dark:bg-slate-800 flex items-center justify-center text-emerald-500 hover:scale-110 hover:bg-emerald-50 dark:hover:bg-emerald-950/60 transition-all"
+                          title="WhatsApp"
+                        >
+                          <WhatsappIcon className="h-3.5 w-3.5" />
+                        </a>
                       )}
-                      {!member.socials ||
-                        (Object.values(member.socials).every((v) => !v) && (
-                          <span className="text-[10px] text-slate-400 italic">
-                            No social links
-                          </span>
-                        ))}
+                      {(!member.socials ||
+                        Object.values(member.socials).every((v) => !v)) && (
+                        <span className="text-[11px] text-slate-400 italic">
+                          No social links configured
+                        </span>
+                      )}
                     </div>
                   </div>
                 </div>
 
                 {/* Footer Actions */}
-                <div className="px-5 py-3 border-t border-slate-100 dark:border-slate-800 flex items-center justify-between bg-slate-50/50 dark:bg-slate-800/30">
+                <div className="px-5 py-3.5 border-t border-slate-100 dark:border-slate-800 flex items-center justify-between bg-slate-50/70 dark:bg-slate-800/40">
                   <Button
                     size="sm"
-                    variant="ghost"
+                    variant="outline"
                     onClick={() => setPreviewMember(member)}
-                    className="h-8 px-2 text-xs text-slate-600 dark:text-slate-400 hover:text-blue-600"
+                    className="h-8 px-3 text-xs rounded-xl font-medium border-slate-200 dark:border-slate-700 hover:bg-blue-50 dark:hover:bg-blue-950/40 hover:text-blue-600 dark:hover:text-blue-400 hover:border-blue-300 dark:hover:border-blue-800 transition-all shadow-2xs"
                     title="Preview card appearance"
                   >
-                    <Eye className="h-3.5 w-3.5 mr-1" />
+                    <Eye className="h-3.5 w-3.5 mr-1.5" />
                     Preview
                   </Button>
 
-                  <div className="flex items-center gap-1">
+                  <div className="flex items-center gap-1.5">
                     <Button
                       size="sm"
-                      variant="ghost"
+                      variant="outline"
                       onClick={() => handleOpenEditModal(member)}
-                      className="h-8 w-8 p-0 text-slate-600 dark:text-slate-400 hover:text-blue-600 rounded-lg"
+                      className="h-8 px-3 text-xs rounded-xl font-medium border-slate-200 dark:border-slate-700 hover:bg-blue-600 hover:text-white hover:border-blue-600 transition-all shadow-2xs"
                       title="Edit member"
                     >
-                      <Edit className="h-3.5 w-3.5" />
+                      <Edit className="h-3.5 w-3.5 mr-1" />
+                      Edit
                     </Button>
                     <Button
                       size="sm"
                       variant="ghost"
                       onClick={() => handleDeleteMember(member)}
-                      className="h-8 w-8 p-0 text-red-500 hover:bg-red-50 dark:hover:bg-red-950/40 rounded-lg"
+                      className="h-8 w-8 p-0 text-slate-400 hover:text-rose-600 hover:bg-rose-50 dark:hover:bg-rose-950/50 rounded-xl transition-all"
                       title="Delete member"
                     >
                       <Trash2 className="h-3.5 w-3.5" />
