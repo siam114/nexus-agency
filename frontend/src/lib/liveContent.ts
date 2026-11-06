@@ -298,7 +298,7 @@ export function getAdminTeam(): TeamMember[] {
           }
           if (
             m.name?.toLowerCase().includes("samiul") &&
-            (m.image?.includes("unsplash.com") || m.image?.includes("AAAA"))
+            m.image?.includes("unsplash.com")
           ) {
             return { ...m, image: "/images/team/md-samiul.jpg" };
           }
