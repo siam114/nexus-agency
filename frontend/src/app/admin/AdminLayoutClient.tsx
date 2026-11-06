@@ -64,7 +64,7 @@ function AdminShell({ children }: { children: React.ReactNode }) {
   }
 
   return (
-    <div className="min-h-screen flex bg-slate-50 dark:bg-slate-950 text-slate-900 dark:text-slate-100">
+    <div className="h-screen h-[100dvh] flex overflow-hidden bg-slate-50 dark:bg-slate-950 text-slate-900 dark:text-slate-100">
       {/* Mobile Sidebar Overlay */}
       {sidebarOpen && (
         <div
@@ -73,10 +73,10 @@ function AdminShell({ children }: { children: React.ReactNode }) {
         />
       )}
 
-      {/* Sidebar Navigation */}
+      {/* Sidebar Navigation - Fixed on Desktop */}
       <aside
         className={cn(
-          "fixed inset-y-0 left-0 z-50 w-64 flex flex-col justify-between border-r border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900/95 p-5 transition-transform duration-200 lg:static lg:translate-x-0",
+          "fixed inset-y-0 left-0 z-50 w-64 h-full flex flex-col justify-between border-r border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900/95 p-5 transition-transform duration-200 overflow-y-auto lg:static lg:translate-x-0 flex-shrink-0 select-none",
           sidebarOpen ? "translate-x-0" : "-translate-x-full"
         )}
       >
@@ -159,10 +159,10 @@ function AdminShell({ children }: { children: React.ReactNode }) {
         </div>
       </aside>
 
-      {/* Main Content Area */}
-      <div className="flex-1 flex flex-col min-w-0">
-        {/* Top Header */}
-        <header className="sticky top-0 z-30 h-16 border-b border-slate-200 dark:border-slate-800 bg-white/95 dark:bg-slate-900/90 backdrop-blur-md px-6 flex items-center justify-between">
+      {/* Main Content Area - Scrollable */}
+      <div className="flex-1 flex flex-col min-w-0 h-full overflow-hidden">
+        {/* Top Header - Fixed/Sticky at top of content area */}
+        <header className="flex-shrink-0 h-16 border-b border-slate-200 dark:border-slate-800 bg-white/95 dark:bg-slate-900/90 backdrop-blur-md px-6 flex items-center justify-between z-20">
           <div className="flex items-center gap-3">
             <button
               onClick={() => setSidebarOpen(true)}
@@ -182,9 +182,11 @@ function AdminShell({ children }: { children: React.ReactNode }) {
           </div>
         </header>
 
-        {/* Page Content */}
-        <main className="flex-1 p-6 sm:p-8 lg:p-10 max-w-[1600px] w-full mx-auto">
-          {children}
+        {/* Scrollable Page Content */}
+        <main className="flex-1 overflow-y-auto overscroll-contain p-6 sm:p-8 lg:p-10">
+          <div className="max-w-[1600px] w-full mx-auto pb-16">
+            {children}
+          </div>
         </main>
       </div>
     </div>
