@@ -34,7 +34,10 @@ export const testimonialController = {
   async updateTestimonial(req: Request, res: Response, next: NextFunction) {
     try {
       const id = getParam(req.params.id);
-      const updated = await testimonialService.update(id, req.body);
+      const originalName = req.query.originalName
+        ? String(req.query.originalName)
+        : (req.body.originalName as string | undefined);
+      const updated = await testimonialService.update(id, req.body, originalName);
       if (!updated) {
         return apiResponse.notFound(res, "Testimonial not found");
       }
@@ -47,7 +50,8 @@ export const testimonialController = {
   async deleteTestimonial(req: Request, res: Response, next: NextFunction) {
     try {
       const id = getParam(req.params.id);
-      const deleted = await testimonialService.delete(id);
+      const name = req.query.name ? String(req.query.name) : undefined;
+      const deleted = await testimonialService.delete(id, name);
       if (!deleted) {
         return apiResponse.notFound(res, "Testimonial not found");
       }

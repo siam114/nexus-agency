@@ -2,6 +2,7 @@ import { z } from "zod";
 
 export const createTestimonialSchema = z.object({
   name: z.string().min(2, "Client name is required"),
+  originalName: z.string().optional(),
   role: z.string().optional(),
   company: z.string().optional(),
   content: z.string().min(10, "Testimonial content must be at least 10 characters"),

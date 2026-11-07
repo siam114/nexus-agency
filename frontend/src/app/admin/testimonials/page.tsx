@@ -41,6 +41,53 @@ export default function AdminTestimonialsPage() {
   const [search, setSearch] = React.useState("");
   const [statusFilter, setStatusFilter] = React.useState<"all" | "published" | "draft">("all");
 
+  // Fetch real testimonials from backend API on mount to sync with MongoDB Atlas
+  React.useEffect(() => {
+    let isMounted = true;
+    const fetchTestimonialsFromBackend = async () => {
+      try {
+        const activeToken =
+          token ||
+          (typeof window !== "undefined"
+            ? localStorage.getItem("nexus_admin_jwt")
+            : null) ||
+          "fallback-jwt-token-nexus-admin";
+        const headers: Record<string, string> = {
+          Authorization: `Bearer ${activeToken}`,
+        };
+
+        let res = await fetch(`${BACKEND_URL}/admin/testimonials`, { headers });
+        if (!res.ok) {
+          res = await fetch(`${BACKEND_URL}/testimonials`);
+        }
+
+        if (res.ok) {
+          const json = await res.json();
+          if (json.success && Array.isArray(json.data) && isMounted) {
+            const fetchedTestimonials = json.data.map(
+              (t: Testimonial, idx: number) => ({
+                ...t,
+                id:
+                  t.id ||
+                  (t as unknown as { _id?: string })._id ||
+                  `testimonial-${idx + 1}`,
+              }),
+            );
+            setTestimonials(fetchedTestimonials);
+            saveAdminTestimonials(fetchedTestimonials);
+          }
+        }
+      } catch (err) {
+        console.warn("Could not fetch remote testimonials, fallback to local storage:", err);
+      }
+    };
+
+    fetchTestimonialsFromBackend();
+    return () => {
+      isMounted = false;
+    };
+  }, [token]);
+
   // Modal states
   const [showFormModal, setShowFormModal] = React.useState(false);
   const [editingItem, setEditingItem] = React.useState<Testimonial | null>(null);
@@ -57,13 +104,15 @@ export default function AdminTestimonialsPage() {
   const [formFeatured, setFormFeatured] = React.useState(false);
   const [formSortOrder, setFormSortOrder] = React.useState(1);
   const [formError, setFormError] = React.useState("");
+  const [isSubmitting, setIsSubmitting] = React.useState(false);
 
   const fileInputRef = React.useRef<HTMLInputElement | null>(null);
 
   const syncBackend = async (
     action: "create" | "update" | "delete",
-    data: Partial<Testimonial>
-  ) => {
+    data: Partial<Testimonial>,
+    originalName?: string,
+  ): Promise<boolean> => {
     const activeToken =
       token ||
       (typeof window !== "undefined"
@@ -72,7 +121,7 @@ export default function AdminTestimonialsPage() {
       "fallback-jwt-token-nexus-admin";
     try {
       if (action === "create") {
-        await fetch(`${BACKEND_URL}/admin/testimonials`, {
+        const res = await fetch(`${BACKEND_URL}/admin/testimonials`, {
           method: "POST",
           headers: {
             "Content-Type": "application/json",
@@ -80,25 +129,97 @@ export default function AdminTestimonialsPage() {
           },
           body: JSON.stringify(data),
         });
+        if (!res.ok) {
+          const errData = await res.json().catch(() => null);
+          const msg =
+            errData?.message ||
+            errData?.errors?.[0]?.message ||
+            `Server error (Status ${res.status})`;
+          throw new Error(msg);
+        }
+        const resData = await res.json();
+        const serverId =
+          resData?.data?.id || (resData?.data as { _id?: string })?._id;
+        if (serverId) {
+          setTestimonials((prev) =>
+            prev.map((t) => (t.id === data.id ? { ...t, id: serverId } : t)),
+          );
+          const currentList = getAdminTestimonials();
+          const updated = currentList.map((t) =>
+            t.id === data.id ? { ...t, id: serverId } : t,
+          );
+          saveAdminTestimonials(updated);
+        }
+        return true;
       } else if (action === "update" && data.id) {
-        await fetch(`${BACKEND_URL}/admin/testimonials/${data.id}`, {
-          method: "PATCH",
-          headers: {
-            "Content-Type": "application/json",
-            Authorization: `Bearer ${activeToken}`,
+        const queryParam = originalName
+          ? `?originalName=${encodeURIComponent(originalName)}`
+          : "";
+        const res = await fetch(
+          `${BACKEND_URL}/admin/testimonials/${data.id}${queryParam}`,
+          {
+            method: "PATCH",
+            headers: {
+              "Content-Type": "application/json",
+              Authorization: `Bearer ${activeToken}`,
+            },
+            body: JSON.stringify({ ...data, originalName }),
           },
-          body: JSON.stringify(data),
-        });
+        );
+        if (!res.ok) {
+          const errData = await res.json().catch(() => null);
+          const msg =
+            errData?.message ||
+            errData?.errors?.[0]?.message ||
+            `Server error (Status ${res.status})`;
+          throw new Error(msg);
+        }
+        const resData = await res.json();
+        const serverId =
+          resData?.data?.id ||
+          (resData?.data as { _id?: string })?._id ||
+          data.id;
+        setTestimonials((prev) =>
+          prev.map((t) =>
+            t.id === data.id ||
+            (originalName &&
+              t.name.toLowerCase().trim() ===
+                originalName.toLowerCase().trim()) ||
+            t.name.toLowerCase().trim() === data.name?.toLowerCase().trim()
+              ? { ...t, ...resData.data, id: serverId }
+              : t,
+          ),
+        );
+        const currentList = getAdminTestimonials();
+        const updated = currentList.map((t) =>
+          t.id === data.id ||
+          (originalName &&
+            t.name.toLowerCase().trim() ===
+              originalName.toLowerCase().trim()) ||
+          t.name.toLowerCase().trim() === data.name?.toLowerCase().trim()
+            ? { ...t, ...resData.data, id: serverId }
+            : t,
+        );
+        saveAdminTestimonials(updated);
+        return true;
       } else if (action === "delete" && data.id) {
-        await fetch(`${BACKEND_URL}/admin/testimonials/${data.id}`, {
-          method: "DELETE",
-          headers: {
-            Authorization: `Bearer ${activeToken}`,
+        const res = await fetch(
+          `${BACKEND_URL}/admin/testimonials/${data.id}?name=${encodeURIComponent(
+            data.name || "",
+          )}`,
+          {
+            method: "DELETE",
+            headers: {
+              Authorization: `Bearer ${activeToken}`,
+            },
           },
-        });
+        );
+        return res.ok;
       }
-    } catch {
-      // Backend offline; local storage persists
+      return true;
+    } catch (err) {
+      console.error("syncBackend error:", err);
+      throw err;
     }
   };
 
@@ -141,22 +262,59 @@ export default function AdminTestimonialsPage() {
       return;
     }
 
-    if (file.size > 5 * 1024 * 1024) {
-      setFormError("Image file size should be less than 5MB.");
+    if (file.size > 12 * 1024 * 1024) {
+      setFormError("Image file size should be less than 12MB.");
       return;
     }
 
     const reader = new FileReader();
     reader.onload = (event) => {
-      if (typeof event.target?.result === "string") {
-        setFormAvatar(event.target.result);
-        setFormError("");
-      }
+      const src = event.target?.result;
+      if (typeof src !== "string") return;
+
+      const img = new window.Image();
+      img.onload = () => {
+        try {
+          const canvas = document.createElement("canvas");
+          const MAX_DIM = 400;
+          let width = img.width;
+          let height = img.height;
+
+          if (width > height) {
+            if (width > MAX_DIM) {
+              height = Math.round((height * MAX_DIM) / width);
+              width = MAX_DIM;
+            }
+          } else {
+            if (height > MAX_DIM) {
+              width = Math.round((width * MAX_DIM) / height);
+              height = MAX_DIM;
+            }
+          }
+
+          canvas.width = width;
+          canvas.height = height;
+          const ctx = canvas.getContext("2d");
+          if (ctx) {
+            ctx.drawImage(img, 0, 0, width, height);
+            const compressed = canvas.toDataURL("image/jpeg", 0.85);
+            setFormAvatar(compressed);
+            setFormError("");
+          } else {
+            setFormAvatar(src);
+            setFormError("");
+          }
+        } catch {
+          setFormAvatar(src);
+          setFormError("");
+        }
+      };
+      img.src = src;
     };
     reader.readAsDataURL(file);
   };
 
-  const handleSaveTestimonial = (e: React.FormEvent) => {
+  const handleSaveTestimonial = async (e: React.FormEvent) => {
     e.preventDefault();
 
     if (!formName.trim()) {
@@ -168,6 +326,9 @@ export default function AdminTestimonialsPage() {
       setFormError("Testimonial content must be at least 10 characters.");
       return;
     }
+
+    setIsSubmitting(true);
+    setFormError("");
 
     const payload: Testimonial = {
       id: editingItem ? editingItem.id : `testimonial-${Date.now()}`,
@@ -184,39 +345,63 @@ export default function AdminTestimonialsPage() {
       updatedAt: new Date().toISOString(),
     };
 
-    let updatedList: Testimonial[];
-    if (editingItem) {
-      updatedList = testimonials.map((t) => (t.id === payload.id ? payload : t));
-      syncBackend("update", payload);
-    } else {
-      updatedList = [...testimonials, payload];
-      syncBackend("create", payload);
+    try {
+      if (editingItem) {
+        await syncBackend("update", payload, editingItem.name);
+        const updatedList = testimonials.map((t) =>
+          t.id === payload.id ||
+          t.name.toLowerCase().trim() === payload.name.toLowerCase().trim() ||
+          t.name.toLowerCase().trim() === editingItem.name.toLowerCase().trim()
+            ? payload
+            : t,
+        );
+        updatedList.sort((a, b) => (a.sortOrder ?? 0) - (b.sortOrder ?? 0));
+        setTestimonials(updatedList);
+        saveAdminTestimonials(updatedList);
+      } else {
+        await syncBackend("create", payload);
+        const updatedList = [...testimonials, payload];
+        updatedList.sort((a, b) => (a.sortOrder ?? 0) - (b.sortOrder ?? 0));
+        setTestimonials(updatedList);
+        saveAdminTestimonials(updatedList);
+      }
+      setShowFormModal(false);
+    } catch (err) {
+      setFormError(
+        (err as Error).message ||
+          "Failed to save testimonial to database. Please try again.",
+      );
+    } finally {
+      setIsSubmitting(false);
     }
-
-    updatedList.sort((a, b) => (a.sortOrder ?? 0) - (b.sortOrder ?? 0));
-    setTestimonials(updatedList);
-    saveAdminTestimonials(updatedList);
-    setShowFormModal(false);
   };
 
-  const handleTogglePublish = (item: Testimonial) => {
+  const handleTogglePublish = async (item: Testimonial) => {
     const updated = { ...item, published: !(item.published !== false) };
     const updatedList = testimonials.map((t) => (t.id === item.id ? updated : t));
     setTestimonials(updatedList);
     saveAdminTestimonials(updatedList);
-    syncBackend("update", updated);
+    try {
+      await syncBackend("update", updated, item.name);
+    } catch (err) {
+      console.error("Toggle publish failed:", err);
+    }
   };
 
-  const handleDelete = (item: Testimonial) => {
+  const handleDelete = async (item: Testimonial) => {
     if (
       confirm(
         `Are you sure you want to delete the testimonial from "${item.name}"? This action cannot be undone.`
       )
     ) {
-      const updatedList = testimonials.filter((t) => t.id !== item.id);
+      const updatedList = testimonials.filter((t) => t.id !== item.id && t.name !== item.name);
       setTestimonials(updatedList);
       saveAdminTestimonials(updatedList);
-      syncBackend("delete", { id: item.id });
+      try {
+        await syncBackend("delete", { id: item.id, name: item.name });
+      } catch (err) {
+        console.error("Delete failed:", err);
+      }
       if (previewItem?.id === item.id) {
         setPreviewItem(null);
       }
@@ -725,9 +910,17 @@ export default function AdminTestimonialsPage() {
                 <Button
                   type="submit"
                   size="sm"
-                  className="bg-indigo-600 hover:bg-indigo-700 text-white rounded-xl font-semibold shadow-xs"
+                  disabled={isSubmitting}
+                  className="bg-indigo-600 hover:bg-indigo-700 text-white rounded-xl font-semibold shadow-xs flex items-center gap-2 cursor-pointer disabled:opacity-70"
                 >
-                  {editingItem ? "Save Changes" : "Create Testimonial"}
+                  {isSubmitting && (
+                    <div className="h-3.5 w-3.5 border-2 border-white/30 border-t-white rounded-full animate-spin" />
+                  )}
+                  {isSubmitting
+                    ? "Saving to Database..."
+                    : editingItem
+                      ? "Save Changes"
+                      : "Create Testimonial"}
                 </Button>
               </div>
             </form>

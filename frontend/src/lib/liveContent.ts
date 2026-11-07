@@ -435,7 +435,16 @@ export function getAdminTestimonials(): Testimonial[] {
     if (saved) {
       const parsed: Testimonial[] = JSON.parse(saved);
       if (Array.isArray(parsed) && parsed.length > 0) {
-        return parsed
+        // Merge missing default testimonials so all 6 are guaranteed available
+        const existingNames = new Set(
+          parsed.map((t) => t.name?.toLowerCase().trim()).filter(Boolean),
+        );
+        const missingDefaults = defaultTestimonials.filter(
+          (dt) => !existingNames.has(dt.name?.toLowerCase().trim()),
+        );
+        const combined = [...parsed, ...missingDefaults];
+
+        return combined
           .map((t, idx) => ({ ...t, id: t.id || `testimonial-${idx + 1}` }))
           .sort((a, b) => (a.sortOrder ?? 0) - (b.sortOrder ?? 0));
       }
