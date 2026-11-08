@@ -391,6 +391,27 @@ export const teamData: TeamMember[] = [
     featured: false,
     sortOrder: 3,
   },
+  {
+    id: "8",
+    name: "Ibrahim Kholilullah",
+    role: "Shopify & WordPress Developer",
+    bio: "Experienced eCommerce and CMS developer specializing in custom Shopify storefronts, Liquid theme development, and responsive WordPress solutions. Passionate about building high-converting online stores, optimized page speeds, and clean, scalable code.",
+    image: "/images/team/ibrahim-kholilullah.jpg",
+    skills: [
+      "Shopify Development",
+      "WordPress Development",
+      "Liquid & Theme Customization",
+      "WooCommerce",
+      "PHP & MySQL",
+      "HTML5, CSS3 & JavaScript",
+      "Speed & SEO Optimization",
+      "Responsive Web Design",
+    ],
+    socials: {},
+    published: true,
+    featured: true,
+    sortOrder: 4,
+  },
 ];
 
 export const testimonialsData: Testimonial[] = [

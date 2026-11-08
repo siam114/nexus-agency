@@ -310,6 +310,12 @@ export function getAdminTeam(): TeamMember[] {
           ) {
             return { ...m, image: "/images/team/md-samiul.jpg" };
           }
+          if (
+            m.name?.toLowerCase().includes("ibrahim") &&
+            (!m.image || m.image.includes("unsplash.com"))
+          ) {
+            return { ...m, image: "/images/team/ibrahim-kholilullah.jpg" };
+          }
           return m;
         });
 
