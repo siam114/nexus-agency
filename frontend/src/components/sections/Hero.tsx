@@ -4,7 +4,7 @@ import { ArrowRight, Calendar, TrendingUp } from "lucide-react";
 
 export function Hero() {
   return (
-    <section id="hero" className="relative overflow-hidden pt-10 pb-16 sm:pt-14 sm:pb-20 lg:pt-18 lg:pb-24">
+    <section id="hero" className="relative overflow-hidden pt-8 pb-12 sm:pt-10 sm:pb-14 lg:pt-12 lg:pb-16">
       {/* Soft blue radial background glow with gentle breathing animation */}
       <div className="absolute top-1/4 right-1/4 w-[500px] h-[500px] bg-blue-500/10 dark:bg-blue-600/15 blur-[120px] pointer-events-none rounded-full animate-soft-glow" />
       <div className="absolute top-1/2 left-1/3 w-[300px] h-[300px] bg-indigo-500/10 blur-[100px] pointer-events-none rounded-full animate-soft-glow" style={{ animationDelay: "-4s" }} />

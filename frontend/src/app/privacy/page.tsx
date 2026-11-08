@@ -19,7 +19,7 @@ export const metadata: Metadata = {
 
 export default function PrivacyPolicyPage() {
   return (
-    <div className="py-12 sm:py-16 lg:py-20">
+    <div className="py-10 sm:py-12 lg:py-14">
       <div className="mx-auto max-w-4xl px-4 sm:px-6 lg:px-8">
         {/* Breadcrumb Navigation */}
         <nav aria-label="Breadcrumb" className="mb-8 sm:mb-12">

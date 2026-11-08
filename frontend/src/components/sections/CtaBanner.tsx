@@ -4,7 +4,7 @@ import { ArrowRight, Mail } from "lucide-react";
 
 export function CtaBanner() {
   return (
-    <section className="py-14 sm:py-18 lg:py-20">
+    <section className="py-10 sm:py-12 lg:py-14">
       <div className="mx-auto max-w-[1600px] w-full px-4 sm:px-6 lg:px-8 xl:px-12 2xl:px-16">
         <div className="rounded-3xl border border-blue-100 dark:border-blue-950/80 bg-gradient-to-r from-blue-50/90 via-indigo-50/50 to-blue-50/90 dark:from-slate-900/90 dark:via-blue-950/40 dark:to-slate-900/90 p-8 sm:p-12 lg:p-14 2xl:p-16 shadow-sm">
           <div className="flex flex-col lg:flex-row lg:items-center justify-between gap-8">

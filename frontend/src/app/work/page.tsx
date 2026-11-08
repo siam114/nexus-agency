@@ -11,10 +11,10 @@ export const metadata: Metadata = {
 
 export default function WorkPage() {
   return (
-    <div className="py-12 sm:py-16 lg:py-20">
+    <div className="py-10 sm:py-12 lg:py-14">
       <div className="mx-auto max-w-[1600px] w-full px-4 sm:px-6 lg:px-8 xl:px-12 2xl:px-16">
         {/* Header */}
-        <div className="max-w-3xl 2xl:max-w-4xl mx-auto text-center mb-12 sm:mb-16">
+        <div className="max-w-3xl 2xl:max-w-4xl mx-auto text-center mb-8 sm:mb-10">
           <div className="inline-flex items-center gap-1.5 rounded-full border border-blue-200/80 dark:border-blue-900/60 bg-blue-50/70 dark:bg-blue-950/40 px-3.5 py-1 text-xs font-semibold tracking-wider text-blue-600 dark:text-blue-400 uppercase mb-4">
             <Sparkles className="h-3.5 w-3.5" />
             <span>PORTFOLIO &amp; WORK</span>

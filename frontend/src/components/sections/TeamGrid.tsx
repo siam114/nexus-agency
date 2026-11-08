@@ -105,7 +105,7 @@ export function TeamGrid() {
   const step2 = isSmallPhone ? 280 : isMobile ? 320 : isTablet ? 450 : isLargeDesktop ? 650 : 540;
 
   return (
-    <div className="w-full mb-20 select-none overflow-hidden">
+    <div className="w-full mb-12 sm:mb-14 select-none overflow-hidden">
       {/* Top Controls: Navigation Arrows */}
       <div className="flex items-center justify-end gap-2.5 mb-6 px-4">
         <button

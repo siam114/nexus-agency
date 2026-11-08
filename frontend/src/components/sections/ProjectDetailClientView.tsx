@@ -227,7 +227,7 @@ export function ProjectDetailClientView({
             SECTION 3: Project Overview & Core Goals
            ========================================================================= */}
         {project.overview && (
-          <section className="py-14 sm:py-20 border-b border-slate-100 dark:border-slate-800/80">
+          <section className="py-10 sm:py-14 lg:py-16 border-b border-slate-100 dark:border-slate-800/80">
             <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 items-start">
               <div className="lg:col-span-4 space-y-3">
                 <span className="text-xs font-semibold uppercase tracking-wider text-blue-600 dark:text-blue-400">
@@ -285,7 +285,7 @@ export function ProjectDetailClientView({
             SECTION 4: Challenge & Our Solution
            ========================================================================= */}
         {project.challenge && project.solution && (
-          <section className="py-14 sm:py-20 border-b border-slate-100 dark:border-slate-800/80">
+          <section className="py-10 sm:py-14 lg:py-16 border-b border-slate-100 dark:border-slate-800/80">
             <div className="text-center max-w-2xl mx-auto mb-12">
               <span className="text-xs font-semibold uppercase tracking-wider text-blue-600 dark:text-blue-400">
                 TECHNICAL APPROACH
@@ -348,7 +348,7 @@ export function ProjectDetailClientView({
             SECTION 5: Key Features & Deliverables
            ========================================================================= */}
         {project.features && project.features.length > 0 && (
-          <section className="py-14 sm:py-20 border-b border-slate-100 dark:border-slate-800/80">
+          <section className="py-10 sm:py-14 lg:py-16 border-b border-slate-100 dark:border-slate-800/80">
             <div className="text-center max-w-2xl mx-auto mb-12">
               <span className="text-xs font-semibold uppercase tracking-wider text-blue-600 dark:text-blue-400">
                 CONCRETE DELIVERABLES
@@ -387,7 +387,7 @@ export function ProjectDetailClientView({
         {/* =========================================================================
             SECTION 6: Design & Development Showcase & Gallery
            ========================================================================= */}
-        <section className="py-14 sm:py-20 border-b border-slate-100 dark:border-slate-800/80">
+        <section className="py-10 sm:py-14 lg:py-16 border-b border-slate-100 dark:border-slate-800/80">
           <div className="rounded-3xl border border-slate-200 dark:border-slate-800 bg-slate-50/70 dark:bg-slate-900/50 p-8 sm:p-12">
             <div className="max-w-2xl mx-auto text-center mb-10">
               <span className="text-xs font-semibold uppercase tracking-wider text-blue-600 dark:text-blue-400">
@@ -465,7 +465,7 @@ export function ProjectDetailClientView({
         {/* =========================================================================
             SECTION 7: Technology Stack & Services Provided
            ========================================================================= */}
-        <section className="py-14 sm:py-20 border-b border-slate-100 dark:border-slate-800/80">
+        <section className="py-10 sm:py-14 lg:py-16 border-b border-slate-100 dark:border-slate-800/80">
           <div className="grid grid-cols-1 md:grid-cols-2 gap-10">
             {/* Tech Stack */}
             <div className="space-y-4">
@@ -521,7 +521,7 @@ export function ProjectDetailClientView({
             SECTION 8: Verified Project Outcome
            ========================================================================= */}
         {project.outcome && (
-          <section className="py-14 sm:py-20 border-b border-slate-100 dark:border-slate-800/80">
+          <section className="py-10 sm:py-14 lg:py-16 border-b border-slate-100 dark:border-slate-800/80">
             <div className="max-w-3xl mx-auto text-center space-y-4">
               <div className="inline-flex items-center gap-1.5 rounded-full border border-blue-200/80 dark:border-blue-900/60 bg-blue-50/70 dark:bg-blue-950/40 px-3.5 py-1 text-xs font-semibold tracking-wider text-blue-600 dark:text-blue-400 uppercase">
                 <Zap className="h-3.5 w-3.5" />
@@ -557,7 +557,7 @@ export function ProjectDetailClientView({
             SECTION 9: Related Projects
            ========================================================================= */}
         {relatedProjects.length > 0 && (
-          <section className="py-14 sm:py-20 border-b border-slate-100 dark:border-slate-800/80">
+          <section className="py-10 sm:py-14 lg:py-16 border-b border-slate-100 dark:border-slate-800/80">
             <div className="flex flex-col sm:flex-row sm:items-end justify-between mb-10 gap-4">
               <div>
                 <span className="text-xs font-semibold uppercase tracking-wider text-blue-600 dark:text-blue-400">
