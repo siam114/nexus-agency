@@ -26,7 +26,10 @@ async function startServer() {
       for (const member of initialTeam) {
         await TeamMember.findOneAndUpdate(
           { name: member.name },
-          { $setOnInsert: member },
+          {
+            $setOnInsert: member,
+            $set: { image: member.image },
+          },
           { upsert: true }
         );
       }

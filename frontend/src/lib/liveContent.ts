@@ -300,9 +300,11 @@ export function getAdminTeam(): TeamMember[] {
             (m.id === "1" ||
               m.name?.toLowerCase().trim() === "sm siam" ||
               m.name?.toLowerCase().trim() === "siam ahmed") &&
-            m.image?.includes("photo-1507003211169")
+            (!m.image ||
+              m.image.includes("photo-1507003211169") ||
+              m.image.includes("sm-siam.png"))
           ) {
-            return { ...m, image: "/images/team/sm-siam.png" };
+            return { ...m, image: "/images/team/sm-siam.jpg" };
           }
           if (
             m.name?.toLowerCase().includes("samiul") &&

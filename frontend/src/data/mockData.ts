@@ -334,7 +334,7 @@ export const teamData: TeamMember[] = [
     name: "SM Siam",
     role: "Shopify Specialist & Web Developer",
     bio: "SM Siam is a Shopify and Web Developer specializing in building modern, responsive, and user-friendly eCommerce websites. He focuses on Shopify theme customization, custom functionality, and creating seamless online shopping experiences. With a strong interest in web technologies, he also works with React, Node.js, and MongoDB to develop modern web solutions.",
-    image: "/images/team/sm-siam.png",
+    image: "/images/team/sm-siam.jpg",
     skills: [
       "Shopify Store Development",
       "Shopify Theme Customization",
