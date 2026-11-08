@@ -1009,6 +1009,25 @@ export const initialTeam: ITeamMember[] = [
     published: true,
     sortOrder: 5,
   },
+  {
+    name: "Masud Rana",
+    role: "Shopify Specialist & Full Stack Developer",
+    bio: "Full stack web engineer and Shopify specialist with deep expertise in custom Liquid theme architecture, headless commerce, React/Next.js applications, and scalable backend APIs. Passionate about engineering high-speed digital storefronts with flawless user experiences.",
+    image: "/images/team/masud-rana.jpg",
+    skills: [
+      "Shopify Theme Engineering",
+      "Full Stack Web Development",
+      "Shopify Liquid & Storefront API",
+      "React.js & Next.js",
+      "Node.js & Express",
+      "TypeScript",
+      "RESTful APIs & GraphQL",
+      "Performance & CRO Optimization",
+    ],
+    socials: {},
+    published: true,
+    sortOrder: 6,
+  },
 ];
 
 export const initialTestimonials: ITestimonial[] = [

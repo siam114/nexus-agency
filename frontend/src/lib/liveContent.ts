@@ -325,6 +325,13 @@ export function getAdminTeam(): TeamMember[] {
           ) {
             return { ...m, image: "/images/team/md-salauddin-jony.jpg" };
           }
+          if (
+            (m.name?.toLowerCase().includes("masud") ||
+              m.name?.toLowerCase().includes("rana")) &&
+            (!m.image || m.image.includes("unsplash.com"))
+          ) {
+            return { ...m, image: "/images/team/masud-rana.jpg" };
+          }
           return m;
         });
 
