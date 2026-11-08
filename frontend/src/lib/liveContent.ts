@@ -318,6 +318,13 @@ export function getAdminTeam(): TeamMember[] {
           ) {
             return { ...m, image: "/images/team/ibrahim-kholilullah.jpg" };
           }
+          if (
+            (m.name?.toLowerCase().includes("salauddin") ||
+              m.name?.toLowerCase().includes("jony")) &&
+            (!m.image || m.image.includes("unsplash.com"))
+          ) {
+            return { ...m, image: "/images/team/md-salauddin-jony.jpg" };
+          }
           return m;
         });
 

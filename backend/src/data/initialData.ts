@@ -986,6 +986,29 @@ export const initialTeam: ITeamMember[] = [
     published: true,
     sortOrder: 4,
   },
+  {
+    name: "MD Salauddin Jony",
+    role: "SEO Specialist & WordPress Developer",
+    bio: "Strategic SEO specialist and experienced WordPress developer dedicated to driving organic search traffic, keyword ranking growth, and technical website performance. Specializes in on-page/off-page SEO, technical audits, custom WordPress themes, and high-converting landing pages.",
+    image: "/images/team/md-salauddin-jony.jpg",
+    skills: [
+      "Technical SEO",
+      "On-Page & Off-Page SEO",
+      "Keyword Research & Strategy",
+      "WordPress Development",
+      "Custom Theme Customization",
+      "Core Web Vitals Optimization",
+      "Google Analytics & Search Console",
+      "Conversion Rate Optimization (CRO)",
+    ],
+    socials: {
+      linkedin: "https://www.linkedin.com/in/salauddin-jony/",
+      whatsapp: "https://wa.me/8801303068448",
+      website: "https://growscapers.co.uk",
+    },
+    published: true,
+    sortOrder: 5,
+  },
 ];
 
 export const initialTestimonials: ITestimonial[] = [
