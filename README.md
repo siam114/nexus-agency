@@ -18,7 +18,7 @@
 **A high-performance, enterprise-grade digital agency platform and administrative content management suite.**  
 Engineered with Next.js 16 (App Router), React 19, TypeScript, Tailwind CSS, Express, and MongoDB Atlas.
 
-[🌐 **Live Website**](https://nexusagency-five.vercel.app) • [🔐 **Admin Dashboard**](https://nexusagency-five.vercel.app/admin) • [⚙️ **REST API Documentation**](https://nexusagency-backend.onrender.com/api/v1/health)
+[🌐 **Live Website**](https://nexusagency-five.vercel.app) • [⚙️ **REST API Documentation**](https://nexusagency-backend.onrender.com/api/v1/health)
 
 </div>
 
@@ -50,12 +50,7 @@ Engineered with Next.js 16 (App Router), React 19, TypeScript, Tailwind CSS, Exp
 | Component | URL | Status | Description |
 | :--- | :--- | :--- | :--- |
 | **Public Agency Portal** | [nexusagency-five.vercel.app](https://nexusagency-five.vercel.app) | `Production` | Customer-facing agency storefront, case studies, interactive services, 3D team showcase, and smooth reviews slider. |
-| **Admin Control Panel** | [nexusagency-five.vercel.app/admin](https://nexusagency-five.vercel.app/admin) | `Protected` | Administrative suite for managing projects, services, team members, reviews, and client inquiries. |
 | **Backend REST API** | [nexusagency-backend.onrender.com](https://nexusagency-backend.onrender.com/api/v1/health) | `Active` | Scalable Node.js + Express API connected to MongoDB Atlas with JWT auth and rate limiting. |
-
-> **Admin Demo Access**:
-> - **Email**: `smsiam987@gmail.com`
-> - **Password**: `AdminPassword123!` *(or use the 1-click demo button on the login screen)*
 
 ---
 
@@ -242,9 +237,9 @@ cd nexus-agency
    JWT_SECRET=super_secret_jwt_key_nexusagency_2026
    JWT_EXPIRES_IN=7d
    ALLOWED_ORIGINS=http://localhost:3000,https://nexusagency-five.vercel.app
-   INITIAL_ADMIN_EMAIL=smsiam987@gmail.com
-   INITIAL_ADMIN_PASSWORD=AdminPassword123!
-   INITIAL_ADMIN_NAME=SM SIAM
+   INITIAL_ADMIN_EMAIL=admin@example.com
+   INITIAL_ADMIN_PASSWORD=your_secure_password
+   INITIAL_ADMIN_NAME=Admin User
    ```
 
 4. **Seed database (Optional)**:
@@ -288,8 +283,7 @@ cd nexus-agency
    ```
 
 5. **Visit the application**:
-   Open [http://localhost:3000](http://localhost:3000) in your browser.  
-   To test the admin CMS, navigate to [http://localhost:3000/admin](http://localhost:3000/admin).
+   Open [http://localhost:3000](http://localhost:3000) in your browser.
 
 ---
 
@@ -305,8 +299,8 @@ cd nexus-agency
 | `JWT_SECRET` | Yes | Secret key used for signing admin JWT tokens | `your_secret_string` |
 | `JWT_EXPIRES_IN`| No | Token expiry duration | `7d` |
 | `ALLOWED_ORIGINS`| Yes | Comma-separated list of allowed CORS domains | `http://localhost:3000,https://...` |
-| `INITIAL_ADMIN_EMAIL` | Yes | Default email for first-time admin creation | `smsiam987@gmail.com` |
-| `INITIAL_ADMIN_PASSWORD` | Yes | Default password for initial admin user | `AdminPassword123!` |
+| `INITIAL_ADMIN_EMAIL` | Yes | Default email for first-time admin creation | `admin@example.com` |
+| `INITIAL_ADMIN_PASSWORD` | Yes | Default password for initial admin user | `your_secure_password` |
 | `SMTP_HOST` | No | Gmail or SMTP host for sending contact emails | `smtp.gmail.com` |
 | `SMTP_USER` | No | SMTP login username/email | `your_email@gmail.com` |
 | `SMTP_PASS` | No | SMTP App Password | `xxxx xxxx xxxx xxxx` |
