@@ -22,6 +22,18 @@ export const testimonialService = {
           );
         }
       }
+      // Upgrade any obsolete placeholder avatars to real portraits
+      for (const item of initialTestimonials) {
+        if (item.avatar) {
+          await Testimonial.updateOne(
+            {
+              name: item.name,
+              avatar: { $regex: /unsplash\.com\/photo-(1507003211169|1534528741775|1500648767791)/ },
+            },
+            { $set: { avatar: item.avatar } }
+          );
+        }
+      }
       return Testimonial.find({ published: true }).sort({ sortOrder: 1 });
     }
     return fallbackTestimonials.filter((t) => t.published);
@@ -36,6 +48,18 @@ export const testimonialService = {
             { name: item.name },
             { $setOnInsert: item },
             { upsert: true }
+          );
+        }
+      }
+      // Upgrade any obsolete placeholder avatars to real portraits
+      for (const item of initialTestimonials) {
+        if (item.avatar) {
+          await Testimonial.updateOne(
+            {
+              name: item.name,
+              avatar: { $regex: /unsplash\.com\/photo-(1507003211169|1534528741775|1500648767791)/ },
+            },
+            { $set: { avatar: item.avatar } }
           );
         }
       }

@@ -4,7 +4,11 @@ import * as React from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { Testimonial } from "@/types";
-import { getAdminTestimonials, saveAdminTestimonials } from "@/lib/liveContent";
+import {
+  getAdminTestimonials,
+  saveAdminTestimonials,
+  upgradeTestimonialAvatars,
+} from "@/lib/liveContent";
 import { useAdminAuth } from "@/lib/adminAuth";
 import { Card } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
@@ -64,14 +68,14 @@ export default function AdminTestimonialsPage() {
         if (res.ok) {
           const json = await res.json();
           if (json.success && Array.isArray(json.data) && isMounted) {
-            const fetchedTestimonials = json.data.map(
-              (t: Testimonial, idx: number) => ({
+            const fetchedTestimonials = upgradeTestimonialAvatars(
+              json.data.map((t: Testimonial, idx: number) => ({
                 ...t,
                 id:
                   t.id ||
                   (t as unknown as { _id?: string })._id ||
                   `testimonial-${idx + 1}`,
-              }),
+              }))
             );
             setTestimonials(fetchedTestimonials);
             saveAdminTestimonials(fetchedTestimonials);

@@ -457,8 +457,31 @@ export function useLiveTeam(): TeamMember[] {
 // Testimonials Storage Handlers & Hook
 // ==========================================
 
+const TESTIMONIAL_AVATAR_UPGRADES: Record<string, string> = {
+  "david chen": "/images/testimonials/david-chen.jpg",
+  "sophia martinez": "/images/testimonials/sophia-martinez.jpg",
+  "alexander wright": "/images/testimonials/alexander-wright.jpg",
+};
+
+export function upgradeTestimonialAvatars(testimonials: Testimonial[]): Testimonial[] {
+  return testimonials.map((t) => {
+    const key = t.name?.toLowerCase().trim();
+    if (key && TESTIMONIAL_AVATAR_UPGRADES[key]) {
+      const isOldDummy =
+        !t.avatar ||
+        t.avatar.includes("photo-1507003211169") ||
+        t.avatar.includes("photo-1534528741775") ||
+        t.avatar.includes("photo-1500648767791");
+      if (isOldDummy) {
+        return { ...t, avatar: TESTIMONIAL_AVATAR_UPGRADES[key] };
+      }
+    }
+    return t;
+  });
+}
+
 export function getAdminTestimonials(): Testimonial[] {
-  if (typeof window === "undefined") return defaultTestimonials;
+  if (typeof window === "undefined") return upgradeTestimonialAvatars(defaultTestimonials);
   try {
     const saved = localStorage.getItem(STORAGE_KEYS.TESTIMONIALS);
     if (saved) {
@@ -472,8 +495,9 @@ export function getAdminTestimonials(): Testimonial[] {
           (dt) => !existingNames.has(dt.name?.toLowerCase().trim()),
         );
         const combined = [...parsed, ...missingDefaults];
+        const upgraded = upgradeTestimonialAvatars(combined);
 
-        return combined
+        return upgraded
           .map((t, idx) => ({ ...t, id: t.id || `testimonial-${idx + 1}` }))
           .sort((a, b) => (a.sortOrder ?? 0) - (b.sortOrder ?? 0));
       }
@@ -481,7 +505,7 @@ export function getAdminTestimonials(): Testimonial[] {
   } catch {
     // fallback
   }
-  return defaultTestimonials;
+  return upgradeTestimonialAvatars(defaultTestimonials);
 }
 
 export function saveAdminTestimonials(testimonials: Testimonial[]) {
@@ -568,7 +592,7 @@ export function useLiveTestimonials(): Testimonial[] {
               .filter((t) => t.published !== false)
               .sort((a, b) => (a.sortOrder ?? 0) - (b.sortOrder ?? 0));
 
-            setTestimonials(merged);
+            setTestimonials(upgradeTestimonialAvatars(merged));
             return;
           }
         }

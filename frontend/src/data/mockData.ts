@@ -531,8 +531,7 @@ export const testimonialsData: Testimonial[] = [
     company: "Aura Living",
     content:
       "Migrating our custom store to a headless Shopify build boosted our page speed by 65% and doubled our mobile checkout conversions. The NexusAgency team's eCommerce expertise is truly world-class.",
-    avatar:
-      "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&w=200&q=80",
+    avatar: "/images/testimonials/david-chen.jpg",
     rating: 5,
     featured: true,
     published: true,
@@ -545,8 +544,7 @@ export const testimonialsData: Testimonial[] = [
     company: "Lumina Wellness",
     content:
       "Working with NexusAgency has been transformative for our brand. They didn't just build our online store; they re-engineered the user journey, increasing our average order value by over 40%.",
-    avatar:
-      "https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=200&q=80",
+    avatar: "/images/testimonials/sophia-martinez.jpg",
     rating: 5,
     featured: false,
     published: true,
@@ -559,8 +557,7 @@ export const testimonialsData: Testimonial[] = [
     company: "Finova Capital",
     content:
       "Outstanding visual craftsmanship, modern aesthetics, and enterprise-grade reliability. Their attention to detail on SEO structure and fast load times exceeded all our stakeholder expectations.",
-    avatar:
-      "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?auto=format&fit=crop&w=200&q=80",
+    avatar: "/images/testimonials/alexander-wright.jpg",
     rating: 5,
     featured: false,
     published: true,
