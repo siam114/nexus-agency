@@ -332,6 +332,13 @@ export function getAdminTeam(): TeamMember[] {
           ) {
             return { ...m, image: "/images/team/masud-rana.jpg" };
           }
+          if (
+            (m.name?.toLowerCase().includes("tufael") ||
+              m.name?.toLowerCase().includes("zuarder")) &&
+            (!m.image || m.image.includes("unsplash.com"))
+          ) {
+            return { ...m, image: "/images/team/tufael-ahmed.jpg" };
+          }
           return m;
         });
 

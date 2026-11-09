@@ -458,6 +458,27 @@ export const teamData: TeamMember[] = [
     featured: true,
     sortOrder: 6,
   },
+  {
+    id: "11",
+    name: "Tufael Ahmed Zuarder",
+    role: "Project Manager & WordPress Developer",
+    bio: "Experienced web technologist and technical project manager specializing in custom WordPress development, web solutions, agile project workflows, and cross-functional team delivery. Passionate about turning complex digital requirements into high-performing websites and on-time client deliverables.",
+    image: "/images/team/tufael-ahmed.jpg",
+    skills: [
+      "Project Management",
+      "Agile & Scrum Workflows",
+      "WordPress Development",
+      "Custom CMS Solutions",
+      "PHP & MySQL",
+      "Frontend Web Development",
+      "Client Communication",
+      "Quality Assurance & Testing",
+    ],
+    socials: {},
+    published: true,
+    featured: true,
+    sortOrder: 7,
+  },
 ];
 
 export const testimonialsData: Testimonial[] = [

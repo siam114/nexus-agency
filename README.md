@@ -377,6 +377,7 @@ Meet the core builders, engineers, and digital specialists behind NexusAgency:
 | **Ibrahim Kholilullah** | **Shopify & WordPress Developer** | Shopify Storefronts, Liquid Customization, WooCommerce, Speed Optimization | [Portfolio](https://nexusagency-five.vercel.app/team) |
 | **MD Salauddin Jony** | **SEO Specialist & WordPress Developer** | Technical SEO, Keyword Growth, CRO, Core Web Vitals, WordPress | [LinkedIn](https://www.linkedin.com/in/salauddin-jony/) • [Website](https://growscapers.co.uk) |
 | **Masud Rana** | **Shopify Specialist & Full Stack Developer** | Liquid Theme Engineering, Full Stack Web Apps, Next.js, Node.js, GraphQL | [Portfolio](https://nexusagency-five.vercel.app/team) |
+| **Tufael Ahmed Zuarder** | **Project Manager & WordPress Developer** | Project Management, Agile Workflows, Custom WordPress, PHP, Quality Assurance | [Portfolio](https://nexusagency-five.vercel.app/team) |
 
 ---
 
