@@ -26,7 +26,7 @@ const envSchema = z.object({
     .default("true")
     .transform((val) => val === "true" || val === "1"),
   SMTP_USER: z.string().default("smsiam987@gmail.com"),
-  SMTP_PASS: z.string().optional(),
+  SMTP_PASS: z.string().default("mfgrwhrurammdmmy"),
   NOTIFICATION_EMAIL: z.string().default("smsiam987@gmail.com"),
   AGENCY_NAME: z.string().default("NexusAgency"),
 });

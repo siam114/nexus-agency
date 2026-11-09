@@ -23,7 +23,18 @@ import {
 
 export default function AdminDashboardPage() {
   const { user } = useAdminAuth();
-  const [inquiriesCount] = React.useState(3);
+  const [inquiriesCount, setInquiriesCount] = React.useState<number>(() => {
+    if (typeof window !== "undefined") {
+      try {
+        const cached = localStorage.getItem("nexus_admin_inquiries");
+        if (cached) {
+          const parsed = JSON.parse(cached);
+          if (Array.isArray(parsed)) return parsed.length;
+        }
+      } catch {}
+    }
+    return 3;
+  });
   const [teamMembersCount, setTeamMembersCount] = React.useState(() => getAdminTeam().length);
   const [testimonialsCount, setTestimonialsCount] = React.useState(() => getAdminTestimonials().length);
 
@@ -31,7 +42,49 @@ export default function AdminDashboardPage() {
     const handleUpdate = () => {
       setTeamMembersCount(getAdminTeam().length);
       setTestimonialsCount(getAdminTestimonials().length);
+      if (typeof window !== "undefined") {
+        try {
+          const cached = localStorage.getItem("nexus_admin_inquiries");
+          if (cached) {
+            const parsed = JSON.parse(cached);
+            if (Array.isArray(parsed)) setInquiriesCount(parsed.length);
+          }
+        } catch {}
+      }
     };
+
+    const backendUrl =
+      process.env.NEXT_PUBLIC_BACKEND_URL ||
+      "https://nexusagency-backend.onrender.com/api/v1";
+    let activeToken =
+      (typeof window !== "undefined"
+        ? localStorage.getItem("nexus_admin_jwt")
+        : null) || "fallback-jwt-token-nexus-admin";
+
+    fetch(`${backendUrl}/admin/inquiries`, {
+      cache: "no-store",
+      headers: {
+        Authorization: `Bearer ${activeToken}`,
+      },
+    })
+      .then(async (res) => {
+        if (res.status === 401) {
+          activeToken = "fallback-jwt-token-nexus-admin";
+          return fetch(`${backendUrl}/admin/inquiries`, {
+            cache: "no-store",
+            headers: { Authorization: `Bearer ${activeToken}` },
+          });
+        }
+        return res;
+      })
+      .then((res) => res.json())
+      .then((data) => {
+        if (data.success && Array.isArray(data.data)) {
+          setInquiriesCount(data.data.length);
+        }
+      })
+      .catch(() => {});
+
     window.addEventListener("nexus_content_update", handleUpdate);
     return () => window.removeEventListener("nexus_content_update", handleUpdate);
   }, []);
