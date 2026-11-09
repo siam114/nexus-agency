@@ -218,8 +218,8 @@ export function Team() {
                     "overflow-hidden p-0 rounded-3xl flex flex-col justify-between transition-all duration-650 ease-[cubic-bezier(0.25,1,0.5,1)] group",
                     // Middle active card is wider and highlighted
                     isCenter
-                      ? "w-[280px] min-[380px]:w-[320px] sm:w-[350px] lg:w-[380px] 2xl:w-[410px] border-2 border-blue-500/90 dark:border-blue-500 bg-white dark:bg-slate-900 shadow-2xl shadow-blue-500/25 ring-4 ring-blue-500/15"
-                      : "w-[210px] min-[380px]:w-[240px] sm:w-[260px] lg:w-[280px] 2xl:w-[310px] border border-slate-200/80 dark:border-slate-800 bg-white/95 dark:bg-slate-900/90 shadow-md hover:shadow-xl hover:opacity-95"
+                      ? "w-[280px] min-[380px]:w-[320px] sm:w-[350px] lg:w-[380px] 2xl:w-[410px] border-2 border-blue-500/90 dark:border-blue-500 bg-white dark:bg-slate-900 shadow-none ring-0"
+                      : "w-[210px] min-[380px]:w-[240px] sm:w-[260px] lg:w-[280px] 2xl:w-[310px] border border-slate-200/80 dark:border-slate-800 bg-white/95 dark:bg-slate-900/90 shadow-none hover:opacity-95"
                   )}
                 >
                   {/* Portrait Image - Strictly 1:1 Aspect Ratio (Square) for Center Card */}
@@ -381,7 +381,7 @@ export function Team() {
                 className={cn(
                   "h-2.5 rounded-full transition-all duration-500 ease-[cubic-bezier(0.25,1,0.5,1)] cursor-pointer focus:outline-none",
                   isActive
-                    ? "w-9 bg-blue-600 dark:bg-blue-500 shadow-md shadow-blue-500/50"
+                    ? "w-9 bg-blue-600 dark:bg-blue-500 shadow-none"
                     : "w-2.5 bg-slate-300 dark:bg-slate-700 hover:bg-slate-400 dark:hover:bg-slate-600"
                 )}
                 aria-label={`View ${m.name}`}
