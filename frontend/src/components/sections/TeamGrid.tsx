@@ -4,7 +4,7 @@ import * as React from "react";
 import Image from "next/image";
 import { useLiveTeam } from "@/lib/liveContent";
 import { Card } from "@/components/ui/card";
-import { ChevronLeft, ChevronRight, Crown, Sparkles } from "lucide-react";
+import { ChevronLeft, ChevronRight } from "lucide-react";
 import {
   GithubIcon,
   LinkedinIcon,
@@ -145,9 +145,6 @@ export function TeamGrid() {
           const isCenter = diff === 0;
           const isAdjacent = Math.abs(diff) === 1;
           const isOuter = Math.abs(diff) === 2;
-          const isFounder =
-            member.role.toLowerCase().includes("founder") ||
-            member.name.toLowerCase().includes("siam");
 
           let xOffset = 0;
           if (diff === -1) xOffset = -step1;
@@ -203,16 +200,6 @@ export function TeamGrid() {
                     className="object-cover group-hover:scale-103 transition-transform duration-700 ease-[cubic-bezier(0.25,1,0.5,1)]"
                     sizes="(max-width: 640px) 310px, (max-width: 1024px) 350px, 380px"
                   />
-
-                  {/* Spotlight Badge on Center Card */}
-                  {isCenter && (
-                    <div className="absolute top-3.5 left-3.5 right-3.5 flex items-center justify-between pointer-events-none">
-                      <span className="inline-flex items-center gap-1.5 rounded-full bg-blue-600/95 backdrop-blur-md px-3 py-1 text-[11px] font-bold text-white shadow-md tracking-wider uppercase">
-                        {isFounder ? <Crown className="h-3.5 w-3.5" /> : <Sparkles className="h-3.5 w-3.5" />}
-                        <span>{isFounder ? "Founder & Lead" : "Spotlight"}</span>
-                      </span>
-                    </div>
-                  )}
 
                   {!isCenter && (
                     <div className="absolute inset-0 bg-slate-950/15 dark:bg-slate-950/30 group-hover:bg-transparent transition-colors duration-500" />
