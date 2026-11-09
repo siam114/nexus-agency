@@ -15,8 +15,14 @@ import {
   X,
 } from "lucide-react";
 import { Service } from "@/types";
+import { useAdminAuth } from "@/lib/adminAuth";
+
+const BACKEND_URL =
+  process.env.NEXT_PUBLIC_BACKEND_URL ||
+  "https://nexusagency-backend.onrender.com/api/v1";
 
 export default function AdminServicesPage() {
+  const { token } = useAdminAuth();
   const [services, setServices] = React.useState<Service[]>(() => {
     if (typeof window !== "undefined") {
       const saved = localStorage.getItem("nexus_admin_services");
@@ -30,6 +36,54 @@ export default function AdminServicesPage() {
     }
     return initialServices;
   });
+
+  // Sync services from remote backend API
+  React.useEffect(() => {
+    let isMounted = true;
+    const fetchServices = async () => {
+      try {
+        const activeToken =
+          token ||
+          (typeof window !== "undefined"
+            ? localStorage.getItem("nexus_admin_jwt")
+            : null) ||
+          "fallback-jwt-token-nexus-admin";
+        const headers: Record<string, string> = {
+          Authorization: `Bearer ${activeToken}`,
+        };
+        let res = await fetch(`${BACKEND_URL}/admin/services`, { headers });
+        if (!res.ok) {
+          res = await fetch(`${BACKEND_URL}/services`);
+        }
+        if (res.ok) {
+          const json = await res.json();
+          if (json.success && Array.isArray(json.data) && isMounted) {
+            const fetched = json.data.map((s: Service, idx: number) => ({
+              ...s,
+              id:
+                s.id ||
+                (s as unknown as { _id?: string })._id ||
+                s.slug ||
+                `service-${idx + 1}`,
+            }));
+            setServices(fetched);
+            try {
+              localStorage.setItem(
+                "nexus_admin_services",
+                JSON.stringify(fetched),
+              );
+            } catch {}
+          }
+        }
+      } catch (err) {
+        console.warn("Could not fetch remote services:", err);
+      }
+    };
+    fetchServices();
+    return () => {
+      isMounted = false;
+    };
+  }, [token]);
 
   const [search, setSearch] = React.useState("");
   const [editingService, setEditingService] = React.useState<Service | null>(
@@ -76,6 +130,30 @@ export default function AdminServicesPage() {
 
     setServices((prev) => prev.map((s) => (s.id === updated.id ? updated : s)));
     setEditingService(null);
+
+    const targetId = editingService.id || editingService.slug;
+    const activeToken =
+      token ||
+      (typeof window !== "undefined"
+        ? localStorage.getItem("nexus_admin_jwt")
+        : null) ||
+      "fallback-jwt-token-nexus-admin";
+
+    fetch(`${BACKEND_URL}/admin/services/${targetId}`, {
+      method: "PATCH",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${activeToken}`,
+      },
+      body: JSON.stringify({
+        title: updated.title,
+        description: updated.description,
+        features: updated.features,
+        deliverables: updated.deliverables,
+      }),
+    }).catch((err) => {
+      console.warn("Could not sync service to backend:", err);
+    });
   };
 
   const filteredServices = services.filter((s) => {

@@ -68,6 +68,58 @@ export default function AdminProjectsPage() {
   const [search, setSearch] = React.useState("");
   const [selectedCategory, setSelectedCategory] = React.useState("All");
 
+  // Fetch real projects from backend API on mount to sync with MongoDB Atlas
+  React.useEffect(() => {
+    let isMounted = true;
+    const fetchProjectsFromBackend = async () => {
+      try {
+        const activeToken =
+          token ||
+          (typeof window !== "undefined"
+            ? localStorage.getItem("nexus_admin_jwt")
+            : null) ||
+          "fallback-jwt-token-nexus-admin";
+        const headers: Record<string, string> = {
+          Authorization: `Bearer ${activeToken}`,
+        };
+
+        let res = await fetch(`${BACKEND_URL}/admin/projects`, { headers });
+        if (!res.ok) {
+          res = await fetch(`${BACKEND_URL}/projects`);
+        }
+
+        if (res.ok) {
+          const json = await res.json();
+          if (json.success && Array.isArray(json.data) && isMounted) {
+            const fetchedProjects: Project[] = json.data.map(
+              (p: Project, idx: number) => ({
+                ...p,
+                id:
+                  p.id ||
+                  (p as unknown as { _id?: string })._id ||
+                  `project-${idx + 1}`,
+                published: p.published !== false,
+                sortOrder: p.sortOrder ?? idx + 1,
+              }),
+            );
+            setProjects(fetchedProjects);
+            saveAdminProjects(fetchedProjects);
+          }
+        }
+      } catch (err) {
+        console.warn(
+          "Could not fetch remote projects, fallback to local storage:",
+          err,
+        );
+      }
+    };
+
+    fetchProjectsFromBackend();
+    return () => {
+      isMounted = false;
+    };
+  }, [token]);
+
   // Modals state
   const [showAddModal, setShowAddModal] = React.useState(false);
   const [showEditModal, setShowEditModal] = React.useState(false);

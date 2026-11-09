@@ -3,6 +3,7 @@
 import * as React from "react";
 import { Card } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
+import { useAdminAuth } from "@/lib/adminAuth";
 import {
   Mail,
   Search,
@@ -29,52 +30,23 @@ interface Inquiry {
   createdAt: string;
 }
 
-const INITIAL_INQUIRIES: Inquiry[] = [
-  {
-    id: "inq-1",
-    name: "Elena Rostova",
-    email: "elena@novatech-solutions.io",
-    company: "NovaTech Solutions",
-    service: "Shopify Development",
-    message:
-      "Hello NexusAgency team, we are preparing to launch our next-generation consumer electronics accessories brand. We need an end-to-end custom Shopify store with custom Liquid sections, fast page speeds, and Klaviyo email integration. Looking forward to discussing timeline and pricing.",
-    status: "new",
-    createdAt: "2026-10-21T09:30:00.000Z",
-  },
-  {
-    id: "inq-2",
-    name: "Marcus Vance",
-    email: "marcus.vance@orbitlogistics.co",
-    company: "Orbit Global Logistics",
-    service: "Figma to Website Conversion",
-    message:
-      "We already have complete Figma designs ready for our B2B logistics platform redesign (around 12 unique responsive pages). We need clean Next.js/Tailwind CSS implementation with pixel-perfect attention to detail and SEO optimization. Can we schedule a brief discovery call this week?",
-    status: "in_progress",
-    createdAt: "2026-10-20T14:15:00.000Z",
-  },
-  {
-    id: "inq-3",
-    name: "Sarah Jenkins",
-    email: "sarah@luminahealth.org",
-    company: "Lumina Wellness",
-    service: "Custom Website Development",
-    message:
-      "Hi SM SIAM, we loved your portfolio case studies! We are a healthcare clinic network looking to overhaul our public portal with appointment scheduling inquiries, clinic location finder, and accessible typography. Please let us know your current availability.",
-    status: "new",
-    createdAt: "2026-10-19T18:45:00.000Z",
-  },
-  {
-    id: "inq-4",
-    name: "David Kim",
-    email: "dkim@apexventures.capital",
-    company: "Apex Capital Partners",
-    service: "WordPress Development",
-    message:
-      "We require a fast, high-security corporate site on WordPress with custom Gutenberg blocks for our portfolio companies. Please send over your recent enterprise project examples and standard engagement contract terms.",
-    status: "resolved",
-    createdAt: "2026-10-15T11:20:00.000Z",
-  },
-];
+const DUMMY_IDS = new Set(["inq-1", "inq-2", "inq-3", "inq-4"]);
+const DUMMY_EMAILS = new Set([
+  "elena@novatech-solutions.io",
+  "marcus.vance@orbitlogistics.co",
+  "sarah@luminahealth.org",
+  "dkim@apexventures.capital",
+]);
+
+function cleanInquiriesList(list: Inquiry[]): Inquiry[] {
+  return list.filter(
+    (item) =>
+      !DUMMY_IDS.has(item.id) &&
+      !DUMMY_EMAILS.has(item.email?.toLowerCase().trim())
+  );
+}
+
+const INITIAL_INQUIRIES: Inquiry[] = [];
 
 const STATUS_CONFIG: Record<
   InquiryStatus,
@@ -107,12 +79,25 @@ const STATUS_CONFIG: Record<
 };
 
 export default function AdminInquiriesPage() {
+  const { token } = useAdminAuth();
   const [inquiries, setInquiries] = React.useState<Inquiry[]>(() => {
     if (typeof window !== "undefined") {
       const saved = localStorage.getItem("nexus_admin_inquiries");
       if (saved) {
         try {
-          return JSON.parse(saved);
+          const parsed = JSON.parse(saved);
+          if (Array.isArray(parsed)) {
+            const cleaned = cleanInquiriesList(parsed);
+            if (cleaned.length !== parsed.length) {
+              try {
+                localStorage.setItem(
+                  "nexus_admin_inquiries",
+                  JSON.stringify(cleaned),
+                );
+              } catch {}
+            }
+            return cleaned;
+          }
         } catch {
           // fallback
         }
@@ -126,26 +111,29 @@ export default function AdminInquiriesPage() {
   const [statusFilter, setStatusFilter] = React.useState<string>("all");
   const [selectedInquiry, setSelectedInquiry] = React.useState<Inquiry | null>(null);
 
-  const handleManualRefresh = React.useCallback(() => {
+  const handleManualRefresh = React.useCallback(async () => {
     setLoading(true);
     const backendUrl =
       process.env.NEXT_PUBLIC_BACKEND_URL ||
       "https://nexusagency-backend.onrender.com/api/v1";
-    const token =
-      typeof window !== "undefined"
+    const activeToken =
+      token ||
+      (typeof window !== "undefined"
         ? localStorage.getItem("nexus_admin_jwt")
-        : null;
+        : null) ||
+      "fallback-jwt-token-nexus-admin";
 
-    fetch(`${backendUrl}/admin/inquiries`, {
-      headers: {
-        "Content-Type": "application/json",
-        ...(token ? { Authorization: `Bearer ${token}` } : {}),
-      },
-    })
-      .then((res) => res.json())
-      .then((data) => {
-        if (data.success && Array.isArray(data.data)) {
-          const liveList: Inquiry[] = data.data.map((item: {
+    try {
+      const res = await fetch(`${backendUrl}/admin/inquiries`, {
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${activeToken}`,
+        },
+      });
+      const data = await res.json();
+      if (data.success && Array.isArray(data.data)) {
+        const liveList: Inquiry[] = cleanInquiriesList(
+          data.data.map((item: {
             _id?: string;
             id?: string;
             name: string;
@@ -164,80 +152,69 @@ export default function AdminInquiriesPage() {
             message: item.message,
             status: (item.status as InquiryStatus) || "new",
             createdAt: item.createdAt || new Date().toISOString(),
-          }));
+          }))
+        );
 
-          if (liveList.length > 0) {
-            setInquiries((prev) => {
-              const liveIds = new Set(liveList.map((x) => x.id));
-              const nonDuplicates = prev.filter((x) => !liveIds.has(x.id));
-              const combined = [...liveList, ...nonDuplicates];
-              try {
-                localStorage.setItem("nexus_admin_inquiries", JSON.stringify(combined));
-              } catch {}
-              return combined;
-            });
-          }
-        }
-      })
-      .catch((err) => {
-        console.warn("Manual refresh error:", err);
-      })
-      .finally(() => {
-        setLoading(false);
-      });
-  }, []);
+        setInquiries(liveList);
+        try {
+          localStorage.setItem("nexus_admin_inquiries", JSON.stringify(liveList));
+        } catch {}
+      }
+    } catch (err) {
+      console.warn("Manual refresh error:", err);
+    } finally {
+      setLoading(false);
+    }
+  }, [token]);
 
   React.useEffect(() => {
     let ignore = false;
     const backendUrl =
       process.env.NEXT_PUBLIC_BACKEND_URL ||
       "https://nexusagency-backend.onrender.com/api/v1";
-    const token =
-      typeof window !== "undefined"
+    const activeToken =
+      token ||
+      (typeof window !== "undefined"
         ? localStorage.getItem("nexus_admin_jwt")
-        : null;
+        : null) ||
+      "fallback-jwt-token-nexus-admin";
 
     fetch(`${backendUrl}/admin/inquiries`, {
       headers: {
         "Content-Type": "application/json",
-        ...(token ? { Authorization: `Bearer ${token}` } : {}),
+        Authorization: `Bearer ${activeToken}`,
       },
     })
       .then((res) => res.json())
       .then((data) => {
         if (!ignore && data?.success && Array.isArray(data.data)) {
-          const liveList: Inquiry[] = data.data.map((item: {
-            _id?: string;
-            id?: string;
-            name: string;
-            email: string;
-            company?: string;
-            service?: string;
-            message: string;
-            status?: InquiryStatus;
-            createdAt?: string;
-          }) => ({
-            id: item._id || item.id || `inq-${Date.now()}`,
-            name: item.name,
-            email: item.email,
-            company: item.company || "",
-            service: item.service || "General Inquiry",
-            message: item.message,
-            status: (item.status as InquiryStatus) || "new",
-            createdAt: item.createdAt || new Date().toISOString(),
-          }));
+          const liveList: Inquiry[] = cleanInquiriesList(
+            data.data.map((item: {
+              _id?: string;
+              id?: string;
+              name: string;
+              email: string;
+              company?: string;
+              service?: string;
+              message: string;
+              status?: InquiryStatus;
+              createdAt?: string;
+            }) => ({
+              id: item._id || item.id || `inq-${Date.now()}`,
+              name: item.name,
+              email: item.email,
+              company: item.company || "",
+              service: item.service || "General Inquiry",
+              message: item.message,
+              status: (item.status as InquiryStatus) || "new",
+              createdAt: item.createdAt || new Date().toISOString(),
+            }))
+          );
 
-          if (liveList.length > 0) {
-            setInquiries((prev) => {
-              const liveIds = new Set(liveList.map((x) => x.id));
-              const nonDuplicates = prev.filter((x) => !liveIds.has(x.id));
-              const combined = [...liveList, ...nonDuplicates];
-              try {
-                localStorage.setItem("nexus_admin_inquiries", JSON.stringify(combined));
-              } catch {}
-              return combined;
-            });
-          }
+          setInquiries(liveList);
+          try {
+            localStorage.setItem("nexus_admin_inquiries", JSON.stringify(liveList));
+          } catch {}
         }
       })
       .catch(() => {
@@ -252,7 +229,7 @@ export default function AdminInquiriesPage() {
       ignore = true;
       window.removeEventListener("nexus_content_update", handleUpdate);
     };
-  }, [handleManualRefresh]);
+  }, [token, handleManualRefresh]);
 
   React.useEffect(() => {
     if (typeof window !== "undefined") {
@@ -271,17 +248,19 @@ export default function AdminInquiriesPage() {
     const backendUrl =
       process.env.NEXT_PUBLIC_BACKEND_URL ||
       "https://nexusagency-backend.onrender.com/api/v1";
-    const token =
-      typeof window !== "undefined"
+    const activeToken =
+      token ||
+      (typeof window !== "undefined"
         ? localStorage.getItem("nexus_admin_jwt")
-        : null;
+        : null) ||
+      "fallback-jwt-token-nexus-admin";
 
     try {
       await fetch(`${backendUrl}/admin/inquiries/${id}/status`, {
         method: "PATCH",
         headers: {
           "Content-Type": "application/json",
-          ...(token ? { Authorization: `Bearer ${token}` } : {}),
+          Authorization: `Bearer ${activeToken}`,
         },
         body: JSON.stringify({ status: newStatus }),
       });
@@ -297,17 +276,19 @@ export default function AdminInquiriesPage() {
 
       const backendUrl =
         process.env.NEXT_PUBLIC_BACKEND_URL ||
-      "https://nexusagency-backend.onrender.com/api/v1";
-      const token =
-        typeof window !== "undefined"
+        "https://nexusagency-backend.onrender.com/api/v1";
+      const activeToken =
+        token ||
+        (typeof window !== "undefined"
           ? localStorage.getItem("nexus_admin_jwt")
-          : null;
+          : null) ||
+        "fallback-jwt-token-nexus-admin";
 
       try {
         await fetch(`${backendUrl}/admin/inquiries/${id}`, {
           method: "DELETE",
           headers: {
-            ...(token ? { Authorization: `Bearer ${token}` } : {}),
+            Authorization: `Bearer ${activeToken}`,
           },
         });
       } catch {}

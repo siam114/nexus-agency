@@ -78,6 +78,7 @@ export interface ProjectDetail {
 
 export interface Service {
   id: string;
+  slug?: string;
   title: string;
   description: string;
   iconName: string;

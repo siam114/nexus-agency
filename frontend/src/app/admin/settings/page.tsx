@@ -24,6 +24,10 @@ import {
 } from "@/components/ui/SocialIcons";
 import { useAdminAuth } from "@/lib/adminAuth";
 
+const BACKEND_URL =
+  process.env.NEXT_PUBLIC_BACKEND_URL ||
+  "https://nexusagency-backend.onrender.com/api/v1";
+
 interface SavedSettings {
   agencyName?: string;
   tagline?: string;
@@ -51,7 +55,7 @@ function getInitialSettings(): SavedSettings {
 }
 
 export default function AdminSettingsPage() {
-  const { user } = useAdminAuth();
+  const { user, token } = useAdminAuth();
 
   const [agencyName, setAgencyName] = React.useState(
     () => getInitialSettings().agencyName || "NexusAgency",
@@ -99,6 +103,33 @@ export default function AdminSettingsPage() {
   const [saveSuccess, setSaveSuccess] = React.useState(false);
   const [isSaving, setIsSaving] = React.useState(false);
 
+  // Fetch live settings from MongoDB backend
+  React.useEffect(() => {
+    const fetchRemoteSettings = async () => {
+      try {
+        const res = await fetch(`${BACKEND_URL}/settings`);
+        if (res.ok) {
+          const json = await res.json();
+          if (json.success && json.data) {
+            const d = json.data;
+            if (d.agencyName) setAgencyName(d.agencyName);
+            if (d.tagline) setTagline(d.tagline);
+            if (d.contactEmail) setEmail(d.contactEmail);
+            if (d.phone) setPhone(d.phone);
+            if (d.whatsappUrl) setWhatsapp(d.whatsappUrl);
+            if (d.portfolioUrl) setPortfolio(d.portfolioUrl);
+            if (d.linkedinUrl) setLinkedin(d.linkedinUrl);
+            if (d.githubUrl) setGithub(d.githubUrl);
+            if (d.facebookUrl) setFacebook(d.facebookUrl);
+          }
+        }
+      } catch (err) {
+        console.warn("Could not fetch remote settings:", err);
+      }
+    };
+    fetchRemoteSettings();
+  }, []);
+
   const handleSave = (e: React.FormEvent) => {
     e.preventDefault();
     setIsSaving(true);
@@ -123,6 +154,34 @@ export default function AdminSettingsPage() {
     if (typeof window !== "undefined") {
       localStorage.setItem("nexus_admin_settings", JSON.stringify(payload));
     }
+
+    const activeToken =
+      token ||
+      (typeof window !== "undefined"
+        ? localStorage.getItem("nexus_admin_jwt")
+        : null) ||
+      "fallback-jwt-token-nexus-admin";
+
+    fetch(`${BACKEND_URL}/admin/settings`, {
+      method: "PATCH",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${activeToken}`,
+      },
+      body: JSON.stringify({
+        agencyName,
+        tagline,
+        contactEmail: email,
+        phone,
+        whatsappUrl: whatsapp?.startsWith("http") ? whatsapp : undefined,
+        portfolioUrl: portfolio?.startsWith("http") ? portfolio : undefined,
+        linkedinUrl: linkedin?.startsWith("http") ? linkedin : undefined,
+        githubUrl: github?.startsWith("http") ? github : undefined,
+        facebookUrl: facebook?.startsWith("http") ? facebook : undefined,
+      }),
+    }).catch((err) => {
+      console.warn("Could not sync settings to backend:", err);
+    });
 
     setTimeout(() => {
       setIsSaving(false);

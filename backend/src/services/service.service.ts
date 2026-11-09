@@ -1,3 +1,4 @@
+import mongoose from "mongoose";
 import { Service } from "../models/Service.js";
 import { IService } from "../types/index.js";
 import { initialServices } from "../data/initialData.js";
@@ -9,6 +10,16 @@ let fallbackServices: IService[] = [...initialServices];
 export const serviceService = {
   async getPublished() {
     if (isDbConnected()) {
+      const count = await Service.countDocuments();
+      if (count < initialServices.length) {
+        for (const item of initialServices) {
+          await Service.findOneAndUpdate(
+            { slug: item.slug },
+            { $setOnInsert: item },
+            { upsert: true }
+          );
+        }
+      }
       return Service.find({ published: true }).sort({ sortOrder: 1 });
     }
     return fallbackServices.filter((s) => s.published);
@@ -16,6 +27,16 @@ export const serviceService = {
 
   async getAll() {
     if (isDbConnected()) {
+      const count = await Service.countDocuments();
+      if (count < initialServices.length) {
+        for (const item of initialServices) {
+          await Service.findOneAndUpdate(
+            { slug: item.slug },
+            { $setOnInsert: item },
+            { upsert: true }
+          );
+        }
+      }
       return Service.find().sort({ sortOrder: 1 });
     }
     return fallbackServices;
@@ -30,7 +51,10 @@ export const serviceService = {
 
   async getById(id: string) {
     if (isDbConnected()) {
-      return Service.findById(id);
+      if (mongoose.Types.ObjectId.isValid(id)) {
+        return Service.findById(id);
+      }
+      return Service.findOne({ slug: id });
     }
     return fallbackServices.find((s) => s.id === id || s.slug === id) || null;
   },
@@ -61,7 +85,11 @@ export const serviceService = {
 
   async update(id: string, data: Partial<IService>) {
     if (isDbConnected()) {
-      return Service.findByIdAndUpdate(id, { $set: data }, { new: true, runValidators: true });
+      if (mongoose.Types.ObjectId.isValid(id)) {
+        const doc = await Service.findByIdAndUpdate(id, { $set: data }, { new: true, runValidators: true });
+        if (doc) return doc;
+      }
+      return Service.findOneAndUpdate({ slug: id }, { $set: data }, { new: true, runValidators: true });
     }
 
     const index = fallbackServices.findIndex((s) => s.id === id || s.slug === id);
@@ -72,7 +100,11 @@ export const serviceService = {
 
   async delete(id: string) {
     if (isDbConnected()) {
-      return Service.findByIdAndDelete(id);
+      if (mongoose.Types.ObjectId.isValid(id)) {
+        const doc = await Service.findByIdAndDelete(id);
+        if (doc) return doc;
+      }
+      return Service.findOneAndDelete({ slug: id });
     }
 
     const index = fallbackServices.findIndex((s) => s.id === id || s.slug === id);
