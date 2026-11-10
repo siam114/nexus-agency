@@ -69,12 +69,9 @@ function ContactFormContent() {
     setIsSubmitting(true);
     setErrorMsg(null);
 
-    const backendUrl =
-      process.env.NEXT_PUBLIC_BACKEND_URL ||
-      "https://nexusagency-backend.onrender.com/api/v1";
-
     try {
-      const response = await fetch(`${backendUrl}/contact`, {
+      // First try same-origin Next.js /api/contact which dispatches both emails via Vercel & syncs to MongoDB
+      let response = await fetch("/api/contact", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -86,6 +83,25 @@ function ContactFormContent() {
           message: formData.message.trim(),
         }),
       });
+
+      // Fallback directly to backend if /api/contact is unavailable
+      if (!response.ok && response.status === 404) {
+        const backendUrl =
+          process.env.NEXT_PUBLIC_BACKEND_URL ||
+          "https://nexusagency-backend.onrender.com/api/v1";
+        response = await fetch(`${backendUrl}/contact`, {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            name: formData.name.trim(),
+            email: formData.email.trim(),
+            service: formData.service || undefined,
+            message: formData.message.trim(),
+          }),
+        });
+      }
 
       const resData = await response.json();
 

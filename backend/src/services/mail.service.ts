@@ -143,9 +143,9 @@ class MailService {
 
     if (!this.transporter) {
       logger.info(
-        `[DRY RUN - SMTP NOT CONFIGURED] Would send email to ${env.NOTIFICATION_EMAIL} regarding ${data.name}`
+        `SMTP transporter unavailable. Dispatching email via Vercel HTTPS fallback...`
       );
-      return false;
+      return this.dispatchViaHttpsFallback(data);
     }
 
     try {
@@ -160,16 +160,40 @@ class MailService {
       logger.info(`Contact notification delivered: MessageID ${info.messageId}`);
       return true;
     } catch (error) {
-      logger.error("Failed to send contact notification email", error);
-      return false;
+      logger.warn(
+        "Direct SMTP notification failed (e.g. Render outbound port restriction). Falling back to Vercel HTTPS...",
+        error
+      );
+      return this.dispatchViaHttpsFallback(data);
     }
+  }
+
+  /**
+   * Helper fallback to dispatch emails via Vercel HTTPS when host blocks outbound SMTP ports
+   */
+  private async dispatchViaHttpsFallback(data: ContactInquiryEmailPayload): Promise<boolean> {
+    try {
+      const res = await fetch("https://nexusagency-five.vercel.app/api/send-email", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(data),
+      });
+      if (res.ok) {
+        logger.info("Successfully delivered emails via Vercel HTTPS fallback.");
+        return true;
+      }
+    } catch (err) {
+      logger.error("Vercel HTTPS fallback dispatch failed:", err);
+    }
+    return false;
   }
 
   /**
    * Sends a polite auto-confirmation receipt to the client.
    */
   async sendClientConfirmation(data: ContactInquiryEmailPayload): Promise<boolean> {
-    if (!this.transporter || !data.email) return false;
+    if (!data.email) return false;
+    if (!this.transporter) return false;
 
     const subject = `We have received your project inquiry — ${env.AGENCY_NAME}`;
     const htmlContent = `
