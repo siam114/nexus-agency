@@ -21,7 +21,7 @@ class MailService {
   private initTransporter() {
     if (!env.SMTP_PASS) {
       logger.warn(
-        "MailService: SMTP_PASS is not configured. Email dispatch will be simulated in logs."
+        "MailService: SMTP_PASS is not configured. Email dispatch will be simulated in logs.",
       );
       return;
     }
@@ -38,7 +38,7 @@ class MailService {
       });
 
       logger.info(
-        `MailService initialized with SMTP host ${env.SMTP_HOST}:${env.SMTP_PORT} (${env.SMTP_USER})`
+        `MailService initialized with SMTP host ${env.SMTP_HOST}:${env.SMTP_PORT} (${env.SMTP_USER})`,
       );
     } catch (error) {
       logger.error("Failed to initialize nodemailer transporter", error);
@@ -49,7 +49,9 @@ class MailService {
    * Sends an instant notification to SM SIAM (smsiam987@gmail.com)
    * with the client's inquiry details and reply-to preconfigured.
    */
-  async sendContactNotification(data: ContactInquiryEmailPayload): Promise<boolean> {
+  async sendContactNotification(
+    data: ContactInquiryEmailPayload,
+  ): Promise<boolean> {
     const formattedDate = new Intl.DateTimeFormat("en-US", {
       dateStyle: "full",
       timeStyle: "short",
@@ -143,7 +145,7 @@ class MailService {
 
     if (!this.transporter) {
       logger.info(
-        `SMTP transporter unavailable. Dispatching email via Vercel HTTPS fallback...`
+        `SMTP transporter unavailable. Dispatching email via Vercel HTTPS fallback...`,
       );
       return this.dispatchViaHttpsFallback(data);
     }
@@ -157,12 +159,14 @@ class MailService {
         html: htmlContent,
       });
 
-      logger.info(`Contact notification delivered: MessageID ${info.messageId}`);
+      logger.info(
+        `Contact notification delivered: MessageID ${info.messageId}`,
+      );
       return true;
     } catch (error) {
       logger.warn(
         "Direct SMTP notification failed (e.g. Render outbound port restriction). Falling back to Vercel HTTPS...",
-        error
+        error,
       );
       return this.dispatchViaHttpsFallback(data);
     }
@@ -171,13 +175,18 @@ class MailService {
   /**
    * Helper fallback to dispatch emails via Vercel HTTPS when host blocks outbound SMTP ports
    */
-  private async dispatchViaHttpsFallback(data: ContactInquiryEmailPayload): Promise<boolean> {
+  private async dispatchViaHttpsFallback(
+    data: ContactInquiryEmailPayload,
+  ): Promise<boolean> {
     try {
-      const res = await fetch("https://nexusagency-five.vercel.app/api/send-email", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(data),
-      });
+      const res = await fetch(
+        "https://nexusagency-five.vercel.app/api/send-email",
+        {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify(data),
+        },
+      );
       if (res.ok) {
         logger.info("Successfully delivered emails via Vercel HTTPS fallback.");
         return true;
@@ -191,7 +200,9 @@ class MailService {
   /**
    * Sends a polite auto-confirmation receipt to the client.
    */
-  async sendClientConfirmation(data: ContactInquiryEmailPayload): Promise<boolean> {
+  async sendClientConfirmation(
+    data: ContactInquiryEmailPayload,
+  ): Promise<boolean> {
     if (!data.email) return false;
     if (!this.transporter) return false;
 
