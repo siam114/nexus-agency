@@ -631,23 +631,23 @@ export default function AdminInquiriesPage() {
             </div>
 
             {/* Action Buttons */}
-            <div className="flex items-center justify-between pt-4 border-t border-slate-100 dark:border-slate-800">
+            <div className="flex flex-col-reverse sm:flex-row items-stretch sm:items-center justify-between gap-3 pt-4 border-t border-slate-100 dark:border-slate-800">
               <Button
                 variant="outline"
                 size="sm"
                 onClick={() => deleteInquiry(selectedInquiry.id)}
-                className="text-xs text-red-600 border-red-200 dark:border-red-900/60 hover:bg-red-50 dark:hover:bg-red-950/40"
+                className="text-xs text-red-600 border-red-200 dark:border-red-900/60 hover:bg-red-50 dark:hover:bg-red-950/40 w-full sm:w-auto"
               >
                 <Trash2 className="h-4 w-4 mr-1.5" />
                 Delete Inquiry
               </Button>
 
-              <div className="flex items-center gap-2">
+              <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-2 w-full sm:w-auto">
                 <Button
                   variant="outline"
                   size="sm"
                   onClick={() => setSelectedInquiry(null)}
-                  className="text-xs"
+                  className="text-xs w-full sm:w-auto"
                 >
                   Close
                 </Button>
@@ -655,8 +655,9 @@ export default function AdminInquiriesPage() {
                   href={`mailto:${selectedInquiry.email}?subject=Regarding your inquiry with NexusAgency&body=Hi ${selectedInquiry.name},\n\nThank you for reaching out to NexusAgency.`}
                   target="_blank"
                   rel="noreferrer"
+                  className="w-full sm:w-auto"
                 >
-                  <Button size="sm" className="bg-blue-600 hover:bg-blue-700 text-white text-xs">
+                  <Button size="sm" className="bg-blue-600 hover:bg-blue-700 text-white text-xs w-full sm:w-auto">
                     <Reply className="h-4 w-4 mr-1.5" />
                     Reply via Email
                   </Button>

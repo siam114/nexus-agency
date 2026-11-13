@@ -114,7 +114,7 @@ export function Navbar() {
 
       {/* Mobile Menu Drawer */}
       {mobileMenuOpen && (
-        <div className="md:hidden border-t border-slate-100 dark:border-slate-800 bg-white/98 dark:bg-slate-950/98 backdrop-blur-md px-6 py-5 space-y-3 shadow-xl transition-all duration-200">
+        <div className="md:hidden border-t border-slate-100 dark:border-slate-800 bg-white/98 dark:bg-slate-950/98 backdrop-blur-md px-6 py-5 space-y-3 shadow-xl max-h-[calc(100dvh-4.5rem)] overflow-y-auto transition-all duration-200">
           {navItems.map((item) => {
             const isHome = item.href === "/" && pathname === "/";
             const isActive =

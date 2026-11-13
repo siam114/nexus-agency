@@ -555,7 +555,7 @@ export default function AdminTeamPage() {
       {/* Filter & Search Bar */}
       <Card className="p-4 rounded-2xl border-slate-200/80 dark:border-slate-800 bg-white dark:bg-slate-900 flex flex-col md:flex-row md:items-center justify-between gap-4">
         {/* Status Tabs */}
-        <div className="flex items-center gap-1.5 p-1 rounded-xl bg-slate-100 dark:bg-slate-800/80">
+        <div className="flex flex-wrap items-center gap-1.5 p-1 rounded-xl bg-slate-100 dark:bg-slate-800/80">
           {[
             { id: "all", label: "All Members", count: totalMembers },
             { id: "published", label: "Published", count: publishedCount },

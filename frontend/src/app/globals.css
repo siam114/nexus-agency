@@ -39,6 +39,8 @@ html {
   -moz-osx-font-smoothing: grayscale;
   text-rendering: optimizeLegibility;
   -webkit-tap-highlight-color: transparent;
+  overflow-x: clip;
+  max-width: 100vw;
 }
 
 body {
@@ -46,6 +48,8 @@ body {
   color: var(--foreground);
   transition: background-color 0.3s cubic-bezier(0.16, 1, 0.3, 1), color 0.3s cubic-bezier(0.16, 1, 0.3, 1);
   font-family: var(--font-geist-sans), system-ui, -apple-system, sans-serif;
+  overflow-x: clip;
+  max-width: 100vw;
 }
 
 /* Global Soft Interactive Elements - Zero Tap Delay & Fluid Tactile Feedback */

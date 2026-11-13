@@ -165,7 +165,7 @@ export function Hero() {
               </div>
 
               {/* Floating Analytics Card (Top-Right of composition) */}
-              <div className="absolute -top-7 -right-3 sm:-right-6 w-52 sm:w-56 rounded-2xl border border-slate-200/90 dark:border-slate-800 bg-white dark:bg-slate-900 p-4 shadow-xl z-20 backdrop-blur-md">
+              <div className="absolute -top-5 right-0 sm:-right-6 w-48 min-[380px]:w-52 sm:w-56 rounded-2xl border border-slate-200/90 dark:border-slate-800 bg-white dark:bg-slate-900 p-3 sm:p-4 shadow-xl z-20 backdrop-blur-md">
                 <div className="flex items-center justify-between">
                   <span className="text-[11px] font-semibold text-slate-500">Total Sales</span>
                   <span className="inline-flex items-center gap-0.5 rounded-full bg-emerald-50 dark:bg-emerald-950/60 px-2 py-0.5 text-[10px] font-semibold text-emerald-600">

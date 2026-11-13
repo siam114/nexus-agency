@@ -1927,24 +1927,24 @@ export default function AdminProjectsPage() {
               )}
 
               {/* Bottom Actions Bar */}
-              <div className="flex items-center justify-between pt-4 border-t border-slate-100 dark:border-slate-800">
+              <div className="flex flex-col-reverse sm:flex-row items-stretch sm:items-center justify-between gap-3 pt-4 border-t border-slate-100 dark:border-slate-800">
                 <Button
                   type="button"
                   variant="outline"
                   size="sm"
                   onClick={handleCloseEdit}
-                  className="rounded-xl"
+                  className="rounded-xl w-full sm:w-auto"
                 >
                   Cancel
                 </Button>
 
-                <div className="flex items-center gap-2">
-                  <Link href={`/projects/${editOriginalSlug}`} target="_blank">
+                <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-2 w-full sm:w-auto">
+                  <Link href={`/projects/${editOriginalSlug}`} target="_blank" className="w-full sm:w-auto">
                     <Button
                       type="button"
                       variant="ghost"
                       size="sm"
-                      className="text-xs text-slate-500 hover:text-blue-600"
+                      className="text-xs text-slate-500 hover:text-blue-600 w-full sm:w-auto justify-center"
                     >
                       <ExternalLink className="h-3.5 w-3.5 mr-1.5" />
                       View Live Page
@@ -1955,7 +1955,7 @@ export default function AdminProjectsPage() {
                     type="submit"
                     disabled={isSaving}
                     size="sm"
-                    className="bg-blue-600 hover:bg-blue-700 text-white rounded-xl font-semibold shadow-xs"
+                    className="bg-blue-600 hover:bg-blue-700 text-white rounded-xl font-semibold shadow-xs w-full sm:w-auto justify-center"
                   >
                     <Save className="h-4 w-4 mr-1.5" />
                     {isSaving ? "Saving Changes..." : "Save Project"}

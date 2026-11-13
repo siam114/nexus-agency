@@ -99,10 +99,11 @@ export function TeamGrid() {
   // Responsive horizontal spacing between cards
   const isMobile = windowWidth < 640;
   const isSmallPhone = windowWidth < 400;
+  const isTinyPhone = windowWidth < 360;
   const isTablet = windowWidth >= 640 && windowWidth < 1024;
   const isLargeDesktop = windowWidth >= 1536;
-  const step1 = isSmallPhone ? 150 : isMobile ? 180 : isTablet ? 240 : isLargeDesktop ? 340 : 285;
-  const step2 = isSmallPhone ? 280 : isMobile ? 320 : isTablet ? 450 : isLargeDesktop ? 650 : 540;
+  const step1 = isTinyPhone ? 135 : isSmallPhone ? 150 : isMobile ? 180 : isTablet ? 240 : isLargeDesktop ? 340 : 285;
+  const step2 = isTinyPhone ? 250 : isSmallPhone ? 280 : isMobile ? 320 : isTablet ? 450 : isLargeDesktop ? 650 : 540;
 
   return (
     <div className="w-full mb-12 sm:mb-14 select-none overflow-hidden">
@@ -180,8 +181,8 @@ export function TeamGrid() {
                 className={cn(
                   "overflow-hidden p-0 rounded-3xl flex flex-col justify-between transition-all duration-650 ease-[cubic-bezier(0.25,1,0.5,1)] group",
                   isCenter
-                    ? "w-[280px] min-[380px]:w-[320px] sm:w-[350px] lg:w-[380px] 2xl:w-[410px] border-2 border-blue-500/90 dark:border-blue-500 bg-white dark:bg-slate-900 shadow-none ring-0"
-                    : "w-[210px] min-[380px]:w-[240px] sm:w-[260px] lg:w-[280px] 2xl:w-[310px] border border-slate-200/80 dark:border-slate-800 bg-white/95 dark:bg-slate-900/90 shadow-none hover:opacity-95"
+                    ? "w-[260px] min-[360px]:w-[285px] min-[400px]:w-[320px] sm:w-[350px] lg:w-[380px] 2xl:w-[410px] border-2 border-blue-500/90 dark:border-blue-500 bg-white dark:bg-slate-900 shadow-none ring-0"
+                    : "w-[200px] min-[360px]:w-[220px] min-[400px]:w-[240px] sm:w-[260px] lg:w-[280px] 2xl:w-[310px] border border-slate-200/80 dark:border-slate-800 bg-white/95 dark:bg-slate-900/90 shadow-none hover:opacity-95"
                 )}
               >
                 {/* Portrait Image - Strictly 1:1 Aspect Ratio (Square) for Center Card */}
